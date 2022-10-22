@@ -9,5 +9,11 @@ namespace StrengthJournal.Server.Controllers
         {
             return View();
         }
+
+        [Route("signup")]
+        public IActionResult SignUp()
+        {
+            return View();
+        }
     }
 }
