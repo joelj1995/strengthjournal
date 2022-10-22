@@ -11,11 +11,12 @@ namespace StrengthJournal.DataAccess.Contexts
     public class StrengthJournalContext : DbContext
     {
         public DbSet<User> Users { get; set; }
+        public DbSet<Exercise> Exercises { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(
-                @"Server=localhost;Database=StrengthJournal1;Trusted_Connection=True");
+                @"Server=localhost;Database=StrengthJournal;Trusted_Connection=True");
         }
     }
 }
