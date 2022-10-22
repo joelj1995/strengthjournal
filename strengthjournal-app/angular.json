@@ -10,14 +10,14 @@
           "strict": true
         }
       },
-      "root": "",
+      "root": "/app",
       "sourceRoot": "src",
       "prefix": "app",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/strengthjournal-app",
+            "outputPath": "../strengthjournal-server/StrengthJournal.Server/wwwroot/dist",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
