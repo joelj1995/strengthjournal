@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using StrengthJournal.DataAccess.Contexts;
 
@@ -11,9 +12,10 @@ using StrengthJournal.DataAccess.Contexts;
 namespace StrengthJournal.DataAccess.Migrations
 {
     [DbContext(typeof(StrengthJournalContext))]
-    partial class StrengthJournalContextModelSnapshot : ModelSnapshot
+    [Migration("20221022212332_SeedExercises")]
+    partial class SeedExercises
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
