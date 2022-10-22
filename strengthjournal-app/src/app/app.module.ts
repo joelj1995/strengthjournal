@@ -5,16 +5,21 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 import {APP_BASE_HREF} from '@angular/common';
+import { TracerComponent } from './tracer/tracer/tracer.component';
+import { StrengthjournalService } from './services/strengthjournal.service';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    TracerComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule
   ],
-  providers: [{provide: APP_BASE_HREF, useValue: '/app'}],
+  providers: [{provide: APP_BASE_HREF, useValue: '/app'}, StrengthjournalService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

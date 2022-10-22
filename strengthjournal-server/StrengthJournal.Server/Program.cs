@@ -9,6 +9,12 @@ builder.Services.AddDbContext<StrengthJournalContext>();
 
 builder.Services.AddScoped<ExerciseService>();
 
+var devCorsRule = "_allowAngularDevServer";
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: devCorsRule, policy => { policy.WithOrigins("http://localhost:4200"); });
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -23,6 +29,11 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+
+if (app.Environment.IsDevelopment())
+{
+    app.UseCors(devCorsRule);
+}
 
 app.UseAuthorization();
 
