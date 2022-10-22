@@ -1,7 +1,10 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
+@model AppViewModel
 @{
 }
-<p>App Code 2</p>
 <app-root></app-root>
+<script src="@Model.mainUrl" type="module"></script>
+<script src="@Model.polyfillsUrl" type="module"></script>
+<script src="@Model.runtimeUrl" type="module"></script>
