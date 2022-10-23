@@ -1,7 +1,16 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using StrengthJournal.DataAccess.Contexts;
 using StrengthJournal.Server.Services;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services
+    .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.Authority = "https://dev-bs65rtlog25jigd0.us.auth0.com";
+        options.Audience = "https://localhost:7080/api";
+    });
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -28,13 +37,14 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
-app.UseRouting();
-
 if (app.Environment.IsDevelopment())
 {
     app.UseCors(devCorsRule);
 }
 
+app.UseRouting();
+
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(

@@ -32,6 +32,7 @@ import { DashboardComponent } from './pages/dashboard/dashboard.component';
     AuthModule.forRoot({
       domain: 'dev-bs65rtlog25jigd0.us.auth0.com',
       clientId: 'LdMw0S4EL13LvL4SZJOPRCSZo5cZJ3zD',
+      audience: 'https://localhost:7080/api',
       httpInterceptor: {
         allowedList: [`${environment.api}*`]
       },

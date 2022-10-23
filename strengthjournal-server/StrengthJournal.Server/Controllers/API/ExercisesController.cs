@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using StrengthJournal.Server.Services;
 
 namespace StrengthJournal.Server.Controllers.API
 {
     [Route("api/[controller]")]
+    [Authorize]
     [ApiController]
     public class ExercisesController : ControllerBase
     {
