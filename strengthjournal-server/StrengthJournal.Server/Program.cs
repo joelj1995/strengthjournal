@@ -1,6 +1,9 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 using StrengthJournal.DataAccess.Contexts;
+using StrengthJournal.Server.Middleware;
 using StrengthJournal.Server.Services;
+using System.Security.Claims;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +13,10 @@ builder.Services
     {
         options.Authority = "https://dev-bs65rtlog25jigd0.us.auth0.com";
         options.Audience = "https://localhost:7080/api";
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            NameClaimType = ClaimTypes.NameIdentifier
+        };
     });
 
 // Add services to the container.
@@ -46,6 +53,8 @@ app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseMiddleware<Auth0IDToUser>();
 
 app.MapControllerRoute(
     name: "default",
