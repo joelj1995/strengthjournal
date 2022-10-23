@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using StrengthJournal.Server.Extensions;
 using StrengthJournal.Server.Services;
 
 namespace StrengthJournal.Server.Controllers.API
@@ -20,6 +21,7 @@ namespace StrengthJournal.Server.Controllers.API
         [HttpGet("")]
         public async Task<ActionResult> GetExercises()
         {
+            var userId = HttpContext.GetUserId();
             var exercise = await exerciseService.GetExercises();
             return Ok(exercise);
         }
