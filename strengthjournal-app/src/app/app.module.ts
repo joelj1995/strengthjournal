@@ -14,12 +14,14 @@ import { environment } from 'src/environments/environment';
 
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthHttpInterceptor } from '@auth0/auth0-angular';
+import { NavComponent } from './nav/nav.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     TracerComponent,
-    DevLoginComponent
+    DevLoginComponent,
+    NavComponent
   ],
   imports: [
     BrowserModule,
