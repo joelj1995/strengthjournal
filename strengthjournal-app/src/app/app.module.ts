@@ -17,6 +17,7 @@ import { AuthHttpInterceptor } from '@auth0/auth0-angular';
 import { NavComponent } from './nav/nav.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { HeaderComponent } from './header/header.component';
+import { ListExercisesComponent } from './pages/exercises/list-exercises.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { HeaderComponent } from './header/header.component';
     DevLoginComponent,
     NavComponent,
     DashboardComponent,
-    HeaderComponent
+    HeaderComponent,
+    ListExercisesComponent
   ],
   imports: [
     BrowserModule,
