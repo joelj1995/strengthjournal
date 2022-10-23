@@ -34,7 +34,8 @@ import { DashboardComponent } from './pages/dashboard/dashboard.component';
       clientId: 'LdMw0S4EL13LvL4SZJOPRCSZo5cZJ3zD',
       httpInterceptor: {
         allowedList: [`${environment.api}*`]
-      }
+      },
+      redirectUri: `${window.location.origin}/app`
     }),
   ],
   providers: [
