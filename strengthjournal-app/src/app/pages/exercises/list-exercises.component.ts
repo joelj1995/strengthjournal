@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Exercise } from 'src/app/model/exercise';
+import { ExerciseService } from 'src/app/services/exercise.service';
 
 @Component({
   selector: 'app-list-exercises',
@@ -7,9 +9,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ListExercisesComponent implements OnInit {
 
-  constructor() { }
+  systemExerciseList: Exercise[] | null = null;
+
+  constructor(private exercises : ExerciseService) { }
 
   ngOnInit(): void {
+    this.exercises.getExercises().subscribe(exercises => {
+      this.systemExerciseList = exercises;
+    })
   }
 
 }

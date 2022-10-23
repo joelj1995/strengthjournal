@@ -7,15 +7,12 @@ import { Exercise } from '../model/exercise';
 @Injectable({
   providedIn: 'root'
 })
-export class StrengthjournalService {
+export class StrengthjournalBaseService {
 
-  private BASE_URL: string = environment.api;
+  protected BASE_URL: string = environment.api;
 
   constructor(
-    private http: HttpClient
+    protected http: HttpClient
   ) { }
-
-  getExercises(): Observable<Exercise[]> {
-    return this.http.get<Exercise[]>(`${this.BASE_URL}/exercises`);
-  }
+  
 }

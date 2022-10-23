@@ -5,8 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 import { APP_BASE_HREF } from '@angular/common';
-import { TracerComponent } from './tracer/tracer/tracer.component';
-import { StrengthjournalService } from './services/strengthjournal.service';
+import { StrengthjournalBaseService } from './services/strengthjournalbase.service';
 import { HttpClientModule } from '@angular/common/http';
 import { DevLoginComponent } from './pages/dev-login/dev-login.component';
 import { AuthModule } from '@auth0/auth0-angular';
@@ -22,7 +21,6 @@ import { ListExercisesComponent } from './pages/exercises/list-exercises.compone
 @NgModule({
   declarations: [
     AppComponent,
-    TracerComponent,
     DevLoginComponent,
     NavComponent,
     DashboardComponent,
@@ -53,7 +51,7 @@ import { ListExercisesComponent } from './pages/exercises/list-exercises.compone
       useClass: AuthHttpInterceptor,
       multi: true,
     },
-    StrengthjournalService],
+    StrengthjournalBaseService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

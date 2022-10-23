@@ -7,7 +7,20 @@
         <h2 class="card-tile">System Defined Exercises</h2>
       </div>
       <div class="card-body">
-
+        <table *ngIf="systemExerciseList" class="table table-striped dataTable no-footer dtr-inline collapsed">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Personal Best</th>
+            </tr>
+          </thead>
+          <tbody *ngFor="let systemExercise of systemExerciseList">
+            <tr>
+              <td>{{systemExercise.name}}</td>
+              <td>0</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
 
@@ -16,7 +29,7 @@
         <h2 class="card-tile">My Exercises</h2>
       </div>
       <div class="card-body">
-
+        <button class="btn btn-secondary buttons-copy buttons-html5">New Exercise</button>
       </div>
     </div>
 
