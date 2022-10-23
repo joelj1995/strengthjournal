@@ -9,7 +9,7 @@ import { Exercise } from '../model/exercise';
 })
 export class StrengthjournalService {
 
-  private BASE_URL: string = environment.production ? '/api' : 'https://localhost:7080/api';
+  private BASE_URL: string = environment.api;
 
   constructor(
     private http: HttpClient

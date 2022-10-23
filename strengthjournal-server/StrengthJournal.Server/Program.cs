@@ -12,7 +12,7 @@ builder.Services.AddScoped<ExerciseService>();
 var devCorsRule = "_allowAngularDevServer";
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy(name: devCorsRule, policy => { policy.WithOrigins("http://localhost:4200"); });
+    options.AddPolicy(name: devCorsRule, policy => { policy.WithOrigins("http://localhost:4200").AllowAnyHeader(); });
 });
 
 var app = builder.Build();
