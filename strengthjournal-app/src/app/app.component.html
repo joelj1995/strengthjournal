@@ -1,8 +1,13 @@
 <div class="wrapper">
   <app-nav></app-nav>
-  <main class="content">
-    <div class="container-fluid p-0">
-      <router-outlet></router-outlet>
-    </div>
-  </main>
+  
+  <div class="main">
+    <app-header></app-header>
+    <main class="content">
+      <div class="container-fluid p-0">
+        <router-outlet></router-outlet>
+      </div>
+    </main>
+  </div>
+  
 </div>
