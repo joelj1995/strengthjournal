@@ -7,7 +7,7 @@
         <h2 class="card-tile">System Defined Exercises</h2>
       </div>
       <div class="card-body">
-        <table *ngIf="systemExerciseList" class="table table-striped dataTable no-footer dtr-inline collapsed">
+        <table *ngIf="systemExerciseList; else systemExerciseListLoading" class="table table-striped dataTable no-footer dtr-inline collapsed">
           <thead>
             <tr>
               <th>Name</th>
@@ -21,6 +21,13 @@
             </tr>
           </tbody>
         </table>
+        <ng-template #systemExerciseListLoading>
+          <div class="mb-2 text-center">
+            <div class="spinner-grow me-2" role="status">
+              <span class="sr-only">Loading...</span>
+            </div>
+          </div>
+        </ng-template>
       </div>
     </div>
 
