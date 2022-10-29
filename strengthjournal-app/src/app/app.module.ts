@@ -17,7 +17,7 @@ import { NavComponent } from './nav/nav.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { HeaderComponent } from './header/header.component';
 import { ListExercisesComponent } from './pages/exercises/list-exercises.component';
-import { NewExerciseComponent } from './exercises/new-exercise.component';
+import { NewExerciseComponent } from './pages/exercises/new-exercise.component';
 
 @NgModule({
   declarations: [
