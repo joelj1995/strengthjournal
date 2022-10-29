@@ -18,5 +18,11 @@ namespace StrengthJournal.Server.Services
             var exercises = await context.Exercises.Where(e => e.CreatedByUser == null).ToListAsync();
             return exercises.Select(e => new ExerciseDto() { Id = e.Id, Name = e.Name });
         }
+
+        public async Task CreateExercise(ExerciseDto exercise, Guid userId)
+        {
+            var createdByUser = context.Users.Single(u => u.Id == userId);
+            await context.Exercises.AddAsync(new DataAccess.Model.Exercise() { Id = exercise.Id, Name = exercise.Name, CreatedByUser = createdByUser });
+        }
     }
 }

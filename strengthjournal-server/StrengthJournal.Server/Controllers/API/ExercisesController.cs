@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using StrengthJournal.Server.ApiModels;
 using StrengthJournal.Server.Extensions;
 using StrengthJournal.Server.Services;
 
@@ -19,11 +20,18 @@ namespace StrengthJournal.Server.Controllers.API
         }
 
         [HttpGet("")]
-        public async Task<ActionResult> GetExercises()
+        public async Task<ActionResult<ExerciseDto>> GetExercises()
         {
-            var userId = HttpContext.GetUserId();
             var exercise = await exerciseService.GetExercises();
             return Ok(exercise);
+        }
+
+        [HttpPost("")]
+        public async Task<ActionResult> CreateExercise([FromBody] ExerciseDto exercise)
+        {
+            var userId = HttpContext.GetUserId();
+            await exerciseService.CreateExercise(exercise, userId);
+            return Ok();
         }
     }
 }
