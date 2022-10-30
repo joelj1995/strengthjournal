@@ -1,4 +1,5 @@
-﻿using StrengthJournal.DataAccess.Contexts;
+﻿using Microsoft.EntityFrameworkCore;
+using StrengthJournal.DataAccess.Contexts;
 using StrengthJournal.DataAccess.Model;
 using StrengthJournal.Server.ApiModels;
 using StrengthJournal.Server.ServiceExceptions;
@@ -29,7 +30,7 @@ namespace StrengthJournal.Server.Services
         public async Task<IEnumerable<WorkoutSetSync>> GetWorkoutSets(Guid userId, Guid workoutId)
         {
             var user = context.Users.Single(u => u.Id == userId);
-            var workout = context.WorkoutLogEntries.FirstOrDefault(wle => wle.Id == workoutId && wle.User == user);
+            var workout = context.WorkoutLogEntries.Include(wle => wle.Sets).Include("Sets.Exercise").FirstOrDefault(wle => wle.Id == workoutId && wle.User == user);
             if (workout == null)
             {
                 throw new EntityNotFoundException();
