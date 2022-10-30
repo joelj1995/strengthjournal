@@ -24,6 +24,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<StrengthJournalContext>();
 
 builder.Services.AddScoped<ExerciseService>();
+builder.Services.AddScoped<WorkoutService>();
 
 var devCorsRule = "_allowAngularDevServer";
 builder.Services.AddCors(options =>
