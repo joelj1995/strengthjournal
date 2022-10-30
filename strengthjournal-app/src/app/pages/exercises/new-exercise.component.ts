@@ -25,7 +25,7 @@ export class NewExerciseComponent implements OnInit {
     console.log(this.form.value.name);
     this.exercises.createExercise(this.form.value.name).subscribe(e => {
       this.enableSubmit = true;
-    })
+    });
   }
 
 }

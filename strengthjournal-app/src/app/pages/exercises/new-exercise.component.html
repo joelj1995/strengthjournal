@@ -11,7 +11,7 @@
             <label>Name</label>
             <input type="text" class="form-control" id="name" formControlName="name">
           </div>
-          <button type="submit" class="btn btn-primary">Create</button>
+          <button type="submit" class="btn btn-primary" [class.disabled]="!this.enableSubmit">Create</button>
         </form>
       </div>
     </div>
