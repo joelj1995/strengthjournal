@@ -36,7 +36,7 @@ namespace StrengthJournal.Server.Services
                 throw new EntityNotFoundException();
             }
             // TODO: implement automapper to make this less painful
-            return workout.Sets.Select(set => new WorkoutSetSync { Id = set.Id, ExerciseId = set.Exercise.Id, ExerciseName = set.Exercise.Name, Reps = set.Reps, TargetReps = set.TargetReps, Weight = set.WeightLbs == null ? set.WeightKg : set.WeightLbs, WeightUnit = set.WeightLbs == null ? "kg" : "lbs" });
+            return workout.Sets.Select(set => new WorkoutSetSync { Id = set.Id, ExerciseId = set.Exercise.Id, ExerciseName = set.Exercise.Name, Reps = set.Reps, TargetReps = set.TargetReps, Weight = set.WeightLbs == null ? set.WeightKg : set.WeightLbs, WeightUnit = set.WeightLbs == null ? "kg" : "lbs", RPE = set.RPE });
         }
 
         public async Task SyncWorkoutSet(Guid userId, Guid workoutId, WorkoutSetSync set)
