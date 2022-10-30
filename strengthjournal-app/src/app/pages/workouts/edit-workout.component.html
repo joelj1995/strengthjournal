@@ -20,18 +20,19 @@
             <td>{{set.weight}} {{set.weightUnit}}</td>
             <td>{{set.rpe}}</td>
           </tr>
-          <tr>
+          <tr [formGroup]="newSetForm">
             <td>
-              <select class="form-control">
-                <option *ngFor="let exercise of exerciseList" value="exercise.id">{{exercise.name}}</option>
+              <select class="form-control" formControlName="exerciseId">
+                <option *ngFor="let exercise of exerciseList" [value]="exercise.id">{{exercise.name}}</option>
               </select>
             </td>
-            <td><input type="number" class="form-control" id="reps"></td>
-            <td><input type="number" class="form-control" id="reps"></td>
-            <td><input type="number" class="form-control" id="reps"></td>
-            <td><input type="number" class="form-control" id="reps"></td>
+            <td><input type="number" class="form-control" id="reps" formControlName="reps"></td>
+            <td><input type="number" class="form-control" id="targetReps" formControlName="targetReps"></td>
+            <td><input type="number" class="form-control" id="weight" formControlName="weight"></td>
+            <td><input type="number" class="form-control" id="rpe" formControlName="rpe"></td>
           </tr>
         </tbody>
+        <button class="btn btn-primary" (click)="logNewSet()" [class.disabled]="this.addingSet">Add Set</button>
       </table>
       <ng-template #setListLoading>
         <div class="mb-2 text-center">

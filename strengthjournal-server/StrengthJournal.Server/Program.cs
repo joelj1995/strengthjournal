@@ -29,7 +29,7 @@ builder.Services.AddScoped<WorkoutService>();
 var devCorsRule = "_allowAngularDevServer";
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy(name: devCorsRule, policy => { policy.WithOrigins("http://localhost:4200").AllowAnyHeader(); });
+    options.AddPolicy(name: devCorsRule, policy => { policy.WithOrigins("http://localhost:4200").AllowAnyHeader().AllowAnyMethod(); });
 });
 
 var app = builder.Build();

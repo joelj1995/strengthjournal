@@ -19,4 +19,8 @@ export class WorkoutService extends StrengthjournalBaseService {
     return this.http.get<WorkoutSet[]>(`${this.BASE_URL}/workouts/${workoutId}/sets`);
   }
 
+  syncSet(workoutId: string, set: WorkoutSet) {
+    return this.http.put<void>(`${this.BASE_URL}/workouts/${workoutId}/sets`, set);
+  }
+
 }

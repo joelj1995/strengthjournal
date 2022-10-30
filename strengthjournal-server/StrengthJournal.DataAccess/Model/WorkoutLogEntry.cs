@@ -11,6 +11,6 @@ namespace StrengthJournal.DataAccess.Model
         public Guid Id { get; set; }
         public DateTime EntryDateUTC { get; set; }
         public User User { get; set; }
-        public IEnumerable<WorkoutLogEntrySet> Sets { get; set; } = Enumerable.Empty<WorkoutLogEntrySet>();
+        public ICollection<WorkoutLogEntrySet> Sets { get; set; } = new List<WorkoutLogEntrySet>();
     }
 }

@@ -51,8 +51,7 @@ namespace StrengthJournal.Server.Services
             {
                 throw new EntityNotFoundException();
             }
-            
-            var existingSet = context.WorkoutLogEntrySets.FirstOrDefault(set => set.Id == workout.Id && set.WorkoutLogEntry == workout);
+            var existingSet = context.WorkoutLogEntrySets.FirstOrDefault(s => s.Id == set.Id && s.WorkoutLogEntry == workout);
             if (existingSet != null)
             {
                 throw new NotImplementedException();
@@ -62,7 +61,7 @@ namespace StrengthJournal.Server.Services
                 // TODO: implement automapper to make this less painful
                 var setEntity = new WorkoutLogEntrySet()
                 {
-                    Id = workout.Id,
+                    Id = set.Id,
                     WorkoutLogEntry = workout,
                     Exercise = exercise,
                     Reps = set.Reps,

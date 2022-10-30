@@ -42,12 +42,13 @@ namespace StrengthJournal.Server.Controllers.API
         }
 
 
-        [HttpPut("sets")]
-        public async Task<ActionResult> SyncSet([FromBody] WorkoutSetSync set)
+        [HttpPut("{workoutId:Guid}/sets")]
+        public async Task<ActionResult> SyncSet([FromRoute] Guid workoutId, WorkoutSetSync set)
         {
             try
             {
                 var userId = HttpContext.GetUserId();
+                await workoutService.SyncWorkoutSet(userId, workoutId, set);
             }
             catch(EntityNotFoundException e)
             {
