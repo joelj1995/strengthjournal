@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Exercise } from 'src/app/model/exercise';
 import { WorkoutSet } from 'src/app/model/workout-set';
+import { ExerciseService } from 'src/app/services/exercise.service';
 import { WorkoutService } from 'src/app/services/workout.service';
 
 @Component({
@@ -12,9 +14,13 @@ export class EditWorkoutComponent implements OnInit {
 
   id: string = '';
   setList: WorkoutSet[] = [];
-  constructor(private route: ActivatedRoute, private workouts: WorkoutService) { }
+  exerciseList: Exercise[] = [];
+  constructor(private route: ActivatedRoute, private workouts: WorkoutService, private exercises : ExerciseService) { }
 
   ngOnInit(): void {
+    this.exercises.getExercises().subscribe(exercises => {
+      this.exerciseList = exercises;
+    });
     this.route.params.subscribe(params => {
       this.id = params['id'];
       this.setList = [];
