@@ -20,6 +20,7 @@ import { HeaderComponent } from './header/header.component';
 import { ListExercisesComponent } from './pages/exercises/list-exercises.component';
 import { NewExerciseComponent } from './pages/exercises/new-exercise.component';
 import { CardComponent } from './components/card/card.component';
+import { NewWorkoutComponent } from './pages/workouts/new-workout.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { CardComponent } from './components/card/card.component';
     HeaderComponent,
     ListExercisesComponent,
     NewExerciseComponent,
-    CardComponent
+    CardComponent,
+    NewWorkoutComponent
   ],
   imports: [
     BrowserModule,
