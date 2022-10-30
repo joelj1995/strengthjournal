@@ -8,16 +8,16 @@ namespace StrengthJournal.Server.Controllers.API
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class WorkoutController : ControllerBase
+    public class WorkoutsController : ControllerBase
     {
         private readonly WorkoutService workoutService;
 
-        public WorkoutController(WorkoutService workoutService)
+        public WorkoutsController(WorkoutService workoutService)
         {
             this.workoutService = workoutService;
         }
 
-        [HttpPut]
+        [HttpPost]
         public async Task<Guid> CreateWorkout([FromBody]WorkoutCreationDto workout)
         {
             var userId = HttpContext.GetUserId();
