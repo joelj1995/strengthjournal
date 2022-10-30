@@ -1,1 +1,33 @@
-<p>Editing {{id}}</p>
+<h1 class="h3 mb-3">Editing workout entry for </h1>
+<div class="row">
+  <div class="col-12">
+    <app-card cardTitle="My Exercise List">
+      <table *ngIf="setList; else setListLoading" class="table table-striped dataTable no-footer dtr-inline collapsed">
+        <thead>
+          <tr>
+            <th>Exercise Name</th>
+            <th>Reps</th>
+            <th>Target Reps</th>
+            <th>Weight</th>
+            <th>RPE</th>
+          </tr>
+        </thead>
+        <tbody *ngFor="let set of setList">
+          <tr>
+            <td>{{set.exerciseName}}</td>
+            <td>{{set.reps}}</td>
+            <td>{{set.weight}} {{set.weightUnit}}</td>
+            <td>{{set.rpe}}</td>
+          </tr>
+        </tbody>
+      </table>
+      <ng-template #setListLoading>
+        <div class="mb-2 text-center">
+          <div class="spinner-grow me-2" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+        </div>
+      </ng-template>
+    </app-card>
+  </div>
+</div>

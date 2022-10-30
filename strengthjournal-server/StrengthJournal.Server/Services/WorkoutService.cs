@@ -26,6 +26,18 @@ namespace StrengthJournal.Server.Services
             return workout.Id;
         }
 
+        public async Task<IEnumerable<WorkoutSetSync>> GetWorkoutSets(Guid userId, Guid workoutId)
+        {
+            var user = context.Users.Single(u => u.Id == userId);
+            var workout = context.WorkoutLogEntries.FirstOrDefault(wle => wle.Id == workoutId && wle.User == user);
+            if (workout == null)
+            {
+                throw new EntityNotFoundException();
+            }
+            // TODO: implement automapper to make this less painful
+            return workout.Sets.Select(set => new WorkoutSetSync { Id = set.Id, ExerciseId = set.Exercise.Id, ExerciseName = set.Exercise.Name, Reps = set.Reps, TargetReps = set.TargetReps, Weight = set.WeightLbs == null ? set.WeightKg : set.WeightLbs, WeightUnit = set.WeightLbs == null ? "kg" : "lbs" });
+        }
+
         public async Task SyncWorkoutSet(Guid userId, Guid workoutId, WorkoutSetSync set)
         {
             var user = context.Users.Single(u => u.Id == userId);
@@ -47,6 +59,7 @@ namespace StrengthJournal.Server.Services
             }
             else
             {
+                // TODO: implement automapper to make this less painful
                 var setEntity = new WorkoutLogEntrySet()
                 {
                     Id = workout.Id,

@@ -26,6 +26,22 @@ namespace StrengthJournal.Server.Controllers.API
             return workoutId;
         }
 
+        [HttpGet("{workoutId:Guid}/sets")]
+        public async Task<ActionResult> GetSets([FromRoute]Guid workoutId)
+        {
+            try
+            {
+                var userId = HttpContext.GetUserId();
+                var sets = await workoutService.GetWorkoutSets(userId, workoutId);
+                return Ok(sets);
+            }
+            catch (EntityNotFoundException e)
+            {
+                return NotFound();
+            }
+        }
+
+
         [HttpPut("sets")]
         public async Task<ActionResult> SyncSet([FromBody] WorkoutSetSync set)
         {

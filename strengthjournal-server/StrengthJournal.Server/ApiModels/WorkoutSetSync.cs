@@ -6,7 +6,8 @@ namespace StrengthJournal.Server.ApiModels
     {
         public Guid Id { get; set; }
         public Guid ExerciseId { get; set; }
-        public uint Reps { get; set; }
+        public string ExerciseName { get; set; } = String.Empty;
+        public uint? Reps { get; set; }
         public uint? TargetReps { get; set; }
         [Range(0, 2000)]
         public decimal? Weight { get; set; }
