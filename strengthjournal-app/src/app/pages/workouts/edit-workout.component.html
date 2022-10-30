@@ -12,8 +12,8 @@
             <th>RPE</th>
           </tr>
         </thead>
-        <tbody *ngFor="let set of setList">
-          <tr>
+        <tbody>
+          <tr *ngFor="let set of setList">
             <td>{{set.exerciseName}}</td>
             <td>{{set.reps}}</td>
             <td>{{set.weight}} {{set.weightUnit}}</td>

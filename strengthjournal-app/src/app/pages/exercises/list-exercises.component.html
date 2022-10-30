@@ -10,8 +10,8 @@
             <th>Personal Best</th>
           </tr>
         </thead>
-        <tbody *ngFor="let systemExercise of systemExerciseList">
-          <tr>
+        <tbody>
+          <tr *ngFor="let systemExercise of systemExerciseList">
             <td>{{systemExercise.name}}</td>
             <td>0</td>
           </tr>
