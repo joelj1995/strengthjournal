@@ -15,4 +15,8 @@ export class ExerciseService extends StrengthjournalBaseService {
     return this.http.get<Exercise[]>(`${this.BASE_URL}/exercises`);
   }
 
+  createExercise(name: string): Observable<void> {
+    return this.http.post<void>(`${this.BASE_URL}/exercises`, {name});
+  }
+
 }

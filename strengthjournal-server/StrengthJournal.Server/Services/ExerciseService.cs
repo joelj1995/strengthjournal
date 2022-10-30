@@ -19,10 +19,11 @@ namespace StrengthJournal.Server.Services
             return exercises.Select(e => new ExerciseDto() { Id = e.Id, Name = e.Name });
         }
 
-        public async Task CreateExercise(ExerciseDto exercise, Guid userId)
+        public async Task CreateExercise(string name, Guid userId)
         {
             var createdByUser = context.Users.Single(u => u.Id == userId);
-            await context.Exercises.AddAsync(new DataAccess.Model.Exercise() { Id = exercise.Id, Name = exercise.Name, CreatedByUser = createdByUser });
+            await context.Exercises.AddAsync(new DataAccess.Model.Exercise() { Name = name, CreatedByUser = createdByUser });
+            await context.SaveChangesAsync();
         }
     }
 }

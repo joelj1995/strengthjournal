@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
+import { ExerciseService } from 'src/app/services/exercise.service';
 
 @Component({
   selector: 'app-new-exercise',
@@ -7,9 +9,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NewExerciseComponent implements OnInit {
 
-  constructor() { }
+  enableSubmit: boolean = true;
+
+  form = new FormGroup({
+    name: new FormControl('')
+  });
+
+  constructor(private exercises : ExerciseService) { }
 
   ngOnInit(): void {
+  }
+
+  onSubmit() {
+    this.enableSubmit = false;
+    console.log(this.form.value.name);
+    this.exercises.createExercise(this.form.value.name).subscribe(e => {
+      this.enableSubmit = true;
+    })
   }
 
 }

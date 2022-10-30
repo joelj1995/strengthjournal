@@ -27,10 +27,10 @@ namespace StrengthJournal.Server.Controllers.API
         }
 
         [HttpPost("")]
-        public async Task<ActionResult> CreateExercise([FromBody] ExerciseDto exercise)
+        public async Task<ActionResult> CreateExercise([FromBody]ExerciseCreationDto exercise)
         {
             var userId = HttpContext.GetUserId();
-            await exerciseService.CreateExercise(exercise, userId);
+            await exerciseService.CreateExercise(exercise.Name, userId);
             return Ok();
         }
     }

@@ -12,6 +12,7 @@ import { AuthModule } from '@auth0/auth0-angular';
 import { environment } from 'src/environments/environment';
 
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { ReactiveFormsModule } from '@angular/forms';
 import { AuthHttpInterceptor } from '@auth0/auth0-angular';
 import { NavComponent } from './nav/nav.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
@@ -33,6 +34,7 @@ import { NewExerciseComponent } from './pages/exercises/new-exercise.component';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    ReactiveFormsModule,
     AuthModule.forRoot({
       domain: 'dev-bs65rtlog25jigd0.us.auth0.com',
       clientId: 'LdMw0S4EL13LvL4SZJOPRCSZo5cZJ3zD',
