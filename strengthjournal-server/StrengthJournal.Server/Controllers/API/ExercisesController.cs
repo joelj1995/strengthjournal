@@ -22,7 +22,8 @@ namespace StrengthJournal.Server.Controllers.API
         [HttpGet("")]
         public async Task<ActionResult<ExerciseDto>> GetExercises()
         {
-            var exercise = await exerciseService.GetExercises();
+            var userId = HttpContext.GetUserId();
+            var exercise = await exerciseService.GetExercises(userId);
             return Ok(exercise);
         }
 

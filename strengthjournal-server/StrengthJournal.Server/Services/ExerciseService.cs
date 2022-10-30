@@ -13,10 +13,11 @@ namespace StrengthJournal.Server.Services
             this.context = context;
         }
 
-        public async Task<IEnumerable<ExerciseDto>> GetExercises()
+        public async Task<IEnumerable<ExerciseDto>> GetExercises(Guid userId)
         {
-            var exercises = await context.Exercises.Where(e => e.CreatedByUser == null).ToListAsync();
-            return exercises.Select(e => new ExerciseDto() { Id = e.Id, Name = e.Name });
+            var user = context.Users.Single(u => u.Id == userId);
+            var exercises = await context.Exercises.Where(e => e.CreatedByUser == null || e.CreatedByUser == user).ToListAsync();
+            return exercises.Select(e => new ExerciseDto() { Id = e.Id, Name = e.Name, SystemDefined = e.CreatedByUser == null });
         }
 
         public async Task CreateExercise(string name, Guid userId)
