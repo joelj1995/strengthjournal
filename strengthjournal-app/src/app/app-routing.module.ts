@@ -6,12 +6,14 @@ import { DevLoginComponent } from './pages/dev-login/dev-login.component';
 import { ListExercisesComponent } from './pages/exercises/list-exercises.component';
 import { NewWorkoutComponent } from './pages/workouts/new-workout.component';
 import { EditWorkoutComponent } from './pages/workouts/edit-workout.component';
+import { ListWorkoutsComponent } from './pages/workouts/list-workouts.component';
 
 const routes: Routes = [
   { path: '', component: DashboardComponent },
   { path: 'login', component: DevLoginComponent },
   { path: 'exercises', component: ListExercisesComponent },
   { path: 'exercises/new', component: NewExerciseComponent },
+  { path: 'workouts', component: ListWorkoutsComponent },
   { path: 'workouts/new', component: NewWorkoutComponent },
   { path: 'workouts/edit/:id', component: EditWorkoutComponent }
 ];
