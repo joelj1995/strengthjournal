@@ -30,7 +30,7 @@ namespace StrengthJournal.Server.Controllers.API
         }
 
         [HttpPost]
-        public async Task<Guid> CreateWorkout([FromBody]WorkoutCreationDto workout)
+        public async Task<Guid> CreateWorkout(WorkoutCreationDto workout)
         {
             var userId = HttpContext.GetUserId();
             var workoutId = await workoutService.CreateWorkout(userId, workout);

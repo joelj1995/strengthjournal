@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Workout } from '../model/workout';
+import { WorkoutCreate } from '../model/workout-create';
 import { WorkoutSet } from '../model/workout-set';
 import { StrengthjournalBaseService } from './strengthjournalbase.service';
 
@@ -16,8 +17,8 @@ export class WorkoutService extends StrengthjournalBaseService {
     return this.http.get<Workout[]>(`${this.BASE_URL}/workouts`);
   }
 
-  createWorkoutNow(): Observable<string> {
-    return this.http.post<string>(`${this.BASE_URL}/workouts`, { startDate: new Date().toISOString() });
+  createWorkout(workout: WorkoutCreate): Observable<string> {
+    return this.http.post<string>(`${this.BASE_URL}/workouts`, workout);
   }
 
   getWorkoutSets(workoutId: string): Observable<WorkoutSet[]> {
