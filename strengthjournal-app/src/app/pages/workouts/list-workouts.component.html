@@ -3,7 +3,28 @@
 
   <div class="col-12">
     <app-card cardTitle="My Workout List">
-
+      <table *ngIf="workoutList; else workoutListLoading" class="table table-striped dataTable no-footer dtr-inline collapsed">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Title</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let workout of workoutList">
+            <td>{{workout.entryDateUTC | date:'short'}}</td>
+            <td>{{workout.title}}</td>
+          </tr>
+        </tbody>
+      </table>
+      <ng-template #workoutListLoading>
+        <div class="mb-2 text-center">
+          <div class="spinner-grow me-2" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+        </div>
+      </ng-template>
+      <button class="btn btn-secondary buttons-copy buttons-html5" routerLink="new">Log New Workout</button>
     </app-card>
   </div>
 
