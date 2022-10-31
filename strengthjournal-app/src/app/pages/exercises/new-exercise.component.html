@@ -7,7 +7,11 @@
         <label>Name</label>
         <input type="text" class="form-control" id="name" formControlName="name">
       </div>
-      <button type="submit" class="btn btn-primary" [class.disabled]="!this.enableSubmit">Create</button>
+      <div class="btn-group">
+        <button type="submit" class="btn btn-primary" [class.disabled]="!this.enableSubmit">Create</button>
+        <button class="btn btn-warning" [class.disabled]="!this.enableSubmit" routerLink="/exercises">Cancel</button>
+      </div>
+      
     </form>
   </app-card>
 
