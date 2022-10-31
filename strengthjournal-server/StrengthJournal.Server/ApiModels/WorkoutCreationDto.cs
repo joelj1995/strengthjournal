@@ -2,6 +2,7 @@
 {
     public class WorkoutCreationDto
     {
-        public DateTime StartDate { get; set; }
+        public string Title { get; set; }
+        public DateTime EntryDateUTC { get; set; }
     }
 }

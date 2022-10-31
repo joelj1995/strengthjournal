@@ -24,17 +24,18 @@ namespace StrengthJournal.Server.Services
             }).ToListAsync();
         }
 
-        public async Task<Guid> StartWorkout(Guid userId, DateTime started)
+        public async Task<Guid> CreateWorkout(Guid userId, WorkoutCreationDto workout)
         {
             var user = context.Users.Single(u => u.Id == userId);
-            var workout = new WorkoutLogEntry()
+            var newWorkout = new WorkoutLogEntry()
             {
-                EntryDateUTC = started,
+                EntryDateUTC = workout.EntryDateUTC,
+                Title = workout.Title,
                 User = user
             };
-            await context.WorkoutLogEntries.AddAsync(workout);
+            await context.WorkoutLogEntries.AddAsync(newWorkout);
             await context.SaveChangesAsync();
-            return workout.Id;
+            return newWorkout.Id;
         }
 
         public async Task<IEnumerable<WorkoutSetSync>> GetWorkoutSets(Guid userId, Guid workoutId)

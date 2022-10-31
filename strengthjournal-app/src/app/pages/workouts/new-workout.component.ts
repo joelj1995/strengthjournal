@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { WorkoutService } from 'src/app/services/workout.service';
 
@@ -9,16 +10,23 @@ import { WorkoutService } from 'src/app/services/workout.service';
 })
 export class NewWorkoutComponent implements OnInit {
 
-  failed: boolean = false;
-  newWorkoutGuid: string | null = null;
+  enableSubmit: boolean = true;
+  form = new FormGroup({
+    title: new FormControl(''),
+    date: new FormControl(new Date())
+  });
 
   constructor(private workouts: WorkoutService, private router: Router) { }
 
   ngOnInit(): void {
-    this.workouts.createWorkoutNow().subscribe(workoutId => {
-      this.newWorkoutGuid = workoutId;
-      this.router.navigate(['workouts', 'edit', workoutId]);
-    })
+    // this.workouts.createWorkoutNow().subscribe(workoutId => {
+    //   this.newWorkoutGuid = workoutId;
+    //   this.router.navigate(['workouts', 'edit', workoutId]);
+    // })
+  }
+
+  onSubmit() {
+
   }
 
 }

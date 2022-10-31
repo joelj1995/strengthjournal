@@ -33,7 +33,7 @@ namespace StrengthJournal.Server.Controllers.API
         public async Task<Guid> CreateWorkout([FromBody]WorkoutCreationDto workout)
         {
             var userId = HttpContext.GetUserId();
-            var workoutId = await workoutService.StartWorkout(userId, workout.StartDate);
+            var workoutId = await workoutService.CreateWorkout(userId, workout);
             return workoutId;
         }
 
