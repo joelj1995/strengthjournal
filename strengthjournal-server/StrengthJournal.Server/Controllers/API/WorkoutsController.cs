@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using StrengthJournal.Server.ApiModels;
 using StrengthJournal.Server.Extensions;
@@ -8,6 +9,7 @@ using StrengthJournal.Server.Services;
 namespace StrengthJournal.Server.Controllers.API
 {
     [Route("api/[controller]")]
+    [Authorize]
     [ApiController]
     public class WorkoutsController : ControllerBase
     {
@@ -16,6 +18,15 @@ namespace StrengthJournal.Server.Controllers.API
         public WorkoutsController(WorkoutService workoutService)
         {
             this.workoutService = workoutService;
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<WorkoutListDto>>> GetWorkouts()
+        {
+            // TODO: paginate this endpoint
+            var userId = HttpContext.GetUserId();
+            var workouts = await workoutService.GetWorkouts(userId);
+            return Ok(workouts);
         }
 
         [HttpPost]

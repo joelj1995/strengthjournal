@@ -14,6 +14,16 @@ namespace StrengthJournal.Server.Services
             this.context = context;
         }
 
+        public async Task<IEnumerable<WorkoutListDto>> GetWorkouts(Guid userId)
+        {
+            return await context.WorkoutLogEntries.Where(wle => wle.User.Id.Equals(userId)).OrderBy(wle => wle.EntryDateUTC).Select(wle => new WorkoutListDto()
+            {
+                Id = wle.Id,
+                Title = wle.Title,
+                EntryDateUTC = wle.EntryDateUTC
+            }).ToListAsync();
+        }
+
         public async Task<Guid> StartWorkout(Guid userId, DateTime started)
         {
             var user = context.Users.Single(u => u.Id == userId);
@@ -30,7 +40,7 @@ namespace StrengthJournal.Server.Services
         public async Task<IEnumerable<WorkoutSetSync>> GetWorkoutSets(Guid userId, Guid workoutId)
         {
             var user = context.Users.Single(u => u.Id == userId);
-            var workout = context.WorkoutLogEntries.Include(wle => wle.Sets).Include("Sets.Exercise").FirstOrDefault(wle => wle.Id == workoutId && wle.User == user);
+            var workout = await context.WorkoutLogEntries.Include(wle => wle.Sets).Include("Sets.Exercise").FirstOrDefaultAsync(wle => wle.Id == workoutId && wle.User == user);
             if (workout == null)
             {
                 throw new EntityNotFoundException();
