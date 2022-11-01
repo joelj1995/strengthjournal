@@ -32,8 +32,11 @@
             <td><input type="number" class="form-control" id="rpe" formControlName="rpe"></td>
           </tr>
         </tbody>
-        <button class="btn btn-primary" (click)="logNewSet()" [class.disabled]="this.addingSet">Add Set</button>
       </table>
+      <div class="btn-group">
+        <button class="btn btn-primary" (click)="logNewSet()" [class.disabled]="this.addingSet">Add Set</button>
+        <button class="btn btn-secondary" [class.disabled]="this.addingSet" routerLink="/workouts">Done</button>
+      </div>
       <ng-template #setListLoading>
         <div class="mb-2 text-center">
           <div class="spinner-grow me-2" role="status">
