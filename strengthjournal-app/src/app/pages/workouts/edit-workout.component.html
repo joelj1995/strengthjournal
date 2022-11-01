@@ -2,48 +2,52 @@
 <div class="row">
   <div class="col-12">
     <app-card cardTitle="My Exercise List">
-      <table *ngIf="setList; else setListLoading" class="table table-striped dataTable no-footer dtr-inline collapsed">
-        <thead>
-          <tr>
-            <th>Exercise Name</th>
-            <th>Reps</th>
-            <th>Target Reps</th>
-            <th>Weight</th>
-            <th>RPE</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let set of setList">
-            <td>{{set.exerciseName}}</td>
-            <td>{{set.reps}}</td>
-            <td>{{set.targetReps}}</td>
-            <td>{{set.weight}} {{set.weightUnit}}</td>
-            <td>{{set.rpe}}</td>
-          </tr>
-          <tr [formGroup]="newSetForm">
-            <td>
-              <select class="form-control" formControlName="exerciseId">
-                <option *ngFor="let exercise of exerciseList" [value]="exercise.id">{{exercise.name}}</option>
-              </select>
-            </td>
-            <td><input type="number" class="form-control" id="reps" formControlName="reps"></td>
-            <td><input type="number" class="form-control" id="targetReps" formControlName="targetReps"></td>
-            <td><input type="number" class="form-control" id="weight" formControlName="weight"></td>
-            <td><input type="number" class="form-control" id="rpe" formControlName="rpe"></td>
-          </tr>
-        </tbody>
-      </table>
-      <div class="btn-group">
-        <button class="btn btn-primary" (click)="logNewSet()" [class.disabled]="this.addingSet">Add Set</button>
-        <button class="btn btn-secondary" [class.disabled]="this.addingSet" routerLink="/workouts">Done</button>
+      <div *ngIf="!loadingSets && !loadingExercises; else loading" >
+        <table  class="table table-striped dataTable no-footer dtr-inline collapsed">
+          <thead>
+            <tr>
+              <th>Exercise Name</th>
+              <th>Reps</th>
+              <th>Target Reps</th>
+              <th>Weight</th>
+              <th>RPE</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let set of setList">
+              <td>{{set.exerciseName}}</td>
+              <td>{{set.reps}}</td>
+              <td>{{set.targetReps}}</td>
+              <td>{{set.weight}} {{set.weightUnit}}</td>
+              <td>{{set.rpe}}</td>
+            </tr>
+            <tr [formGroup]="newSetForm">
+              <td>
+                <select class="form-control" formControlName="exerciseId">
+                  <option *ngFor="let exercise of exerciseList" [value]="exercise.id">{{exercise.name}}</option>
+                </select>
+              </td>
+              <td><input type="number" class="form-control" id="reps" formControlName="reps"></td>
+              <td><input type="number" class="form-control" id="targetReps" formControlName="targetReps"></td>
+              <td><input type="number" class="form-control" id="weight" formControlName="weight"></td>
+              <td><input type="number" class="form-control" id="rpe" formControlName="rpe"></td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="btn-group">
+          <button class="btn btn-primary" (click)="logNewSet()" [class.disabled]="this.addingSet">Add Set</button>
+          <button class="btn btn-secondary" [class.disabled]="this.addingSet" routerLink="/workouts">Done</button>
+        </div>
       </div>
-      <ng-template #setListLoading>
+      <ng-template #loading>
         <div class="mb-2 text-center">
           <div class="spinner-grow me-2" role="status">
             <span class="sr-only">Loading...</span>
           </div>
         </div>
       </ng-template>
+      
+      
     </app-card>
   </div>
 </div>

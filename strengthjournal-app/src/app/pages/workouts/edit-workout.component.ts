@@ -14,6 +14,9 @@ import { v4 as uuidv4 } from 'uuid';
 })
 export class EditWorkoutComponent implements OnInit {
 
+  loadingSets: boolean = true;
+  loadingExercises: boolean = true;
+
   addingSet: boolean = false;
 
   id: string = '';
@@ -32,12 +35,14 @@ export class EditWorkoutComponent implements OnInit {
   ngOnInit(): void {
     this.exercises.getExercises().subscribe(exercises => {
       this.exerciseList = exercises;
+      this.loadingExercises = false;
     });
     this.route.params.subscribe(params => {
       this.id = params['id'];
       this.setList = [];
       this.workouts.getWorkoutSets(this.id).subscribe(sets => {
         this.setList = sets;
+        this.loadingSets = false;
       })
     });
   }
