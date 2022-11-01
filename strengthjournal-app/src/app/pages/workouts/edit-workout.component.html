@@ -7,18 +7,18 @@
           <thead>
             <tr>
               <th>Exercise Name</th>
+              <th>Weight</th>
               <th>Reps</th>
               <th>Target Reps</th>
-              <th>Weight</th>
               <th>RPE</th>
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let set of setList">
               <td>{{set.exerciseName}}</td>
+              <td>{{set.weight}} {{set.weightUnit}}</td>
               <td>{{set.reps}}</td>
               <td>{{set.targetReps}}</td>
-              <td>{{set.weight}} {{set.weightUnit}}</td>
               <td>{{set.rpe}}</td>
             </tr>
             <tr [formGroup]="newSetForm">
@@ -27,9 +27,9 @@
                   <option *ngFor="let exercise of exerciseList" [value]="exercise.id">{{exercise.name}}</option>
                 </select>
               </td>
+              <td><input type="number" class="form-control" id="weight" formControlName="weight"></td>
               <td><input type="number" class="form-control" id="reps" formControlName="reps"></td>
               <td><input type="number" class="form-control" id="targetReps" formControlName="targetReps"></td>
-              <td><input type="number" class="form-control" id="weight" formControlName="weight"></td>
               <td><input type="number" class="form-control" id="rpe" formControlName="rpe"></td>
             </tr>
           </tbody>
