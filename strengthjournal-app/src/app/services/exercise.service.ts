@@ -19,4 +19,8 @@ export class ExerciseService extends StrengthjournalBaseService {
     return this.http.post<void>(`${this.BASE_URL}/exercises`, {name});
   }
 
+  deleteExercise(exerciseId: string) {
+    return this.http.delete<void>(`${this.BASE_URL}/exercises/${exerciseId}`);
+  }
+
 }

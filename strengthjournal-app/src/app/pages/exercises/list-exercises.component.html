@@ -8,12 +8,16 @@
           <tr>
             <th>Name</th>
             <th>Personal Best</th>
+            <th style="width: 10%">Actions</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let systemExercise of systemExerciseList">
             <td>{{systemExercise.name}}</td>
             <td>0</td>
+            <td class="table-action">
+              <app-table-actions (deleteClicked)="this.deleteExercise(systemExercise.id)"></app-table-actions>
+            </td>
           </tr>
         </tbody>
       </table>

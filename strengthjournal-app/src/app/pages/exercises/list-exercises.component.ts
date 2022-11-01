@@ -19,4 +19,10 @@ export class ListExercisesComponent implements OnInit {
     })
   }
 
+  deleteExercise(exerciseId: string) {
+    this.exercises.deleteExercise(exerciseId).subscribe(() => {
+      this.systemExerciseList = this.systemExerciseList?.filter(e => e.id !== exerciseId) ?? null;
+    })
+  }
+
 }

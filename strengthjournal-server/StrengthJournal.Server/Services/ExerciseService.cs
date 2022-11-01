@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using StrengthJournal.DataAccess.Contexts;
 using StrengthJournal.Server.ApiModels;
+using StrengthJournal.Server.ServiceExceptions;
 
 namespace StrengthJournal.Server.Services
 {
@@ -24,6 +25,17 @@ namespace StrengthJournal.Server.Services
         {
             var createdByUser = context.Users.Single(u => u.Id == userId);
             await context.Exercises.AddAsync(new DataAccess.Model.Exercise() { Name = name, CreatedByUser = createdByUser });
+            await context.SaveChangesAsync();
+        }
+
+        public async Task DeleteExercise(Guid userId, Guid exerciseId)
+        {
+            var exercise = context.Exercises.FirstOrDefault(exercise => exercise.Id.Equals(exerciseId) && exercise.CreatedByUser.Id.Equals(userId));
+            if (exercise == null)
+            {
+                throw new EntityNotFoundException();
+            }
+            context.Exercises.Remove(exercise);
             await context.SaveChangesAsync();
         }
     }

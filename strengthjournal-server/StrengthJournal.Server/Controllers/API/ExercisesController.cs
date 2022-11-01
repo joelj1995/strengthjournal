@@ -34,5 +34,13 @@ namespace StrengthJournal.Server.Controllers.API
             await exerciseService.CreateExercise(exercise.Name, userId);
             return Ok();
         }
+
+        [HttpDelete("{exerciseId:Guid}")]
+        public async Task<ActionResult> DeleteExercise([FromRoute]Guid exerciseId)
+        {
+            var userId = HttpContext.GetUserId();
+            await exerciseService.DeleteExercise(userId, exerciseId);
+            return Ok();
+        }
     }
 }
