@@ -10,19 +10,19 @@ import { ExerciseService } from 'src/app/services/exercise.service';
 })
 export class ListExercisesComponent implements OnInit {
 
-  systemExerciseList: Exercise[] | null = null;
+  exerciseList: Exercise[] | null = null;
 
   constructor(private exercises : ExerciseService, private router: Router) { }
 
   ngOnInit(): void {
     this.exercises.getExercises().subscribe(exercises => {
-      this.systemExerciseList = exercises;
+      this.exerciseList = exercises;
     })
   }
 
   deleteExercise(exerciseId: string) {
     this.exercises.deleteExercise(exerciseId).subscribe(() => {
-      this.systemExerciseList = this.systemExerciseList?.filter(e => e.id !== exerciseId) ?? null;
+      this.exerciseList = this.exerciseList?.filter(e => e.id !== exerciseId) ?? null;
     })
   }
 
