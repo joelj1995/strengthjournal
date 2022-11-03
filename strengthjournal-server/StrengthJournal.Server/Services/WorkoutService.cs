@@ -47,7 +47,7 @@ namespace StrengthJournal.Server.Services
                 throw new EntityNotFoundException();
             }
             // TODO: implement automapper to make this less painful
-            return workout.Sets.Select(set => new WorkoutSetSync { Id = set.Id, ExerciseId = set.Exercise.Id, ExerciseName = set.Exercise.Name, Reps = set.Reps, TargetReps = set.TargetReps, Weight = set.WeightLbs == null ? set.WeightKg : set.WeightLbs, WeightUnit = set.WeightLbs == null ? "kg" : "lbs", RPE = set.RPE });
+            return workout.Sets.OrderBy(s => s.Sequence).Select(set => new WorkoutSetSync { Id = set.Id, ExerciseId = set.Exercise.Id, ExerciseName = set.Exercise.Name, Reps = set.Reps, TargetReps = set.TargetReps, Weight = set.WeightLbs == null ? set.WeightKg : set.WeightLbs, WeightUnit = set.WeightLbs == null ? "kg" : "lbs", RPE = set.RPE });
         }
 
         public async Task SyncWorkoutSet(Guid userId, Guid workoutId, WorkoutSetSync set)
@@ -71,6 +71,7 @@ namespace StrengthJournal.Server.Services
             else
             {
                 // TODO: implement automapper to make this less painful
+                var maxSeq = context.WorkoutLogEntrySets.Where(s => s.WorkoutLogEntry.Id == workoutId).Max(s => s.Sequence);
                 var setEntity = new WorkoutLogEntrySet()
                 {
                     Id = set.Id,
@@ -78,7 +79,8 @@ namespace StrengthJournal.Server.Services
                     Exercise = exercise,
                     Reps = set.Reps,
                     TargetReps = set.TargetReps,
-                    RPE = set.RPE
+                    RPE = set.RPE,
+                    Sequence = maxSeq + 1
                 };
                 if (set.WeightUnit.Equals("kg"))
                 {
