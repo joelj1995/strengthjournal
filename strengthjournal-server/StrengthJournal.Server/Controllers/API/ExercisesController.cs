@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using StrengthJournal.Server.ApiModels;
 using StrengthJournal.Server.Extensions;
+using StrengthJournal.Server.ServiceExceptions;
 using StrengthJournal.Server.Services;
 
 namespace StrengthJournal.Server.Controllers.API
@@ -32,6 +33,21 @@ namespace StrengthJournal.Server.Controllers.API
         {
             var userId = HttpContext.GetUserId();
             await exerciseService.CreateExercise(exercise.Name, userId);
+            return Ok();
+        }
+
+        [HttpPut("{exerciseId:Guid}")]
+        public async Task<ActionResult> UpdateExercise([FromRoute]Guid exerciseId, ExerciseUpdateDto exercise)
+        {
+            var userId = HttpContext.GetUserId();
+            try
+            {
+                await exerciseService.UpdateExercise(userId, exerciseId, exercise.Name);
+            }
+            catch(EntityNotFoundException)
+            {
+                return NotFound();
+            }
             return Ok();
         }
 

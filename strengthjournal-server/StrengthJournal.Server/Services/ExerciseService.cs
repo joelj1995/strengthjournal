@@ -28,6 +28,18 @@ namespace StrengthJournal.Server.Services
             await context.SaveChangesAsync();
         }
 
+        public async Task UpdateExercise(Guid userId, Guid exerciseId, string name)
+        {
+            var exercise = context.Exercises.FirstOrDefault(exercise => exercise.Id.Equals(exerciseId) && exercise.CreatedByUser.Id.Equals(userId));
+            if (exercise == null)
+            {
+                throw new EntityNotFoundException();
+            }
+            exercise.Name = name;
+            context.Exercises.Update(exercise);
+            await context.SaveChangesAsync();
+        }
+
         public async Task DeleteExercise(Guid userId, Guid exerciseId)
         {
             var exercise = context.Exercises.FirstOrDefault(exercise => exercise.Id.Equals(exerciseId) && exercise.CreatedByUser.Id.Equals(userId));

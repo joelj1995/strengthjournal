@@ -23,7 +23,6 @@ export class NewExerciseComponent implements OnInit {
 
   onSubmit() {
     this.enableSubmit = false;
-    console.log(this.form.value.name);
     this.exercises.createExercise(this.form.value.name).subscribe(e => {
       this.router.navigate(['exercises']);
     });
