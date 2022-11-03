@@ -10,6 +10,7 @@ namespace StrengthJournal.DataAccess.Model
     {
         public Guid Id { get; set; }
         public WorkoutLogEntry WorkoutLogEntry { get; set; }
+        public int Sequence { get; set; }
         public Exercise Exercise { get; set; }
         public uint? Reps { get; set; }
         public uint? TargetReps { get; set; }
