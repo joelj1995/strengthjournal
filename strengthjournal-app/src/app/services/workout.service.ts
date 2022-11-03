@@ -29,4 +29,7 @@ export class WorkoutService extends StrengthjournalBaseService {
     return this.http.put<void>(`${this.BASE_URL}/workouts/${workoutId}/sets`, set);
   }
 
+  deleteWorkout(workoutId: string) {
+    return this.http.delete(`${this.BASE_URL}/workouts/${workoutId}`);
+  }
 }

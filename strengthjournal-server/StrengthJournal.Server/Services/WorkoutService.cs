@@ -92,5 +92,17 @@ namespace StrengthJournal.Server.Services
             }
             await context.SaveChangesAsync();
         }
+
+        public async Task DeleteWorkout(Guid userId, Guid workoutId)
+        {
+            var user = context.Users.Single(u => u.Id == userId);
+            var workout = context.WorkoutLogEntries.FirstOrDefault(wle => wle.Id == workoutId && wle.User == user);
+            if (workout == null)
+            {
+                throw new EntityNotFoundException();
+            }
+            context.Remove(workout);
+            await context.SaveChangesAsync();
+        }
     }
 }
