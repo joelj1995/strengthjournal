@@ -16,7 +16,7 @@
             <td>{{systemExercise.name}}</td>
             <td>0</td>
             <td class="table-action">
-              <app-table-actions (deleteClicked)="this.deleteExercise(systemExercise.id)"></app-table-actions>
+              <app-table-actions (deleteClicked)="this.deleteExercise(systemExercise.id)" (editClicked)="this.editExercise(systemExercise.id)"></app-table-actions>
             </td>
           </tr>
         </tbody>

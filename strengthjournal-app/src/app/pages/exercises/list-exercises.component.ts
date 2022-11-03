@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Exercise } from 'src/app/model/exercise';
 import { ExerciseService } from 'src/app/services/exercise.service';
 
@@ -11,7 +12,7 @@ export class ListExercisesComponent implements OnInit {
 
   systemExerciseList: Exercise[] | null = null;
 
-  constructor(private exercises : ExerciseService) { }
+  constructor(private exercises : ExerciseService, private router: Router) { }
 
   ngOnInit(): void {
     this.exercises.getExercises().subscribe(exercises => {
@@ -25,4 +26,7 @@ export class ListExercisesComponent implements OnInit {
     })
   }
 
+  editExercise(exerciseId: string) {
+    this.router.navigate(['exercises', 'edit', exerciseId]);
+  }
 }

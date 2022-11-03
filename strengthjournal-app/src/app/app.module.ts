@@ -24,6 +24,7 @@ import { NewWorkoutComponent } from './pages/workouts/new-workout.component';
 import { EditWorkoutComponent } from './pages/workouts/edit-workout.component';
 import { ListWorkoutsComponent } from './pages/workouts/list-workouts.component';
 import { TableActionsComponent } from './components/table-actions/table-actions.component';
+import { EditExerciseComponent } from './pages/exercises/edit-exercise.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { TableActionsComponent } from './components/table-actions/table-actions.
     NewWorkoutComponent,
     EditWorkoutComponent,
     ListWorkoutsComponent,
-    TableActionsComponent
+    TableActionsComponent,
+    EditExerciseComponent
   ],
   imports: [
     BrowserModule,
