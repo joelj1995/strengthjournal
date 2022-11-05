@@ -31,7 +31,7 @@
           <tbody>
             <tr *ngFor="let set of setList">
               <td>{{set.exerciseName}}</td>
-              <td>{{set.weight}} {{set.weightUnit}}</td>
+              <td>{{set.weight}} {{set.weight ? set.weightUnit : ''}}</td>
               <td>{{set.reps}}</td>
               <td>{{set.targetReps}}</td>
               <td>{{set.rpe | rpe}}</td>
