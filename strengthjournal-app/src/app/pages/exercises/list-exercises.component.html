@@ -3,6 +3,9 @@
 
   <div class="col-12">
     <app-card cardTitle="My Exercise List">
+      <p>
+        * indicates a system exercise that cannot be deleted or modified.
+      </p>
       <table *ngIf="exerciseList; else exerciseListLoading" class="table table-striped dataTable no-footer dtr-inline collapsed">
         <thead>
           <tr>
@@ -13,7 +16,7 @@
         </thead>
         <tbody>
           <tr *ngFor="let exercise of exerciseList">
-            <td>{{exercise.name}}</td>
+            <td>{{exercise.name}} <span *ngIf="exercise.systemDefined">*</span></td>
             <td>0</td>
             <td class="table-action">
               <app-table-actions *ngIf="!exercise.systemDefined" (deleteClicked)="this.deleteExercise(exercise.id)" (editClicked)="this.editExercise(exercise.id)"></app-table-actions>
