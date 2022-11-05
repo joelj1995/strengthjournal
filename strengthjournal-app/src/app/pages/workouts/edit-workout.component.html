@@ -2,6 +2,21 @@
 <div class="row">
   <div class="col-12">
     <app-card cardTitle="My Exercise List">
+      <div [formGroup]="sharedSetForm">
+        <label class="form-check form-check-inline">Weight unit:</label>
+        <label class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="weightUnit" value="lbs" formControlName="weightUnit">
+          <span class="form-check-label">
+            lbs
+          </span>
+        </label>
+        <label class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="weightUnit" value="kg" formControlName="weightUnit">
+          <span class="form-check-label">
+            kg
+          </span>
+        </label>
+      </div>
       <div *ngIf="!loadingSets && !loadingExercises; else loading" >
         <table  class="table table-striped dataTable no-footer dtr-inline collapsed">
           <thead>

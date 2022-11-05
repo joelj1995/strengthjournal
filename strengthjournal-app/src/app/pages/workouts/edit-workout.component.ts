@@ -25,6 +25,10 @@ export class EditWorkoutComponent implements OnInit {
   exerciseList: Exercise[] = [];
   constructor(private route: ActivatedRoute, private workouts: WorkoutService, private exercises : ExerciseService) { }
 
+  sharedSetForm = new FormGroup({
+    weightUnit: new FormControl('lbs')
+  });
+
   newSetForm = new FormGroup({
     exerciseId: new FormControl(''),
     reps: new FormControl(),
@@ -49,7 +53,6 @@ export class EditWorkoutComponent implements OnInit {
   }
 
   logNewSet() {
-    
     const setData = this.newSetForm.value;
     if (!setData.exerciseId) {
       alert('Exercise name is required');
@@ -63,7 +66,7 @@ export class EditWorkoutComponent implements OnInit {
       reps: setData.reps,
       targetReps: setData.targetReps,
       weight: setData.weight,
-      weightUnit: 'lbs',
+      weightUnit: this.sharedSetForm.value.weightUnit,
       rpe: setData.rpe * 2
     };
     this.addingSet = true;
