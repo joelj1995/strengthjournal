@@ -71,7 +71,8 @@ namespace StrengthJournal.Server.Services
             else
             {
                 // TODO: implement automapper to make this less painful
-                var maxSeq = context.WorkoutLogEntrySets.Where(s => s.WorkoutLogEntry.Id == workoutId).Max(s => s.Sequence);
+                var lastSet = context.WorkoutLogEntrySets.Where(s => s.WorkoutLogEntry.Id == workoutId);
+                var maxSeq = lastSet.Count() > 0 ? lastSet.Max(s => s.Sequence) : 0;
                 var setEntity = new WorkoutLogEntrySet()
                 {
                     Id = set.Id,
