@@ -19,6 +19,7 @@ export class EditWorkoutComponent implements OnInit {
   loadingExercises: boolean = true;
 
   addingSet: boolean = false;
+  setBeingUpdated: string | null = null;
 
   id: string = '';
   setList: WorkoutSet[] = [];
@@ -27,6 +28,14 @@ export class EditWorkoutComponent implements OnInit {
 
   sharedSetForm = new FormGroup({
     weightUnit: new FormControl('lbs')
+  });
+
+  updateSetForm = new FormGroup({
+    exerciseId: new FormControl(''),
+    reps: new FormControl(),
+    targetReps: new FormControl(),
+    weight: new FormControl(),
+    rpe: new FormControl()
   });
 
   newSetForm = new FormGroup({
@@ -53,14 +62,14 @@ export class EditWorkoutComponent implements OnInit {
   }
 
   logNewSet() {
-    const setData = this.newSetForm.value;
+    const setData = this.setBeingUpdated ? this.updateSetForm.value : this.newSetForm.value;
     if (!setData.exerciseId) {
       alert('Exercise name is required');
       // TODO: Convert this to toast
       return;
     }
     const newWorkoutSet: WorkoutSet = {
-      id: uuidv4(),
+      id: this.setBeingUpdated ?? uuidv4(),
       exerciseId: setData.exerciseId,
       exerciseName: this.exerciseList.find(exercise => exercise.id == setData.exerciseId)?.name ?? '',
       reps: setData.reps,
@@ -73,7 +82,29 @@ export class EditWorkoutComponent implements OnInit {
     this.workouts.syncSet(this.id, newWorkoutSet).subscribe(() => {
       this.setList.push(newWorkoutSet);
       this.addingSet = false;
+      if (this.setBeingUpdated) this.setBeingUpdated = null;
     });
+  }
+
+  startUpdatingSet(setId: string) {
+    const setData = this.setList.find(s => s.id == setId);
+    this.updateSetForm.setValue({ 
+      exerciseId: setData?.exerciseId,
+      reps: setData?.reps,
+      targetReps: setData?.targetReps,
+      weight: setData?.weight,
+      rpe: setData?.rpe
+    });
+    this.sharedSetForm.setValue({ weightUnit: setData?.weightUnit })
+    this.setBeingUpdated = setId;
+  }
+
+  stopUpdatingSet() {
+    this.setBeingUpdated = null;
+  }
+
+  deleteSet(setId: string) {
+
   }
 
 }

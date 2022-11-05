@@ -26,17 +26,35 @@
               <th>Reps</th>
               <th>Target Reps</th>
               <th>RPE</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let set of setList">
-              <td>{{set.exerciseName}}</td>
-              <td>{{set.weight}} {{set.weight ? set.weightUnit : ''}}</td>
-              <td>{{set.reps}}</td>
-              <td>{{set.targetReps}}</td>
-              <td>{{set.rpe | rpe}}</td>
+              <ng-container #viewSet *ngIf="set.id != setBeingUpdated; else updateSet">
+                <td>{{set.exerciseName}}</td>
+                <td>{{set.weight}} {{set.weight ? set.weightUnit : ''}}</td>
+                <td>{{set.reps}}</td>
+                <td>{{set.targetReps}}</td>
+                <td>{{set.rpe | rpe}}</td>
+                <td>
+                  <app-table-actions (deleteClicked)="this.deleteSet(set.id)" (editClicked)="this.startUpdatingSet(set.id)" *ngIf="!setBeingUpdated"></app-table-actions>
+                </td>
+              </ng-container>
+              <ng-template [formGroup]="updateSetForm" #updateSet>
+                <td>
+                  <select class="form-control" formControlName="exerciseId">
+                    <option *ngFor="let exercise of exerciseList" [value]="exercise.id">{{exercise.name}}</option>
+                  </select>
+                </td>
+                <td><input type="number" class="form-control" id="weight" formControlName="weight" min="0" step="1"></td>
+                <td><input type="number" class="form-control" id="reps" formControlName="reps" min="0" step="1"></td>
+                <td><input type="number" class="form-control" id="targetReps" formControlName="targetReps" min="0" step="1"></td>
+                <td><input type="number" class="form-control" id="rpe" formControlName="rpe" min="0" max="10" step="0.5"></td>
+                <td></td>
+              </ng-template>
             </tr>
-            <tr [formGroup]="newSetForm">
+            <tr [formGroup]="newSetForm" *ngIf="!setBeingUpdated">
               <td>
                 <select class="form-control" formControlName="exerciseId">
                   <option *ngFor="let exercise of exerciseList" [value]="exercise.id">{{exercise.name}}</option>
@@ -46,12 +64,14 @@
               <td><input type="number" class="form-control" id="reps" formControlName="reps" min="0" step="1"></td>
               <td><input type="number" class="form-control" id="targetReps" formControlName="targetReps" min="0" step="1"></td>
               <td><input type="number" class="form-control" id="rpe" formControlName="rpe" min="0" max="10" step="0.5"></td>
+              <td></td>
             </tr>
           </tbody>
         </table>
         <div class="btn-group">
-          <button class="btn btn-primary" (click)="logNewSet()" [class.disabled]="this.addingSet">Add Set</button>
-          <button class="btn btn-secondary" [class.disabled]="this.addingSet" routerLink="/workouts">Done</button>
+          <button class="btn btn-primary" (click)="logNewSet()" [class.disabled]="this.addingSet">{{setBeingUpdated ? 'Update' : 'Add'}} Set</button>
+          <button class="btn btn-secondary" [class.disabled]="this.addingSet" routerLink="/workouts" *ngIf="!setBeingUpdated">Done</button>
+          <button class="btn btn-warning" [class.disabled]="this.addingSet" (click)="stopUpdatingSet()" *ngIf="setBeingUpdated">Cancel</button>
         </div>
       </div>
       <ng-template #loading>
