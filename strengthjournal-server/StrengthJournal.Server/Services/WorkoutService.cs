@@ -66,7 +66,19 @@ namespace StrengthJournal.Server.Services
             var existingSet = context.WorkoutLogEntrySets.FirstOrDefault(s => s.Id == set.Id && s.WorkoutLogEntry == workout);
             if (existingSet != null)
             {
-                throw new NotImplementedException();
+                existingSet.Exercise = exercise;
+                existingSet.Reps = set.Reps;
+                existingSet.TargetReps = set.TargetReps;
+                existingSet.RPE = set.RPE;
+                if (set.WeightUnit.Equals("kg"))
+                {
+                    existingSet.WeightKg = set.Weight;
+                }
+                else
+                {
+                    existingSet.WeightLbs = set.Weight;
+                }
+                context.WorkoutLogEntrySets.Update(existingSet);
             }
             else
             {

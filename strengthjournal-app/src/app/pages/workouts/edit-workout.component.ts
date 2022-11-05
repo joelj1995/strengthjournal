@@ -80,9 +80,16 @@ export class EditWorkoutComponent implements OnInit {
     };
     this.addingSet = true;
     this.workouts.syncSet(this.id, newWorkoutSet).subscribe(() => {
-      this.setList.push(newWorkoutSet);
+      if (this.setBeingUpdated) {
+        const indexOfSet = this.setList.findIndex(s => s.id == this.setBeingUpdated);
+        this.setList[indexOfSet] = newWorkoutSet;
+        this.setBeingUpdated = null;
+      }
+      else {
+        this.setList.push(newWorkoutSet);
+      }
       this.addingSet = false;
-      if (this.setBeingUpdated) this.setBeingUpdated = null;
+       
     });
   }
 
