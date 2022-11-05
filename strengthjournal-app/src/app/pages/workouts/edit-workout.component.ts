@@ -110,7 +110,11 @@ export class EditWorkoutComponent implements OnInit {
   }
 
   deleteSet(setId: string) {
-
+    this.addingSet = true;
+    this.workouts.deleteSet(this.id, setId).subscribe(() => {
+      this.setList = this.setList.filter(s => s.id != setId);
+      this.addingSet = false;
+    })
   }
 
 }

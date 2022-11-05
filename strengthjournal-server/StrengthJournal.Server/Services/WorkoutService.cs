@@ -110,6 +110,18 @@ namespace StrengthJournal.Server.Services
             await context.SaveChangesAsync();
         }
 
+        public async Task DeleteSet(Guid userId, Guid workoutId, Guid setId)
+        {
+            var user = context.Users.Single(u => u.Id == userId);
+            var set = context.WorkoutLogEntrySets.FirstOrDefault(s => s.Id == setId && s.WorkoutLogEntry.Id == workoutId);
+            if (set == null)
+            {
+                throw new EntityNotFoundException();
+            }
+            context.WorkoutLogEntrySets.Remove(set);
+            await context.SaveChangesAsync();
+        }
+
         public async Task DeleteWorkout(Guid userId, Guid workoutId)
         {
             var user = context.Users.Single(u => u.Id == userId);

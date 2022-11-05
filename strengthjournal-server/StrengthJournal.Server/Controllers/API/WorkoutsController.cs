@@ -68,6 +68,21 @@ namespace StrengthJournal.Server.Controllers.API
             return Ok();
         }
 
+        [HttpDelete("{workoutId:Guid}/sets/{setId:Guid}")]
+        public async Task<ActionResult> DeleteSet([FromRoute] Guid workoutId, [FromRoute] Guid setId)
+        {
+            try
+            {
+                var userId = HttpContext.GetUserId();
+                await workoutService.DeleteSet(userId, workoutId, setId);
+            }
+            catch (EntityNotFoundException e)
+            {
+                return NotFound();
+            }
+            return Ok();
+        }
+
         [HttpDelete("{workoutId:Guid}")]
         public async Task<ActionResult> DeleteWorkout([FromRoute] Guid workoutId)
         {
