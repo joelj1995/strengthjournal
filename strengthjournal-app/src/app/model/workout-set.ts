@@ -2,9 +2,9 @@ export interface WorkoutSet {
   id: string;
   exerciseId: string;
   exerciseName: string;
-  reps: Number | null;
-  targetReps: Number | null;
-  weight: Number | null;
+  reps: number | null;
+  targetReps: number | null;
+  weight: number | null;
   weightUnit: string;
-  rpe: Number | null;
+  rpe: number | null;
 }

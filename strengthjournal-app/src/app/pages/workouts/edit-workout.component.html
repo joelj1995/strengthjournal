@@ -19,7 +19,7 @@
               <td>{{set.weight}} {{set.weightUnit}}</td>
               <td>{{set.reps}}</td>
               <td>{{set.targetReps}}</td>
-              <td>{{set.rpe}}</td>
+              <td>{{set.rpe | rpe}}</td>
             </tr>
             <tr [formGroup]="newSetForm">
               <td>

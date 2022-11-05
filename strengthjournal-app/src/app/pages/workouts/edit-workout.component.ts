@@ -6,6 +6,7 @@ import { WorkoutSet } from 'src/app/model/workout-set';
 import { ExerciseService } from 'src/app/services/exercise.service';
 import { WorkoutService } from 'src/app/services/workout.service';
 import { v4 as uuidv4 } from 'uuid';
+// import { RPEPipe } from 'src/app/pipes/rpe-format-pipe';
 
 @Component({
   selector: 'app-edit-workout',

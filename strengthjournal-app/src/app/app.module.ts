@@ -25,6 +25,7 @@ import { EditWorkoutComponent } from './pages/workouts/edit-workout.component';
 import { ListWorkoutsComponent } from './pages/workouts/list-workouts.component';
 import { TableActionsComponent } from './components/table-actions/table-actions.component';
 import { EditExerciseComponent } from './pages/exercises/edit-exercise.component';
+import { RPEPipe } from './pipes/rpe-format-pipe';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { EditExerciseComponent } from './pages/exercises/edit-exercise.component
     EditWorkoutComponent,
     ListWorkoutsComponent,
     TableActionsComponent,
-    EditExerciseComponent
+    EditExerciseComponent,
+    RPEPipe
   ],
   imports: [
     BrowserModule,
