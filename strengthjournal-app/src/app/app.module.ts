@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { ErrorHandler, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -26,6 +26,7 @@ import { ListWorkoutsComponent } from './pages/workouts/list-workouts.component'
 import { TableActionsComponent } from './components/table-actions/table-actions.component';
 import { EditExerciseComponent } from './pages/exercises/edit-exercise.component';
 import { RPEPipe } from './pipes/rpe-format-pipe';
+import { AppErrorHandler } from './app-error-handler';
 
 @NgModule({
   declarations: [
@@ -68,6 +69,10 @@ import { RPEPipe } from './pipes/rpe-format-pipe';
       provide: HTTP_INTERCEPTORS,
       useClass: AuthHttpInterceptor,
       multi: true,
+    },
+    {
+      provide: ErrorHandler,
+      useClass: AppErrorHandler,
     },
     StrengthjournalBaseService],
   bootstrap: [AppComponent]
