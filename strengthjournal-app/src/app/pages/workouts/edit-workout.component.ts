@@ -89,7 +89,6 @@ export class EditWorkoutComponent implements OnInit {
         this.setList.push(newWorkoutSet);
       }
       this.addingSet = false;
-       
     });
   }
 
@@ -100,7 +99,7 @@ export class EditWorkoutComponent implements OnInit {
       reps: setData?.reps,
       targetReps: setData?.targetReps,
       weight: setData?.weight,
-      rpe: setData?.rpe
+      rpe: setData?.rpe ? setData?.rpe / 2 : null
     });
     this.sharedSetForm.setValue({ weightUnit: setData?.weightUnit })
     this.setBeingUpdated = setId;

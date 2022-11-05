@@ -73,10 +73,12 @@ namespace StrengthJournal.Server.Services
                 if (set.WeightUnit.Equals("kg"))
                 {
                     existingSet.WeightKg = set.Weight;
+                    existingSet.WeightLbs = null;
                 }
                 else
                 {
                     existingSet.WeightLbs = set.Weight;
+                    existingSet.WeightKg = null;
                 }
                 context.WorkoutLogEntrySets.Update(existingSet);
             }
