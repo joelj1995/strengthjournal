@@ -7,7 +7,6 @@ import { AppComponent } from './app.component';
 import { APP_BASE_HREF } from '@angular/common';
 import { StrengthjournalBaseService } from './services/strengthjournalbase.service';
 import { HttpClientModule } from '@angular/common/http';
-import { DevLoginComponent } from './pages/dev-login/dev-login.component';
 import { AuthModule } from '@auth0/auth0-angular';
 import { environment } from 'src/environments/environment';
 
@@ -31,7 +30,6 @@ import { AppErrorHandler } from './app-error-handler';
 @NgModule({
   declarations: [
     AppComponent,
-    DevLoginComponent,
     NavComponent,
     DashboardComponent,
     HeaderComponent,
