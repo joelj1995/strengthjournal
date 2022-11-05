@@ -48,8 +48,13 @@ export class EditWorkoutComponent implements OnInit {
   }
 
   logNewSet() {
-    this.addingSet = true;
+    
     const setData = this.newSetForm.value;
+    if (!setData.exerciseId) {
+      alert('Exercise name is required');
+      // TODO: Convert this to toast
+      return;
+    }
     const newWorkoutSet: WorkoutSet = {
       id: uuidv4(),
       exerciseId: setData.exerciseId,
@@ -60,7 +65,7 @@ export class EditWorkoutComponent implements OnInit {
       weightUnit: 'lbs',
       rpe: setData.rpe * 2
     };
-    console.log(newWorkoutSet);
+    this.addingSet = true;
     this.workouts.syncSet(this.id, newWorkoutSet).subscribe(() => {
       this.setList.push(newWorkoutSet);
       this.addingSet = false;
