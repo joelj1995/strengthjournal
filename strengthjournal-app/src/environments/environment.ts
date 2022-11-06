@@ -4,6 +4,7 @@
 
 export const environment = {
   production: false,
+  useResourceOwnerFlow: true,
   api: 'https://localhost:7080/api'
 };
 

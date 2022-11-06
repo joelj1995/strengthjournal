@@ -30,7 +30,7 @@ export class AppComponent {
   }
 
   constructor(public auth: AuthService) {
-    if (localStorage.getItem('app_username')) {
+    if (environment.useResourceOwnerFlow) {
       this.resourceOwnerLoginFlow();
     } else {
       this.redirectLoginFlow();

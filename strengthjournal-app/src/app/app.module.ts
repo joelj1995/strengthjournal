@@ -66,7 +66,7 @@ import { TokenInterceptor } from './token-interceptor';
     },
     {
       provide: HTTP_INTERCEPTORS,
-      useClass: environment.production? TokenInterceptor : AuthHttpInterceptor,
+      useClass: environment.useResourceOwnerFlow? TokenInterceptor : AuthHttpInterceptor,
       multi: true,
     },
     {
