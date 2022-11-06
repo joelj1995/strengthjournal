@@ -27,7 +27,7 @@ namespace StrengthJournal.Server.Controllers
                 case AuthenticationResponse.AuthResult.ServiceFailure:
                     return RedirectToAction("Login", new { wrongPassword = true });
                 case AuthenticationResponse.AuthResult.Success:
-                    return View();
+                    return View(new SubmitLoginModel(result.Token, loginModel.Email));
                 default:
                     throw new NotImplementedException("Authentication result not recognized");
             }

@@ -11,8 +11,8 @@ export class AppComponent {
   title = 'strengthjournal-app';
   userFullName = '';
 
-  constructor(public auth: AuthService) {
-    auth.user$.subscribe(user => {
+  redirectLoginFlow() {
+    this.auth.user$.subscribe(user => {
       if (user == null) {
         if (environment.production) {
           window.location.replace('/login');
@@ -22,6 +22,18 @@ export class AppComponent {
         return;
       }
       this.userFullName = user?.name ?? '';
-    })
+    });
+  }
+
+  resourceOwnerLoginFlow() {
+    this.userFullName = localStorage.getItem('app_username') ?? '';
+  }
+
+  constructor(public auth: AuthService) {
+    if (localStorage.getItem('app_username')) {
+      this.resourceOwnerLoginFlow();
+    } else {
+      this.redirectLoginFlow();
+    }
   };
 }
