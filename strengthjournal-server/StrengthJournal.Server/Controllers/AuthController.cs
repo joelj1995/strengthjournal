@@ -40,9 +40,31 @@ namespace StrengthJournal.Server.Controllers
         }
 
         [Route("signup")]
-        public IActionResult SignUp()
+        public IActionResult SignUp([FromQuery] string errorMessage)
         {
             return View();
+        }
+
+        [HttpPost]
+        [Route("signup")]
+        public IActionResult SubmitSignUp(SignUpModel model)
+        {
+            if (model.Password != model.Password2)
+            {
+                return RedirectToAction("signup", new { errorMessage = "Passwords do not match" });
+            }
+            var result = _authenticationService.CreateAccount(model.Email, model.Password);
+            switch (result.Result)
+            {
+                case CreateAccountResponse.CreateResult.ValidationError:
+                    return RedirectToAction("signup", new { errorMessage = result.ErrorMessage });
+                case CreateAccountResponse.CreateResult.ServiceFailure:
+                    return RedirectToAction("signup", new { errorMessage = result.ErrorMessage });
+                case CreateAccountResponse.CreateResult.Success:
+                    return View();
+                default:
+                    throw new NotImplementedException("Authentication result not recognized");
+            }
         }
     }
 }
