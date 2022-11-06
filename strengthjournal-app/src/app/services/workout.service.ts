@@ -21,6 +21,10 @@ export class WorkoutService extends StrengthjournalBaseService {
     return this.http.post<string>(`${this.BASE_URL}/workouts`, workout);
   }
 
+  getWorkout(workoutId: string): Observable<Workout> {
+    return this.http.get<Workout>(`${this.BASE_URL}/workouts/${workoutId}`);
+  }
+
   getWorkoutSets(workoutId: string): Observable<WorkoutSet[]> {
     return this.http.get<WorkoutSet[]>(`${this.BASE_URL}/workouts/${workoutId}/sets`);
   }

@@ -29,6 +29,21 @@ namespace StrengthJournal.Server.Controllers.API
             return Ok(workouts);
         }
 
+        [HttpGet("{workoutId:Guid}")]
+        public async Task<ActionResult<WorkoutDto>> GetWorkout(Guid workoutId)
+        {
+            try
+            {
+                var userId = HttpContext.GetUserId();
+                var workout = await workoutService.GetWorkout(userId, workoutId);
+                return Ok(workout);
+            }
+            catch (EntityNotFoundException e)
+            {
+                return NotFound();
+            }
+        }
+
         [HttpPost]
         public async Task<Guid> CreateWorkout(WorkoutCreationUpdateDto workout)
         {

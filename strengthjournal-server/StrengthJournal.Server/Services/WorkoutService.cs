@@ -38,6 +38,24 @@ namespace StrengthJournal.Server.Services
             return newWorkout.Id;
         }
 
+        public async Task<WorkoutDto> GetWorkout(Guid userId, Guid workoutId)
+        {
+            var workout = await context.WorkoutLogEntries
+                .Include(wle => wle.Sets)
+                .Include("Sets.Exercise")
+                .Include("Sets.WeightUnit")
+                .FirstOrDefaultAsync(wle => wle.Id == workoutId && wle.User.Id == userId) ?? throw new EntityNotFoundException();
+            return new WorkoutDto()
+            {
+                Id = workout.Id,
+                Title = workout.Title,
+                EntryDateUTC = workout.EntryDateUTC,
+                Sets = workout.Sets
+                    .OrderBy(s => s.Sequence)
+                    .Select(set => new WorkoutSetSync { Id = set.Id, ExerciseId = set.Exercise.Id, ExerciseName = set.Exercise.Name, Reps = set.Reps, TargetReps = set.TargetReps, Weight = set.Weight, WeightUnit = set.WeightUnit?.Abbreviation ?? "", RPE = set.RPE })
+            };
+        }
+
         public async Task<IEnumerable<WorkoutSetSync>> GetWorkoutSets(Guid userId, Guid workoutId)
         {
             var user = context.Users.Single(u => u.Id == userId);

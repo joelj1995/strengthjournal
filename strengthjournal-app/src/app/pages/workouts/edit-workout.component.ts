@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Exercise } from 'src/app/model/exercise';
+import { Workout } from 'src/app/model/workout';
 import { WorkoutSet } from 'src/app/model/workout-set';
 import { ExerciseService } from 'src/app/services/exercise.service';
 import { WorkoutService } from 'src/app/services/workout.service';
@@ -22,7 +23,12 @@ export class EditWorkoutComponent implements OnInit {
   setBeingUpdated: string | null = null;
 
   id: string = '';
-  setList: WorkoutSet[] = [];
+  workout: Workout = {
+    id: '',
+    title: '',
+    entryDateUTC: new Date(),
+    sets: []
+  };
   exerciseList: Exercise[] = [];
   constructor(private route: ActivatedRoute, private workouts: WorkoutService, private exercises : ExerciseService) { }
 
@@ -53,9 +59,8 @@ export class EditWorkoutComponent implements OnInit {
     });
     this.route.params.subscribe(params => {
       this.id = params['id'];
-      this.setList = [];
-      this.workouts.getWorkoutSets(this.id).subscribe(sets => {
-        this.setList = sets;
+      this.workouts.getWorkout(this.id).subscribe(workout => {
+        this.workout = workout;
         this.loadingSets = false;
       })
     });
@@ -81,19 +86,19 @@ export class EditWorkoutComponent implements OnInit {
     this.addingSet = true;
     this.workouts.syncSet(this.id, newWorkoutSet).subscribe(() => {
       if (this.setBeingUpdated) {
-        const indexOfSet = this.setList.findIndex(s => s.id == this.setBeingUpdated);
-        this.setList[indexOfSet] = newWorkoutSet;
+        const indexOfSet = this.workout.sets.findIndex(s => s.id == this.setBeingUpdated);
+        this.workout.sets[indexOfSet] = newWorkoutSet;
         this.setBeingUpdated = null;
       }
       else {
-        this.setList.push(newWorkoutSet);
+        this.workout.sets.push(newWorkoutSet);
       }
       this.addingSet = false;
     });
   }
 
   startUpdatingSet(setId: string) {
-    const setData = this.setList.find(s => s.id == setId);
+    const setData = this.workout.sets.find(s => s.id == setId);
     this.updateSetForm.setValue({ 
       exerciseId: setData?.exerciseId,
       reps: setData?.reps,
@@ -112,7 +117,7 @@ export class EditWorkoutComponent implements OnInit {
   deleteSet(setId: string) {
     this.addingSet = true;
     this.workouts.deleteSet(this.id, setId).subscribe(() => {
-      this.setList = this.setList.filter(s => s.id != setId);
+      this.workout.sets = this.workout.sets.filter(s => s.id != setId);
       this.addingSet = false;
     })
   }
