@@ -24,15 +24,6 @@ namespace StrengthJournal.Server.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        [Route("app-exception")]
-        public IActionResult ExceptionHandler([FromQuery] Guid? errorId, [FromQuery] bool showTrace = false)
-        {
-            var model = new ExceptionHandlerViewModel()
-            {
-                ErrorId = errorId,
-                ShowTrace = showTrace
-            };
-            return View(model);
-        }
+        
     }
 }

@@ -12,6 +12,17 @@ namespace StrengthJournal.Server.Controllers
             _hostEnvironment = hostEnvironment;
         }
 
+        [Route("app-exception")]
+        public IActionResult ExceptionHandler([FromQuery] Guid? errorId, [FromQuery] bool showTrace = false)
+        {
+            var model = new ExceptionHandlerViewModel()
+            {
+                ErrorId = errorId,
+                ShowTrace = showTrace
+            };
+            return View(model);
+        }
+
         [Route("app/{*more}")]
         public IActionResult Index()
         {
