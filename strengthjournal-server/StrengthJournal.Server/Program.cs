@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using StrengthJournal.DataAccess.Contexts;
+using StrengthJournal.Server.Integrations;
+using StrengthJournal.Server.Integrations.Implementation;
 using StrengthJournal.Server.Middleware;
 using StrengthJournal.Server.Services;
 using System.Security.Claims;
@@ -25,6 +27,7 @@ builder.Services.AddDbContext<StrengthJournalContext>();
 
 builder.Services.AddScoped<ExerciseService>();
 builder.Services.AddScoped<WorkoutService>();
+builder.Services.AddScoped<IAuthenticationService, Auth0AuthenticationService>();
 
 var devCorsRule = "_allowAngularDevServer";
 builder.Services.AddCors(options =>
