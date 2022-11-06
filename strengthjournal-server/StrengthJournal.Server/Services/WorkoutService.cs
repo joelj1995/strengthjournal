@@ -47,7 +47,7 @@ namespace StrengthJournal.Server.Services
                 throw new EntityNotFoundException();
             }
             // TODO: implement automapper to make this less painful
-            return workout.Sets.OrderBy(s => s.Sequence).Select(set => new WorkoutSetSync { Id = set.Id, ExerciseId = set.Exercise.Id, ExerciseName = set.Exercise.Name, Reps = set.Reps, TargetReps = set.TargetReps, Weight = set.WeightLbs == null ? set.WeightKg : set.WeightLbs, WeightUnit = set.WeightLbs == null ? "kg" : "lbs", RPE = set.RPE });
+            return workout.Sets.OrderBy(s => s.Sequence).Select(set => new WorkoutSetSync { Id = set.Id, ExerciseId = set.Exercise.Id, ExerciseName = set.Exercise.Name, Reps = set.Reps, TargetReps = set.TargetReps, Weight = set.Weight, WeightUnit = set.WeightUnit?.Abbreviation ?? "", RPE = set.RPE });
         }
 
         public async Task SyncWorkoutSet(Guid userId, Guid workoutId, WorkoutSetSync set)
@@ -70,16 +70,8 @@ namespace StrengthJournal.Server.Services
                 existingSet.Reps = set.Reps;
                 existingSet.TargetReps = set.TargetReps;
                 existingSet.RPE = set.RPE;
-                if (set.WeightUnit.Equals("kg"))
-                {
-                    existingSet.WeightKg = set.Weight;
-                    existingSet.WeightLbs = null;
-                }
-                else
-                {
-                    existingSet.WeightLbs = set.Weight;
-                    existingSet.WeightKg = null;
-                }
+                existingSet.Weight = set.Weight;
+                existingSet.WeightUnit = context.WeightUnits.FirstOrDefault(wu => wu.Abbreviation.Equals(set.WeightUnit));
                 context.WorkoutLogEntrySets.Update(existingSet);
             }
             else
@@ -95,16 +87,10 @@ namespace StrengthJournal.Server.Services
                     Reps = set.Reps,
                     TargetReps = set.TargetReps,
                     RPE = set.RPE,
-                    Sequence = maxSeq + 1
+                    Sequence = maxSeq + 1,
+                    Weight = set.Weight,
+                    WeightUnit = context.WeightUnits.FirstOrDefault(wu => wu.Abbreviation.Equals(set.WeightUnit))
                 };
-                if (set.WeightUnit.Equals("kg"))
-                {
-                    setEntity.WeightKg = set.Weight;
-                }
-                else
-                {
-                    setEntity.WeightLbs = set.Weight;
-                }
                 await context.WorkoutLogEntrySets.AddAsync(setEntity);
             }
             await context.SaveChangesAsync();

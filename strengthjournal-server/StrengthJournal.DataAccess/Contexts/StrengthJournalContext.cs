@@ -14,6 +14,7 @@ namespace StrengthJournal.DataAccess.Contexts
         public DbSet<Exercise> Exercises { get; set; }
         public DbSet<WorkoutLogEntry> WorkoutLogEntries { get; set; }
         public DbSet<WorkoutLogEntrySet> WorkoutLogEntrySets { get; set; }
+        public DbSet<WeightUnit> WeightUnits { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -33,6 +34,22 @@ namespace StrengthJournal.DataAccess.Contexts
                     {
                         Id = Guid.Parse("84E827A0-CA29-42F8-9B82-C0A79886FC30"),
                         Name = "Deadlift"
+                    }
+                );
+
+            modelBuilder.Entity<WeightUnit>()
+                .HasData(
+                    new WeightUnit()
+                    {
+                        Id = Guid.Parse("BF8DF35B-2F45-4A79-A49C-D3ACA4A12CD6"),
+                        FullName = "Pounds",
+                        Abbreviation = "lbs"
+                    },
+                    new WeightUnit()
+                    {
+                        Id = Guid.Parse("4BC96550-F274-4A90-978B-92A398F8C49D"),
+                        FullName = "Kilograms",
+                        Abbreviation = "kg"
                     }
                 );
         }

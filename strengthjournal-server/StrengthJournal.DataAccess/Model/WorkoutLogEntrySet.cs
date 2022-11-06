@@ -14,8 +14,8 @@ namespace StrengthJournal.DataAccess.Model
         public Exercise Exercise { get; set; }
         public uint? Reps { get; set; }
         public uint? TargetReps { get; set; }
-        public decimal? WeightKg { get; set; }
-        public decimal? WeightLbs { get; set; }
+        public decimal? Weight { get; set; }
+        public WeightUnit? WeightUnit { get; set; }
         public uint? RPE { get; set; }
     }
 }
