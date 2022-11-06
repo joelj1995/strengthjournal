@@ -24,7 +24,7 @@ namespace StrengthJournal.Server.Services
             }).ToListAsync();
         }
 
-        public async Task<Guid> CreateWorkout(Guid userId, WorkoutCreationDto workout)
+        public async Task<Guid> CreateWorkout(Guid userId, WorkoutCreationUpdateDto workout)
         {
             var user = context.Users.Single(u => u.Id == userId);
             var newWorkout = new WorkoutLogEntry()
@@ -105,6 +105,16 @@ namespace StrengthJournal.Server.Services
                 throw new EntityNotFoundException();
             }
             context.WorkoutLogEntrySets.Remove(set);
+            await context.SaveChangesAsync();
+        }
+
+        public async Task UpdateWorkout(Guid userId, Guid workoutId, WorkoutCreationUpdateDto workout)
+        {
+            var user = context.Users.Single(u => u.Id == userId);
+            var existingWorkout = context.WorkoutLogEntries.FirstOrDefault(wle => wle.User.Id.Equals(userId) && wle.Id.Equals(workoutId)) ?? throw new EntityNotFoundException();
+            existingWorkout.Title = workout.Title;
+            existingWorkout.EntryDateUTC = workout.EntryDateUTC;
+            context.WorkoutLogEntries.Update(existingWorkout);
             await context.SaveChangesAsync();
         }
 

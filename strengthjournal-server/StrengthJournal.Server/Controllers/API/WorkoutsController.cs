@@ -30,7 +30,7 @@ namespace StrengthJournal.Server.Controllers.API
         }
 
         [HttpPost]
-        public async Task<Guid> CreateWorkout(WorkoutCreationDto workout)
+        public async Task<Guid> CreateWorkout(WorkoutCreationUpdateDto workout)
         {
             var userId = HttpContext.GetUserId();
             var workoutId = await workoutService.CreateWorkout(userId, workout);
@@ -75,6 +75,21 @@ namespace StrengthJournal.Server.Controllers.API
             {
                 var userId = HttpContext.GetUserId();
                 await workoutService.DeleteSet(userId, workoutId, setId);
+            }
+            catch (EntityNotFoundException e)
+            {
+                return NotFound();
+            }
+            return Ok();
+        }
+
+        [HttpPut("{workoutId:Guid}")]
+        public async Task<ActionResult> UpdateWorkout([FromRoute] Guid workoutId, WorkoutCreationUpdateDto workout)
+        {
+            try
+            {
+                var userId = HttpContext.GetUserId();
+                await workoutService.UpdateWorkout(userId, workoutId, workout);
             }
             catch (EntityNotFoundException e)
             {

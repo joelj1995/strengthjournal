@@ -28,6 +28,7 @@ import { RPEPipe } from './pipes/rpe-format-pipe';
 import { AppErrorHandler } from './app-error-handler';
 import { TokenInterceptor } from './token-interceptor';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { WorkoutDetailsEditorComponent } from './pages/workouts/workout-details-editor.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     ListWorkoutsComponent,
     TableActionsComponent,
     EditExerciseComponent,
-    RPEPipe
+    RPEPipe,
+    WorkoutDetailsEditorComponent
   ],
   imports: [
     BrowserModule,

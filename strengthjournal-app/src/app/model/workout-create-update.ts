@@ -1,4 +1,4 @@
-export interface WorkoutCreate {
+export interface WorkoutCreateUpdate {
   title: string;
   entryDateUTC: Date;
 }

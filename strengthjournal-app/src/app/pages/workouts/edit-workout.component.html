@@ -70,7 +70,6 @@
         </table>
         <div class="btn-group">
           <button class="btn btn-primary" (click)="logNewSet()" [class.disabled]="this.addingSet">{{setBeingUpdated ? 'Update' : 'Add'}} Set</button>
-          <button class="btn btn-secondary" [class.disabled]="this.addingSet" routerLink="/workouts" *ngIf="!setBeingUpdated">Done</button>
           <button class="btn btn-warning" [class.disabled]="this.addingSet" (click)="stopUpdatingSet()" *ngIf="setBeingUpdated">Cancel</button>
         </div>
       </div>
@@ -86,3 +85,5 @@
     </app-card>
   </div>
 </div>
+
+<app-workout-details-editor [workoutId]="id"></app-workout-details-editor>

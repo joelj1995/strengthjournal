@@ -1,6 +1,6 @@
 ﻿namespace StrengthJournal.Server.ApiModels
 {
-    public class WorkoutCreationDto
+    public class WorkoutCreationUpdateDto
     {
         public string Title { get; set; }
         public DateTime EntryDateUTC { get; set; }
