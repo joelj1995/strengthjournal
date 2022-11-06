@@ -10,5 +10,7 @@
 /*
     In the future we would trigger a redirect if a valid session exists
 */
-window.location.replace('/app');
+if (localStorage.getItem('app_username')) {
+    window.location.replace('/app');
+}
 </script>
