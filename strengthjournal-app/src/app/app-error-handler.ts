@@ -13,7 +13,7 @@ export class AppErrorHandler implements ErrorHandler {
     };
     localStorage.setItem('app_error', JSON.stringify(errorData));
     if (environment.production) {
-      window.location.replace(`/app-exception?errorId=${errorId}`);
+      if (error.name != 'HandledHttpError') window.location.replace(`/app-exception?errorId=${errorId}`);
     } else {
       alert('Exception hit. See error logs for details.')
     }
