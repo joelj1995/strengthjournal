@@ -41,7 +41,7 @@ namespace StrengthJournal.Server.Services
         public async Task<IEnumerable<WorkoutSetSync>> GetWorkoutSets(Guid userId, Guid workoutId)
         {
             var user = context.Users.Single(u => u.Id == userId);
-            var workout = await context.WorkoutLogEntries.Include(wle => wle.Sets).Include("Sets.Exercise").FirstOrDefaultAsync(wle => wle.Id == workoutId && wle.User == user);
+            var workout = await context.WorkoutLogEntries.Include(wle => wle.Sets).Include("Sets.Exercise").Include("Sets.WeightUnit").FirstOrDefaultAsync(wle => wle.Id == workoutId && wle.User == user);
             if (workout == null)
             {
                 throw new EntityNotFoundException();
