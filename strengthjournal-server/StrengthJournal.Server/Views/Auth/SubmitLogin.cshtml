@@ -9,7 +9,11 @@
 						<div class="d-table-cell align-middle">
 
 							<div class="text-center">
-								<h1 class="display-1 fw-bold">Logging you in...</h1>
+								<h1 class="display-1 fw-bold">
+									Login Successful
+								</h1>
+								<p class="h1">Redirecting you to your dashboard...</p>
+								<div class="spinner-border text-dark me-2" style="width: 50px; height: 50px; margin-top: 50px"></div>
 							</div>
 
 						</div>
@@ -19,10 +23,13 @@
 		</main>
 	</div>
 
-<script>
-var appUserName = '@Model.UserName';
-var appToken = '@Model.Token';
-localStorage.setItem('app_username', appUserName);
-localStorage.setItem('app_token', appToken);
-window.location.replace('/app');
-</script>
+@if(!Model.SuppressRedirect)
+{
+    <script>
+        var appUserName = '@Model.UserName';
+        var appToken = '@Model.Token';
+        localStorage.setItem('app_username', appUserName);
+        localStorage.setItem('app_token', appToken);
+        window.location.replace('/app');
+    </script>
+}

@@ -35,6 +35,14 @@ namespace StrengthJournal.Server.Controllers
             }
         }
 
+        [Route("view-submit-login")]
+        public IActionResult ViewSubmitLogin(LoginModel loginModel)
+        {
+            if (!_hostEnvironment.IsDevelopment())
+                return NotFound();
+            return View("SubmitLogin", new SubmitLoginModel("", "", true));
+        }
+
         [Route("login")]
         public IActionResult Login([FromQuery] bool wrongPassword = false, [FromQuery] bool serviceFailure = false)
         {
