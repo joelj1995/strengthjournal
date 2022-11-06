@@ -14,11 +14,7 @@ export class AppComponent {
   redirectLoginFlow() {
     this.auth.user$.subscribe(user => {
       if (user == null) {
-        if (environment.production) {
-          window.location.replace('/login');
-        } else {
           this.auth.loginWithRedirect();
-        }
         return;
       }
       this.userFullName = user?.name ?? '';
