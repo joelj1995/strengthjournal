@@ -9,10 +9,12 @@ namespace StrengthJournal.Server.Controllers
     public class AuthController : Controller
     {
         private readonly IAuthenticationService _authenticationService;
+        private readonly IHostEnvironment _hostEnvironment;
 
-        public AuthController(IAuthenticationService authenticationService)
+        public AuthController(IAuthenticationService authenticationService, IHostEnvironment hostEnvironment)
         {
             _authenticationService = authenticationService;
+            _hostEnvironment = hostEnvironment;
         }
 
         [HttpPost]
@@ -65,6 +67,14 @@ namespace StrengthJournal.Server.Controllers
                 default:
                     throw new NotImplementedException("Authentication result not recognized");
             }
+        }
+
+        [Route("view-signup")]
+        public IActionResult ViewSubmitSignUp()
+        {
+            if (!_hostEnvironment.IsDevelopment())
+                return NotFound();
+            return View("SubmitSignUp");
         }
     }
 }
