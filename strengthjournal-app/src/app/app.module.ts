@@ -27,6 +27,7 @@ import { EditExerciseComponent } from './pages/exercises/edit-exercise.component
 import { RPEPipe } from './pipes/rpe-format-pipe';
 import { AppErrorHandler } from './app-error-handler';
 import { TokenInterceptor } from './token-interceptor';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -58,6 +59,7 @@ import { TokenInterceptor } from './token-interceptor';
       },
       redirectUri: `${window.location.origin}/app`
     }),
+    NgbModule,
   ],
   providers: [
     { 

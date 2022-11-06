@@ -4,7 +4,13 @@
     <form [formGroup]="form" id="validation-form" (ngSubmit)="onSubmit()">
       <div class="mb-3 error-placeholder">
         <label>Date</label>
-        <input type="text" class="form-control" id="date" formControlName="date" ngbDatepicker>
+        <input class="form-control" placeholder="yyyy-mm-dd" name="dp"ngbDatepicker
+          #d="ngbDatepicker" id="date" formControlName="date" />
+        <button class="btn btn-outline-secondary bi bi-calendar3 mt-2" (click)="d.toggle()" type="button">Pick Date</button>
+      </div>
+      <div class="mb-3 error-placeholder">
+        <label>Time</label>
+        <ngb-timepicker formControlName="time"></ngb-timepicker>
       </div>
       <div class="mb-3 error-placeholder">
         <label>Title</label>
@@ -14,7 +20,7 @@
         <button type="submit" class="btn btn-primary" [class.disabled]="!this.enableSubmit">Create</button>
         <button class="btn btn-warning" [class.disabled]="!this.enableSubmit" routerLink="/workouts">Cancel</button>
       </div>
-      
+
     </form>
   </app-card>
 
