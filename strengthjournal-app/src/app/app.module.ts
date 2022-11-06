@@ -26,6 +26,7 @@ import { TableActionsComponent } from './components/table-actions/table-actions.
 import { EditExerciseComponent } from './pages/exercises/edit-exercise.component';
 import { RPEPipe } from './pipes/rpe-format-pipe';
 import { AppErrorHandler } from './app-error-handler';
+import { TokenInterceptor } from './token-interceptor';
 
 @NgModule({
   declarations: [
@@ -65,7 +66,7 @@ import { AppErrorHandler } from './app-error-handler';
     },
     {
       provide: HTTP_INTERCEPTORS,
-      useClass: AuthHttpInterceptor,
+      useClass: environment.production? TokenInterceptor : AuthHttpInterceptor,
       multi: true,
     },
     {

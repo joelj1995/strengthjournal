@@ -11,6 +11,11 @@ export class HeaderComponent implements OnInit {
 
   @Input() userFullName: string = '';
 
+  logout() {
+    localStorage.clear();
+    this.auth.logout({ returnTo: document.location.origin });
+  }
+
   constructor(@Inject(DOCUMENT) public document: Document, public auth: AuthService) { }
 
   ngOnInit(): void {
