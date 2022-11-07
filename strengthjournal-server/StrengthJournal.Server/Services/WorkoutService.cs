@@ -32,6 +32,7 @@ namespace StrengthJournal.Server.Services
                 EntryDateUTC = workout.EntryDateUTC,
                 Title = workout.Title,
                 BodyWeightPIT = workout.Bodyweight,
+                BodyWeightPITUnit = context.WeightUnits.FirstOrDefault(wu => wu.Abbreviation.Equals(workout.BodyweightUnit)),
                 User = user
             };
             await context.WorkoutLogEntries.AddAsync(newWorkout);
@@ -45,6 +46,7 @@ namespace StrengthJournal.Server.Services
                 .Include(wle => wle.Sets)
                 .Include("Sets.Exercise")
                 .Include("Sets.WeightUnit")
+                .Include("BodyWeightPITUnit")
                 .FirstOrDefaultAsync(wle => wle.Id == workoutId && wle.User.Id == userId) ?? throw new EntityNotFoundException();
             return new WorkoutDto()
             {
@@ -52,6 +54,7 @@ namespace StrengthJournal.Server.Services
                 Title = workout.Title,
                 EntryDateUTC = workout.EntryDateUTC,
                 Bodyweight = workout.BodyWeightPIT,
+                BodyweightUnit = workout.BodyWeightPITUnit?.Abbreviation ?? "",
                 Sets = workout.Sets
                     .OrderBy(s => s.Sequence)
                     .Select(set => new WorkoutSetSync { Id = set.Id, ExerciseId = set.Exercise.Id, ExerciseName = set.Exercise.Name, Reps = set.Reps, TargetReps = set.TargetReps, Weight = set.Weight, WeightUnit = set.WeightUnit?.Abbreviation ?? "", RPE = set.RPE })
@@ -135,6 +138,7 @@ namespace StrengthJournal.Server.Services
             existingWorkout.Title = workout.Title;
             existingWorkout.EntryDateUTC = workout.EntryDateUTC;
             existingWorkout.BodyWeightPIT = workout.Bodyweight;
+            existingWorkout.BodyWeightPITUnit = context.WeightUnits.FirstOrDefault(wu => wu.Abbreviation.Equals(workout.BodyweightUnit));
             context.WorkoutLogEntries.Update(existingWorkout);
             await context.SaveChangesAsync();
         }

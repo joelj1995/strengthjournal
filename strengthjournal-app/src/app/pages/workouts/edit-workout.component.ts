@@ -28,7 +28,8 @@ export class EditWorkoutComponent implements OnInit {
     title: '',
     entryDateUTC: new Date(),
     sets: [],
-    bodyweight: null
+    bodyweight: null,
+    bodyweightUnit: ''
   };
   exerciseList: Exercise[] = [];
   constructor(private route: ActivatedRoute, private workouts: WorkoutService, private exercises : ExerciseService) { }
