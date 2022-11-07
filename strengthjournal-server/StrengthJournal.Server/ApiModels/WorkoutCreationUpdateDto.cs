@@ -1,8 +1,12 @@
-﻿namespace StrengthJournal.Server.ApiModels
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace StrengthJournal.Server.ApiModels
 {
     public class WorkoutCreationUpdateDto
     {
         public string Title { get; set; }
         public DateTime EntryDateUTC { get; set; }
+        [Range(0, 1000)]
+        public uint? Bodyweight { get; set; }
     }
 }

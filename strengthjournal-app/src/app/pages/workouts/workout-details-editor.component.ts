@@ -22,6 +22,9 @@ export class WorkoutDetailsEditorComponent implements OnInit {
   @Input()
   initialDate: Date = new Date();
 
+  @Input()
+  bodyweight: number | null = null;
+
   pickerDate: NgbDateStruct = { year: 1789, month: 7, day: 14 };
   pickerTime = {hour: 0, minute: 0};
 
@@ -29,7 +32,8 @@ export class WorkoutDetailsEditorComponent implements OnInit {
   form = new FormGroup({
     title: new FormControl(''),
     date: new FormControl(''),
-    time: new FormControl('')
+    time: new FormControl(''),
+    bodyweight: new FormControl('')
   });
 
   constructor(private workouts: WorkoutService, private router: Router) { 
@@ -66,7 +70,8 @@ export class WorkoutDetailsEditorComponent implements OnInit {
     this.enableSubmit = false;
     const workoutData: WorkoutCreateUpdate = {
       title: this.form.value.title,
-      entryDateUTC: this.getDate()
+      entryDateUTC: this.getDate(),
+      bodyweight: this.form.value.bodyweight
     };
     if (this.workoutId) {
       this.workouts.updateWorkout(this.workoutId, workoutData).subscribe(() => {

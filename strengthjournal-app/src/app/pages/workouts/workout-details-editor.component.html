@@ -16,6 +16,10 @@
         <label>Title</label>
         <input type="text" class="form-control" id="title" formControlName="title" [(ngModel)]="initialTitle">
       </div>
+      <div class="mb-3 error-placeholder">
+        <label>Bodyweight</label>
+        <input type="number" min="0" max="1000" class="form-control" id="bodyweight" formControlName="bodyweight" [(ngModel)]="bodyweight">
+      </div>
       <div class="btn-group">
         <button type="submit" class="btn btn-primary" [class.disabled]="!this.enableSubmit">{{workoutId ? 'Update': 'Create'}}</button>
         <button class="btn btn-warning" [class.disabled]="!this.enableSubmit" routerLink="/workouts" *ngIf="!workoutId">Cancel</button>

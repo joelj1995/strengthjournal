@@ -31,6 +31,7 @@ namespace StrengthJournal.Server.Services
             {
                 EntryDateUTC = workout.EntryDateUTC,
                 Title = workout.Title,
+                BodyWeightPIT = workout.Bodyweight,
                 User = user
             };
             await context.WorkoutLogEntries.AddAsync(newWorkout);
@@ -50,6 +51,7 @@ namespace StrengthJournal.Server.Services
                 Id = workout.Id,
                 Title = workout.Title,
                 EntryDateUTC = workout.EntryDateUTC,
+                Bodyweight = workout.BodyWeightPIT,
                 Sets = workout.Sets
                     .OrderBy(s => s.Sequence)
                     .Select(set => new WorkoutSetSync { Id = set.Id, ExerciseId = set.Exercise.Id, ExerciseName = set.Exercise.Name, Reps = set.Reps, TargetReps = set.TargetReps, Weight = set.Weight, WeightUnit = set.WeightUnit?.Abbreviation ?? "", RPE = set.RPE })
@@ -132,6 +134,7 @@ namespace StrengthJournal.Server.Services
             var existingWorkout = context.WorkoutLogEntries.FirstOrDefault(wle => wle.User.Id.Equals(userId) && wle.Id.Equals(workoutId)) ?? throw new EntityNotFoundException();
             existingWorkout.Title = workout.Title;
             existingWorkout.EntryDateUTC = workout.EntryDateUTC;
+            existingWorkout.BodyWeightPIT = workout.Bodyweight;
             context.WorkoutLogEntries.Update(existingWorkout);
             await context.SaveChangesAsync();
         }
