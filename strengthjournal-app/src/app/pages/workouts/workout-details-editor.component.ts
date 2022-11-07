@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { WorkoutCreateUpdate } from 'src/app/model/workout-create-update';
 import { WorkoutService } from 'src/app/services/workout.service';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
+import { NgbTime } from '@ng-bootstrap/ng-bootstrap/timepicker/ngb-time';
 
 @Component({
   selector: 'app-workout-details-editor',
@@ -22,6 +23,7 @@ export class WorkoutDetailsEditorComponent implements OnInit {
   initialDate: Date = new Date();
 
   pickerDate: NgbDateStruct = { year: 1789, month: 7, day: 14 };
+  pickerTime = {hour: 0, minute: 0};
 
   enableSubmit: boolean = true;
   form = new FormGroup({
@@ -36,8 +38,10 @@ export class WorkoutDetailsEditorComponent implements OnInit {
 
   bindInputDateToPicker() {
     const date = new Date(this.initialDate);
-    const pickerValue = { year: date.getFullYear(), month: date.getMonth() + 1, day: date.getDate() }
-    this.pickerDate = pickerValue;
+    const datePickerValue = { year: date.getFullYear(), month: date.getMonth() + 1, day: date.getDate() };
+    this.pickerDate = datePickerValue;
+    const timePickerValue = { hour: date.getHours(), minute: date.getMinutes() };
+    this.pickerTime = timePickerValue;
   }
 
   ngOnInit(): void {
