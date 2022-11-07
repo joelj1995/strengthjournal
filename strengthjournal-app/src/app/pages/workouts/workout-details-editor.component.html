@@ -14,7 +14,7 @@
       </div>
       <div class="mb-3 error-placeholder">
         <label>Title</label>
-        <input type="text" class="form-control" id="title" formControlName="title" [value]="initialTitle">
+        <input type="text" class="form-control" id="title" formControlName="title" [(ngModel)]="initialTitle">
       </div>
       <div class="btn-group">
         <button type="submit" class="btn btn-primary" [class.disabled]="!this.enableSubmit">{{workoutId ? 'Update': 'Create'}}</button>
