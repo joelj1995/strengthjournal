@@ -5,7 +5,7 @@
       <div class="mb-3 error-placeholder">
         <label>Date</label>
         <input class="form-control" placeholder="yyyy-mm-dd" name="dp"ngbDatepicker
-          #d="ngbDatepicker" id="date" formControlName="date" />
+          #d="ngbDatepicker" id="date" formControlName="date" [(ngModel)]="pickerDate" />
         <button class="btn btn-outline-secondary bi bi-calendar3 mt-2" (click)="d.toggle()" type="button">Pick Date</button>
       </div>
       <div class="mb-3 error-placeholder">
@@ -14,7 +14,7 @@
       </div>
       <div class="mb-3 error-placeholder">
         <label>Title</label>
-        <input type="text" class="form-control" id="title" formControlName="title">
+        <input type="text" class="form-control" id="title" formControlName="title" [value]="initialTitle">
       </div>
       <div class="btn-group">
         <button type="submit" class="btn btn-primary" [class.disabled]="!this.enableSubmit">{{workoutId ? 'Update': 'Create'}}</button>

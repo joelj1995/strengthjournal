@@ -15,6 +15,14 @@ export class WorkoutDetailsEditorComponent implements OnInit {
   @Input()
   workoutId: string | null = null;
 
+  @Input()
+  initialTitle: string = '';
+
+  @Input()
+  initialDate: Date = new Date();
+
+  pickerDate: NgbDateStruct = { year: 1789, month: 7, day: 14 };
+
   enableSubmit: boolean = true;
   form = new FormGroup({
     title: new FormControl(''),
@@ -22,9 +30,22 @@ export class WorkoutDetailsEditorComponent implements OnInit {
     time: new FormControl('')
   });
 
-  constructor(private workouts: WorkoutService, private router: Router) { }
+  constructor(private workouts: WorkoutService, private router: Router) { 
+
+  }
+
+  bindInputDateToPicker() {
+    const date = new Date(this.initialDate);
+    const pickerValue = { year: date.getFullYear(), month: date.getMonth() + 1, day: date.getDate() }
+    this.pickerDate = pickerValue;
+  }
 
   ngOnInit(): void {
+    this.bindInputDateToPicker();
+  }
+
+  ngOnChanges() {
+    this.bindInputDateToPicker();
   }
 
   getDate(): Date {
