@@ -16,7 +16,7 @@ namespace StrengthJournal.DataAccess.Model
         public User User { get; set; }
         public ICollection<WorkoutLogEntrySet> Sets { get; set; } = new List<WorkoutLogEntrySet>();
         public uint? BodyWeightPIT { get; set; }
+        public WeightUnit? BodyWeightPITUnit { get; set; }
         public string Notes { get; set; } = string.Empty;
-
     }
 }
