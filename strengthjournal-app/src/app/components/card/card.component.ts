@@ -10,6 +10,9 @@ export class CardComponent implements OnInit {
   @Input()
   cardTitle: string = '';
 
+  @Input()
+  collapseBody: boolean = false;
+
   constructor() { }
 
   ngOnInit(): void {

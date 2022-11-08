@@ -100,6 +100,9 @@ export class EditWorkoutComponent implements OnInit {
   }
 
   startUpdatingSet(setId: string) {
+    if (this.setBeingUpdated == setId) {
+      return;
+    }
     const setData = this.workout.sets.find(s => s.id == setId);
     this.updateSetForm.setValue({ 
       exerciseId: setData?.exerciseId,
@@ -116,10 +119,15 @@ export class EditWorkoutComponent implements OnInit {
     this.setBeingUpdated = null;
   }
 
-  deleteSet(setId: string) {
+  deleteSet() {
     this.addingSet = true;
-    this.workouts.deleteSet(this.id, setId).subscribe(() => {
-      this.workout.sets = this.workout.sets.filter(s => s.id != setId);
+    if (!this.setBeingUpdated) {
+      throw 'Tried deleting set but none selected'
+    }
+    const toDelete = this.setBeingUpdated;
+    this.workouts.deleteSet(this.id, toDelete).subscribe(() => {
+      this.setBeingUpdated = null;
+      this.workout.sets = this.workout.sets.filter(s => s.id != toDelete);
       this.addingSet = false;
     })
   }

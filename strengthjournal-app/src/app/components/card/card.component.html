@@ -2,7 +2,7 @@
   <div class="card-header">
     <h5 class="card-title mb-0">{{cardTitle}}</h5>
   </div>
-  <div class="card-body">
+  <div [class.card-body]="!collapseBody">
     <ng-content></ng-content>
   </div>
 </div>

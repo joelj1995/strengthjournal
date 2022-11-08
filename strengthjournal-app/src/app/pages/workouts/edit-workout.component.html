@@ -1,7 +1,7 @@
-<h1 class="h3 mb-3">Editing workout entry for {{workout.entryDateUTC | date:'short'}}</h1>
+<h1 class="h3 mb-3">Editing workout {{workout.entryDateUTC | date:'short'}}</h1>
 <div class="row">
   <div class="col-12">
-    <app-card cardTitle="Workout Sets">
+    <app-card cardTitle="Workout Sets" [collapseBody]="true">
       <div [formGroup]="sharedSetForm">
         <label class="form-check form-check-inline">Weight unit:</label>
         <label class="form-check form-check-inline">
@@ -18,28 +18,24 @@
         </label>
       </div>
       <div *ngIf="!loadingSets && !loadingExercises && workout; else loading" >
-        <table  class="table table-striped dataTable no-footer dtr-inline collapsed">
+        <table  class="table table-striped no-footer table-hover">
           <thead>
             <tr>
-              <th>Exercise Name</th>
+              <th>Exercise</th>
               <th>Weight</th>
               <th>Reps</th>
               <th>Target Reps</th>
               <th>RPE</th>
-              <th>Action</th>
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let set of workout.sets">
+            <tr *ngFor="let set of workout.sets" (click)="this.startUpdatingSet(set.id)">
               <ng-container #viewSet *ngIf="set.id != setBeingUpdated; else updateSet">
                 <td>{{set.exerciseName}}</td>
                 <td>{{set.weight}} {{set.weight ? set.weightUnit : ''}}</td>
                 <td>{{set.reps}}</td>
                 <td>{{set.targetReps}}</td>
                 <td>{{set.rpe | rpe}}</td>
-                <td>
-                  <app-table-actions (deleteClicked)="this.deleteSet(set.id)" (editClicked)="this.startUpdatingSet(set.id)" *ngIf="!setBeingUpdated"></app-table-actions>
-                </td>
               </ng-container>
               <ng-template [formGroup]="updateSetForm" #updateSet>
                 <td>
@@ -51,7 +47,6 @@
                 <td><input type="number" class="form-control" id="reps" formControlName="reps" min="0" step="1"></td>
                 <td><input type="number" class="form-control" id="targetReps" formControlName="targetReps" min="0" step="1"></td>
                 <td><input type="number" class="form-control" id="rpe" formControlName="rpe" min="0" max="10" step="0.5"></td>
-                <td></td>
               </ng-template>
             </tr>
             <tr [formGroup]="newSetForm" *ngIf="!setBeingUpdated">
@@ -64,12 +59,12 @@
               <td><input type="number" class="form-control" id="reps" formControlName="reps" min="0" step="1"></td>
               <td><input type="number" class="form-control" id="targetReps" formControlName="targetReps" min="0" step="1"></td>
               <td><input type="number" class="form-control" id="rpe" formControlName="rpe" min="0" max="10" step="0.5"></td>
-              <td></td>
             </tr>
           </tbody>
         </table>
-        <div class="btn-group">
-          <button class="btn btn-primary" (click)="logNewSet()" [class.disabled]="this.addingSet">{{setBeingUpdated ? 'Update' : 'Add'}} Set</button>
+        <div class="btn-group card-footer">
+          <button class="btn btn-primary" (click)="logNewSet()" [class.disabled]="this.addingSet">{{setBeingUpdated ? 'Update' : 'Add'}}</button>
+          <button class="btn btn-danger" [class.disabled]="this.addingSet" (click)="deleteSet()" *ngIf="setBeingUpdated">Delete</button>
           <button class="btn btn-warning" [class.disabled]="this.addingSet" (click)="stopUpdatingSet()" *ngIf="setBeingUpdated">Cancel</button>
         </div>
       </div>
