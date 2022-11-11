@@ -31,7 +31,7 @@ namespace StrengthJournal.Server.Services
                 {
                     EntryDateUTC = line.EntryDateUTC,
                     BodyWeightKg = line.BodyWeightKg,
-                    BodyWeightLbs = line.WeightLbs,
+                    BodyWeightLbs = line.BodyWeightLbs,
                     WeightKg = line.WeightKg,
                     WeightLbs = line.WeightLbs,
                     Reps = line.Reps,
