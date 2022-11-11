@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { ExerciseHistory } from 'src/app/model/exercise-history';
 import { ExerciseService } from 'src/app/services/exercise.service';
 
 @Component({
@@ -8,6 +9,7 @@ import { ExerciseService } from 'src/app/services/exercise.service';
 })
 export class ExerciseHistoryViewComponent implements OnInit {
 
+  historyList: ExerciseHistory[] = [];
   loading: boolean = true;
 
   @Input()
@@ -24,12 +26,13 @@ export class ExerciseHistoryViewComponent implements OnInit {
   }
 
   loadExerciseHistory() {
-    this.loading = true;
     if (!this.exerciseId) {
       return;
     }
+    this.loading = true;
     this.exercises.getExerciseHistory(this.exerciseId).subscribe(historyList => {
-      console.log(historyList);
+      this.loading = false;
+      this.historyList = historyList;
     })
   }
 

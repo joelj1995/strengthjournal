@@ -1,5 +1,5 @@
 export interface ExerciseHistory {
-  EntryDateUTC: Date;
+  entryDateUTC: Date;
   reps: number | null;
   targetReps: number | null;
   weight: number | null;

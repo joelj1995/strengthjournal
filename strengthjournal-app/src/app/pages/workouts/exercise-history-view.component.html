@@ -2,7 +2,7 @@
   <div class="col-12">
     <app-card cardTitle="Exercise History" [collapseBody]="exerciseId ? true : false">
       <div *ngIf="exerciseId; else noExerciseSelected">
-        <table class="table table-striped no-footer">
+        <table class="table no-footer" *ngIf="!loading; else loadingHistory">
           <thead>
             <tr>
               <th>Date</th>
@@ -13,9 +13,22 @@
             </tr>
           </thead>
           <tbody>
-
+            <tr *ngFor="let history of historyList">
+              <td>{{history.entryDateUTC | date:'short'}}</td>
+              <td>{{history.weight}} {{history.weight ? history.weightUnit : ''}}</td>
+              <td>{{history.reps}}</td>
+              <td>{{history.targetReps}}</td>
+              <td>{{history.rpe}}</td>
+            </tr>
           </tbody>
         </table>
+        <ng-template #loadingHistory>
+          <div class="mb-2 text-center">
+            <div class="spinner-grow me-2" role="status">
+              <span class="sr-only">Loading...</span>
+            </div>
+          </div>
+        </ng-template>
       </div>
       <ng-template #noExerciseSelected>
         <p>Choose an exercise from the picker to see its recent history.</p>
