@@ -7,10 +7,12 @@ import { NewWorkoutComponent } from './pages/workouts/new-workout.component';
 import { EditWorkoutComponent } from './pages/workouts/edit-workout.component';
 import { ListWorkoutsComponent } from './pages/workouts/list-workouts.component';
 import { EditExerciseComponent } from './pages/exercises/edit-exercise.component';
+import { ViewExerciseComponent } from './pages/exercises/view-exercise.component';
 
 const routes: Routes = [
   { path: '', component: DashboardComponent },
   { path: 'exercises', component: ListExercisesComponent },
+  { path: 'exercises/:id', component: ViewExerciseComponent },
   { path: 'exercises/new', component: NewExerciseComponent },
   { path: 'exercises/edit/:id', component: EditExerciseComponent },
   { path: 'workouts', component: ListWorkoutsComponent },

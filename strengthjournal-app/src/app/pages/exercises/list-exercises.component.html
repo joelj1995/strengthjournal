@@ -16,6 +16,7 @@
         </thead>
         <tbody>
           <tr *ngFor="let exercise of exerciseList">
+            <td><a [routerLink]="exercise.id">{{exercise.name}}</a><span *ngIf="exercise.systemDefined"> *</span></td>
             <td>{{exercise.name}} <span *ngIf="exercise.systemDefined">*</span></td>
             <td>0</td>
             <td class="table-action">
