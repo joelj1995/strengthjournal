@@ -15,7 +15,7 @@
           <tbody>
             <tr *ngFor="let history of historyList">
               <td>{{history.entryDateUTC | date:'short'}}</td>
-              <td>{{history.weight}} {{history.weight ? history.weightUnit : ''}}</td>
+              <td>{{history.weightKg}}</td>
               <td>{{history.reps}}</td>
               <td>{{history.targetReps}}</td>
               <td>{{history.rpe}}</td>

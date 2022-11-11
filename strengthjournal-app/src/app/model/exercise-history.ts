@@ -1,8 +1,10 @@
 export interface ExerciseHistory {
   entryDateUTC: Date;
+  bodyWeightKg: number | null;
+  bodyWeightLbs: number | null;
+  weightKg: number | null;
+  weightLbs: number | null;
   reps: number | null;
   targetReps: number | null;
-  weight: number | null;
-  weightUnit: string;
   rpe: number | null;
 }

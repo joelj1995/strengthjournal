@@ -23,21 +23,22 @@ namespace StrengthJournal.Server.Services
 
         public async Task<IEnumerable<ExerciseHistoryDto>> GetExerciseHistory(Guid userId, Guid exerciseId, int pageSize = 10)
         {
-            return context.WorkoutLogEntrySets
-                .Include("WeightUnit")
-                .Include("WorkoutLogEntry")
-                .Where(set => set.Exercise.Id.Equals(exerciseId) && set.WorkoutLogEntry.User.Id.Equals(userId))
-                .OrderByDescending(set => set.WorkoutLogEntry.EntryDateUTC)
+            var history = await context.ExerciseHistory
+                .Where(line => line.ExerciseId.Equals(exerciseId) && line.UserId.Equals(userId))
+                .OrderByDescending(line => line.EntryDateUTC)
                 .Take(pageSize)
-                .Select(set => new ExerciseHistoryDto()
+                .Select(line => new ExerciseHistoryDto()
                 {
-                    EntryDateUTC = set.WorkoutLogEntry.EntryDateUTC,
-                    Weight = set.Weight,
-                    WeightUnit = set.WeightUnit == null ? "" : set.WeightUnit.Abbreviation,
-                    Reps = set.Reps,
-                    TargetReps = set.TargetReps,
-                    RPE = set.RPE
-                });
+                    EntryDateUTC = line.EntryDateUTC,
+                    BodyWeightKg = line.BodyWeightKg,
+                    BodyWeightLbs = line.WeightLbs,
+                    WeightKg = line.WeightKg,
+                    WeightLbs = line.WeightLbs,
+                    Reps = line.Reps,
+                    TargetReps = line.TargetReps,
+                    RPE = line.RPE
+                }).ToListAsync();
+            return history;
         }
 
         public async Task CreateExercise(string name, Guid userId)
