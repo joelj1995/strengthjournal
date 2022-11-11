@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using StrengthJournal.DataAccess.Model;
+using StrengthJournal.DataAccess.Model.Virtual;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,7 @@ namespace StrengthJournal.DataAccess.Contexts
         public DbSet<WorkoutLogEntry> WorkoutLogEntries { get; set; }
         public DbSet<WorkoutLogEntrySet> WorkoutLogEntrySets { get; set; }
         public DbSet<WeightUnit> WeightUnits { get; set; }
+        public DbSet<ExerciseHistoryLine> ExerciseHistory { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -54,6 +56,10 @@ namespace StrengthJournal.DataAccess.Contexts
                         RatioToKg = 1.0M
                     }
                 );
+
+            modelBuilder.Entity<ExerciseHistoryLine>()
+                .ToView("vwExerciseHistory")
+                .HasNoKey();
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
