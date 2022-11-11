@@ -1,1 +1,24 @@
-<p>Editing {{exerciseId}}</p>
+<div class="row">
+  <div class="col-12">
+    <app-card cardTitle="Exercise History" [collapseBody]="exerciseId ? true : false">
+      <div *ngIf="exerciseId; else noExerciseSelected">
+        <table class="table table-striped no-footer">
+          <thead>
+            <tr>
+              <th>Weight</th>
+              <th>Reps</th>
+              <th>Target Reps</th>
+              <th>RPE</th>
+            </tr>
+          </thead>
+          <tbody>
+
+          </tbody>
+        </table>
+      </div>
+      <ng-template #noExerciseSelected>
+        <p>Choose an exercise from the picker to see its recent history.</p>
+      </ng-template>
+    </app-card>
+  </div>
+</div>
