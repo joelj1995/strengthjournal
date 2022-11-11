@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { ExerciseService } from 'src/app/services/exercise.service';
 
 @Component({
   selector: 'app-exercise-history-view',
@@ -7,12 +8,29 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class ExerciseHistoryViewComponent implements OnInit {
 
+  loading: boolean = true;
+
   @Input()
   exerciseId: string | null = null;
 
-  constructor() { }
+  constructor(private exercises: ExerciseService) { }
 
   ngOnInit(): void {
+    this.loadExerciseHistory();
+  }
+
+  ngOnChanges(): void {
+    this.loadExerciseHistory();
+  }
+
+  loadExerciseHistory() {
+    this.loading = true;
+    if (!this.exerciseId) {
+      return;
+    }
+    this.exercises.getExerciseHistory(this.exerciseId).subscribe(historyList => {
+      console.log(historyList);
+    })
   }
 
 }

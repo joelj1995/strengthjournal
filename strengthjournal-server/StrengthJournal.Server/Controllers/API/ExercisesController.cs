@@ -27,6 +27,21 @@ namespace StrengthJournal.Server.Controllers.API
             var exercise = await exerciseService.GetExercises(userId);
             return Ok(exercise);
         }
+        
+        [HttpGet("{exerciseId:Guid}/history")]
+        public async Task<ActionResult<IEnumerable<ExerciseHistoryDto>>> GetExerciseHistory([FromRoute] Guid exerciseId)
+        {
+            var userId = HttpContext.GetUserId();
+            try
+            {
+                var history = await exerciseService.GetExerciseHistory(userId, exerciseId, 10);
+                return Ok(history);
+            }
+            catch (EntityNotFoundException)
+            {
+                return NotFound();
+            }
+        }
 
         [HttpPost("")]
         public async Task<ActionResult> CreateExercise([FromBody]ExerciseCreationDto exercise)

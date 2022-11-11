@@ -2,6 +2,7 @@ import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http'
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Exercise } from '../model/exercise';
+import { ExerciseHistory } from '../model/exercise-history';
 import { StrengthjournalBaseService } from './strengthjournalbase.service';
 
 @Injectable({
@@ -13,6 +14,10 @@ export class ExerciseService extends StrengthjournalBaseService {
 
   getExercises(): Observable<Exercise[]> {
     return this.http.get<Exercise[]>(`${this.BASE_URL}/exercises`);
+  }
+
+  getExerciseHistory(exerciseId: string): Observable<ExerciseHistory[]> {
+    return this.http.get<ExerciseHistory[]>(`${this.BASE_URL}/exercises/${exerciseId}/history`);
   }
 
   createExercise(name: string): Observable<void> {
