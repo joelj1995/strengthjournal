@@ -57,7 +57,6 @@ export class WorkoutDetailsEditorComponent implements OnInit {
   }
 
   ngOnChanges() {
-    console.log(this.bodyweightUnit);
     this.bindInputDateToPicker();
   }
 
@@ -68,7 +67,9 @@ export class WorkoutDetailsEditorComponent implements OnInit {
     if (time) {
       dateString += ` ${time.hour}:${time.minute}`;
     }
-    return new Date(dateString);
+    dateString += ' UTC';
+    const returnDate = new Date(dateString);
+    return returnDate;
   }
 
   onSubmit() {
