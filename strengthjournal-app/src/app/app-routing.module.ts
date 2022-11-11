@@ -12,9 +12,9 @@ import { ViewExerciseComponent } from './pages/exercises/view-exercise.component
 const routes: Routes = [
   { path: '', component: DashboardComponent },
   { path: 'exercises', component: ListExercisesComponent },
-  { path: 'exercises/:id', component: ViewExerciseComponent },
   { path: 'exercises/new', component: NewExerciseComponent },
   { path: 'exercises/edit/:id', component: EditExerciseComponent },
+  { path: 'exercises/:id', component: ViewExerciseComponent },
   { path: 'workouts', component: ListWorkoutsComponent },
   { path: 'workouts/new', component: NewWorkoutComponent },
   { path: 'workouts/edit/:id', component: EditWorkoutComponent }
