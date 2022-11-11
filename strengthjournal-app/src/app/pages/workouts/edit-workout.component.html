@@ -79,10 +79,13 @@
   </div>
 </div>
 
-<app-exercise-history-view 
-  [exerciseId]="setBeingUpdated ? updateSetForm.value.exerciseId : newSetForm.value.exerciseId"
-  [displayKg]="sharedSetForm.value.weightUnit == 'kg'">
-</app-exercise-history-view>
+<div class="row">
+  <div class="col-12">
+    <app-exercise-history [exerciseId]="setBeingUpdated ? updateSetForm.value.exerciseId : newSetForm.value.exerciseId"
+      [displayKg]="sharedSetForm.value.weightUnit == 'kg'">
+    </app-exercise-history>
+  </div>
+</div>
 
 <app-workout-details-editor 
   [workoutId]="id"

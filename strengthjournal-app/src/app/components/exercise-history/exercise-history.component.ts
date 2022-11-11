@@ -1,13 +1,13 @@
-import { Component, Input, OnInit, SimpleChange, SimpleChanges } from '@angular/core';
+import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import { ExerciseHistory } from 'src/app/model/exercise-history';
 import { ExerciseService } from 'src/app/services/exercise.service';
 
 @Component({
-  selector: 'app-exercise-history-view',
-  templateUrl: './exercise-history-view.component.html',
-  styleUrls: ['./exercise-history-view.component.css']
+  selector: 'app-exercise-history',
+  templateUrl: './exercise-history.component.html',
+  styleUrls: ['./exercise-history.component.css']
 })
-export class ExerciseHistoryViewComponent implements OnInit {
+export class ExerciseHistoryComponent implements OnInit {
 
   historyList: ExerciseHistory[] = [];
   loading: boolean = true;
