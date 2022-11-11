@@ -14,5 +14,7 @@ namespace StrengthJournal.DataAccess.Model
         public string FullName { get; set; }
         [MaxLength(20)]
         public string Abbreviation { get; set; }
+        [Required]
+        public decimal RatioToKg { get; set; }
     }
 }

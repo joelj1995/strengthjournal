@@ -43,13 +43,15 @@ namespace StrengthJournal.DataAccess.Contexts
                     {
                         Id = Guid.Parse("BF8DF35B-2F45-4A79-A49C-D3ACA4A12CD6"),
                         FullName = "Pounds",
-                        Abbreviation = "lbs"
+                        Abbreviation = "lbs",
+                        RatioToKg = 2.2M
                     },
                     new WeightUnit()
                     {
                         Id = Guid.Parse("4BC96550-F274-4A90-978B-92A398F8C49D"),
                         FullName = "Kilograms",
-                        Abbreviation = "kg"
+                        Abbreviation = "kg",
+                        RatioToKg = 1.0M
                     }
                 );
         }
