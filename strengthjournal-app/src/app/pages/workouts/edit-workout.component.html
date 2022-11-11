@@ -75,11 +75,11 @@
           </div>
         </div>
       </ng-template>
-      
-      
     </app-card>
   </div>
 </div>
+
+<app-exercise-history-view [exerciseId]="setBeingUpdated ? updateSetForm.value.exerciseId : newSetForm.value.exerciseId"></app-exercise-history-view>
 
 <app-workout-details-editor 
   [workoutId]="id"

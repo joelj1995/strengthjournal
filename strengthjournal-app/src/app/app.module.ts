@@ -29,6 +29,7 @@ import { AppErrorHandler } from './app-error-handler';
 import { TokenInterceptor } from './token-interceptor';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { WorkoutDetailsEditorComponent } from './pages/workouts/workout-details-editor.component';
+import { ExerciseHistoryViewComponent } from './pages/workouts/exercise-history-view.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { WorkoutDetailsEditorComponent } from './pages/workouts/workout-details-
     TableActionsComponent,
     EditExerciseComponent,
     RPEPipe,
-    WorkoutDetailsEditorComponent
+    WorkoutDetailsEditorComponent,
+    ExerciseHistoryViewComponent
   ],
   imports: [
     BrowserModule,
