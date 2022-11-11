@@ -16,10 +16,10 @@
           <tbody>
             <tr *ngFor="let history of historyList">
               <td>{{history.entryDateUTC | date:'short'}}</td>
-              <td *ngIf="displayKg">{{history.bodyWeightKg ?? 'N/A'}} kg</td>
-              <td *ngIf="!displayKg">{{history.bodyWeightLbs ?? 'N/A'}} lbs</td>
-              <td *ngIf="displayKg">{{history.weightKg ?? 'N/A'}} kg</td>
-              <td *ngIf="!displayKg">{{history.weightLbs ?? 'N/A'}} lbs</td>
+              <td *ngIf="displayKg">{{history.bodyWeightKg?.toFixed(2) ?? 'N/A'}} kg </td>
+              <td *ngIf="!displayKg">{{history.bodyWeightLbs?.toFixed(2) ?? 'N/A'}} lbs</td>
+              <td *ngIf="displayKg">{{history.weightKg?.toFixed(2) ?? 'N/A'}} kg </td>
+              <td *ngIf="!displayKg">{{history.weightLbs?.toFixed(2) ?? 'N/A'}} lbs</td>
               <td>{{history.reps}}</td>
               <td>{{history.targetReps}}</td>
               <td>{{history.rpe}}</td>
