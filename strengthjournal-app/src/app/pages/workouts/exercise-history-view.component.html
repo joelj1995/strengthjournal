@@ -6,6 +6,7 @@
           <thead>
             <tr>
               <th>Date</th>
+              <th>Body Weight</th>
               <th>Weight</th>
               <th>Reps</th>
               <th>Target Reps</th>
@@ -15,7 +16,10 @@
           <tbody>
             <tr *ngFor="let history of historyList">
               <td>{{history.entryDateUTC | date:'short'}}</td>
-              <td>{{history.weightKg}}</td>
+              <td *ngIf="displayKg">{{history.bodyWeightKg ?? 'N/A'}} kg</td>
+              <td *ngIf="!displayKg">{{history.bodyWeightLbs ?? 'N/A'}} lbs</td>
+              <td *ngIf="displayKg">{{history.weightKg ?? 'N/A'}} kg</td>
+              <td *ngIf="!displayKg">{{history.weightLbs ?? 'N/A'}} lbs</td>
               <td>{{history.reps}}</td>
               <td>{{history.targetReps}}</td>
               <td>{{history.rpe}}</td>

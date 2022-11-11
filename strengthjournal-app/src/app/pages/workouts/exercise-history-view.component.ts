@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, SimpleChange, SimpleChanges } from '@angular/core';
 import { ExerciseHistory } from 'src/app/model/exercise-history';
 import { ExerciseService } from 'src/app/services/exercise.service';
 
@@ -15,14 +15,17 @@ export class ExerciseHistoryViewComponent implements OnInit {
   @Input()
   exerciseId: string | null = null;
 
+  @Input()
+  displayKg: boolean = true;
+
   constructor(private exercises: ExerciseService) { }
 
   ngOnInit(): void {
     this.loadExerciseHistory();
   }
 
-  ngOnChanges(): void {
-    this.loadExerciseHistory();
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['exerciseId']) this.loadExerciseHistory();
   }
 
   loadExerciseHistory() {
