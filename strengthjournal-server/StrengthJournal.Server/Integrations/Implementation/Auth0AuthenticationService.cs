@@ -16,10 +16,10 @@ namespace StrengthJournal.Server.Integrations.Implementation
 
         public Auth0AuthenticationService()
         {
-            clientSecret = "XtCYN0xD2JrDyZN6hFj37qm8aVkyGhJmPipPbS3xcZfaoHmfB3Yb4txgGUsZJq__"; // TODO: inject this
-            clientId = "KYRJbp51UUhR91b1B1oGWh3zgbpAmNau";
-            audience = "https://localhost:7080/api";
-            client = new RestClient("https://dev-bs65rtlog25jigd0.us.auth0.com/");
+            clientSecret = StrengthJournalConfiguration.Instance.Auth0_ClientSecret;
+            clientId = StrengthJournalConfiguration.Instance.Auth0_ClientId;
+            audience = StrengthJournalConfiguration.Instance.Auth0_Audience;
+            client = new RestClient(StrengthJournalConfiguration.Instance.Auth0_BaseURL);
             connection = "Username-Password-Authentication";
         }
 
