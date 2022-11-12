@@ -46,13 +46,18 @@ namespace StrengthJournal.Server.Controllers
         [Route("login")]
         public IActionResult Login([FromQuery] bool wrongPassword = false, [FromQuery] bool serviceFailure = false)
         {
-            return View();
+            string? loginError = null;
+            if (wrongPassword)
+                loginError = "The email and password combination that you used is incorrect.";
+            else if (serviceFailure)
+                loginError = "We encountered an unexpected error trying to log you in. Please try again.";
+            return View(new LoginModel() { Email = "", Password = "", Error = loginError });
         }
 
         [Route("signup")]
         public IActionResult SignUp([FromQuery] string errorMessage)
         {
-            return View();
+            return View(new SignUpModel() { Email = "", Password = "", Password2 = "", Error = errorMessage == String.Empty ? null : errorMessage });
         }
 
         [HttpPost]

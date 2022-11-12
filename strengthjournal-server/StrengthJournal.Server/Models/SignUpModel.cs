@@ -10,6 +10,6 @@ namespace StrengthJournal.Server.Models
         public string Password { get; set; }
         [Required]
         public string Password2 { get; set; }
-        public string ErrorMessage { get; set; } = string.Empty;
+        public string? Error { get; set; }
     }
 }
