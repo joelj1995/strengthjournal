@@ -32,6 +32,7 @@ import { WorkoutDetailsEditorComponent } from './pages/workouts/workout-details-
 import { ExerciseHistoryComponent } from './components/exercise-history/exercise-history.component';
 import { ViewExerciseComponent } from './pages/exercises/view-exercise.component';
 import { FooterComponent } from './footer/footer.component';
+import { ToastComponent } from './components/toast/toast.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import { FooterComponent } from './footer/footer.component';
     WorkoutDetailsEditorComponent,
     ExerciseHistoryComponent,
     ViewExerciseComponent,
-    FooterComponent
+    FooterComponent,
+    ToastComponent
   ],
   imports: [
     BrowserModule,

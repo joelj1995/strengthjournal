@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { TestBed } from '@angular/core/testing';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Exercise } from 'src/app/model/exercise';
 import { Workout } from 'src/app/model/workout';
 import { WorkoutSet } from 'src/app/model/workout-set';
 import { ExerciseService } from 'src/app/services/exercise.service';
+import { ToastService } from 'src/app/services/toast.service';
 import { WorkoutService } from 'src/app/services/workout.service';
 import { v4 as uuidv4 } from 'uuid';
 // import { RPEPipe } from 'src/app/pipes/rpe-format-pipe';
@@ -32,7 +34,7 @@ export class EditWorkoutComponent implements OnInit {
     bodyweightUnit: ''
   };
   exerciseList: Exercise[] = [];
-  constructor(private route: ActivatedRoute, private workouts: WorkoutService, private exercises : ExerciseService) { }
+  constructor(private route: ActivatedRoute, private workouts: WorkoutService, private exercises : ExerciseService, private toast: ToastService) { }
 
   sharedSetForm = new FormGroup({
     weightUnit: new FormControl('lbs')
@@ -71,8 +73,7 @@ export class EditWorkoutComponent implements OnInit {
   logNewSet() {
     const setData = this.setBeingUpdated ? this.updateSetForm.value : this.newSetForm.value;
     if (!setData.exerciseId) {
-      alert('Exercise name is required');
-      // TODO: Convert this to toast
+      this.toast.setToast({ message: 'Exercise name is requried', domClass: 'bg-danger text-light' });
       return;
     }
     const newWorkoutSet: WorkoutSet = {
