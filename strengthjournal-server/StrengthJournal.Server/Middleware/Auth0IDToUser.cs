@@ -21,7 +21,7 @@ namespace StrengthJournal.Server.Middleware
             var auth0UserId = httpContext.User.Identity?.Name;
             if (auth0UserId != null)
             {
-                var dbUser = await strengthJournalContext.Users.FirstOrDefaultAsync(u => u.Handle == auth0UserId);
+                var dbUser = await strengthJournalContext.Users.FirstOrDefaultAsync(u => u.ExternalId == auth0UserId);
                 Guid? dbUserId = null;
                 if (dbUser != null)
                 {
@@ -31,7 +31,7 @@ namespace StrengthJournal.Server.Middleware
                 {
                     var newUser = new StrengthJournal.DataAccess.Model.User()
                     {
-                        Handle = auth0UserId,
+                        ExternalId = auth0UserId,
                     };
                     strengthJournalContext.Users.Add(newUser);
                     await strengthJournalContext.SaveChangesAsync();

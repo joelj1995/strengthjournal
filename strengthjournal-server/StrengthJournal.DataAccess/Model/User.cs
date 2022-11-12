@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace StrengthJournal.DataAccess.Model
 {
-    [Index(nameof(Handle))]
+    [Index(nameof(ExternalId))]
     public class User
     {
         public Guid Id { get; set; }
         [MaxLength(255)]
-        public string Handle { get; set; }
+        public string ExternalId { get; set; }
     }
 }
