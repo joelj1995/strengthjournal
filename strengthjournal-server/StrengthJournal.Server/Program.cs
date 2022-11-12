@@ -11,6 +11,8 @@ using System.Security.Claims;
 
 var builder = WebApplication.CreateBuilder(args);
 
+StrengthJournalConfiguration.Instance.Init(builder.Configuration);
+
 builder.Services
     .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>

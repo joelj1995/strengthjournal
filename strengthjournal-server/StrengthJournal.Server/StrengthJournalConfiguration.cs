@@ -1,4 +1,7 @@
-﻿namespace StrengthJournal.Server
+﻿using Azure.Identity;
+using Azure.Security.KeyVault.Secrets;
+
+namespace StrengthJournal.Server
 {
     public sealed class StrengthJournalConfiguration
     {
@@ -9,6 +12,18 @@
         public string Auth0_ClientId { get; private set; }
         public string Auth0_Audience { get; private set; }
         public string Auth0_BaseURL { get; private set; }
+        public string TestSecret { get; private set; } = "Not Set";
+
+        public void Init(IConfiguration configuration)
+        {
+            if (configuration["AzKeyVaultEndpoint"] != null)
+            {
+                var client = new SecretClient(vaultUri: new Uri(configuration["AzKeyVaultEndpoint"]), credential: new DefaultAzureCredential());
+                KeyVaultSecret secret = client.GetSecret("TestSecret");
+                var value = secret.Value;
+                TestSecret = value;
+            }
+        }
 
         private StrengthJournalConfiguration()
         {
