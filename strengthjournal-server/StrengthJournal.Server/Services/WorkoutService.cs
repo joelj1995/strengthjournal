@@ -60,20 +60,25 @@ namespace StrengthJournal.Server.Services
                 BodyweightUnit = workout.BodyWeightPITUnit?.Abbreviation ?? "",
                 Sets = workout.Sets
                     .OrderBy(s => s.Sequence)
-                    .Select(set => new WorkoutSetSync { Id = set.Id, ExerciseId = set.Exercise.Id, ExerciseName = set.Exercise.Name, Reps = set.Reps, TargetReps = set.TargetReps, Weight = set.Weight, WeightUnit = set.WeightUnit?.Abbreviation ?? "", RPE = set.RPE })
+                    .Select(set => _mapper.Map<WorkoutSetSync>(set))
             };
         }
 
         public async Task<IEnumerable<WorkoutSetSync>> GetWorkoutSets(Guid userId, Guid workoutId)
         {
             var user = context.Users.Single(u => u.Id == userId);
-            var workout = await context.WorkoutLogEntries.Include(wle => wle.Sets).Include("Sets.Exercise").Include("Sets.WeightUnit").FirstOrDefaultAsync(wle => wle.Id == workoutId && wle.User == user);
+            var workout = await context.WorkoutLogEntries
+                .Include(wle => wle.Sets)
+                .Include("Sets.Exercise")
+                .Include("Sets.WeightUnit")
+                .FirstOrDefaultAsync(wle => wle.Id == workoutId && wle.User == user);
             if (workout == null)
             {
                 throw new EntityNotFoundException();
             }
-            // TODO: implement automapper to make this less painful
-            return workout.Sets.OrderBy(s => s.Sequence).Select(set => new WorkoutSetSync { Id = set.Id, ExerciseId = set.Exercise.Id, ExerciseName = set.Exercise.Name, Reps = set.Reps, TargetReps = set.TargetReps, Weight = set.Weight, WeightUnit = set.WeightUnit?.Abbreviation ?? "", RPE = set.RPE });
+            return workout.Sets
+                .OrderBy(s => s.Sequence)
+                .Select(set => _mapper.Map<WorkoutSetSync>(set));
         }
 
         public async Task SyncWorkoutSet(Guid userId, Guid workoutId, WorkoutSetSync set)

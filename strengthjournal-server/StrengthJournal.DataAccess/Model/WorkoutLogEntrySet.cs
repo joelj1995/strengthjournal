@@ -17,5 +17,6 @@ namespace StrengthJournal.DataAccess.Model
         public decimal? Weight { get; set; }
         public WeightUnit? WeightUnit { get; set; }
         public uint? RPE { get; set; }
+        public string WeightUnitAbbreviation { get => WeightUnit?.Abbreviation ?? ""; }
     }
 }

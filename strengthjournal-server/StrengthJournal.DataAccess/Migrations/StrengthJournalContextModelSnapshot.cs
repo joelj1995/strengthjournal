@@ -43,7 +43,7 @@ namespace StrengthJournal.DataAccess.Migrations
 
                     b.HasIndex("CreatedByUserId");
 
-                    b.ToTable("Exercises");
+                    b.ToTable("Exercises", (string)null);
 
                     b.HasData(
                         new
@@ -78,7 +78,7 @@ namespace StrengthJournal.DataAccess.Migrations
 
                     b.HasIndex("ExternalId");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("StrengthJournal.DataAccess.Model.Virtual.ExerciseHistoryLine", b =>
@@ -137,7 +137,7 @@ namespace StrengthJournal.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("WeightUnits");
+                    b.ToTable("WeightUnits", (string)null);
 
                     b.HasData(
                         new
@@ -189,7 +189,7 @@ namespace StrengthJournal.DataAccess.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("WorkoutLogEntries");
+                    b.ToTable("WorkoutLogEntries", (string)null);
                 });
 
             modelBuilder.Entity("StrengthJournal.DataAccess.Model.WorkoutLogEntrySet", b =>
@@ -230,7 +230,7 @@ namespace StrengthJournal.DataAccess.Migrations
 
                     b.HasIndex("WorkoutLogEntryId");
 
-                    b.ToTable("WorkoutLogEntrySets");
+                    b.ToTable("WorkoutLogEntrySets", (string)null);
                 });
 
             modelBuilder.Entity("StrengthJournal.DataAccess.Model.Exercise", b =>

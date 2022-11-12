@@ -9,6 +9,10 @@ namespace StrengthJournal.Server.AutoMapperProfiles
         public WorkoutProfile()
         {
             CreateMap<WorkoutLogEntry, WorkoutListDto>();
+            CreateMap<WorkoutLogEntrySet, WorkoutSetSync>()
+                .ForMember(
+                    dest => dest.WeightUnit,
+                    opt => opt.MapFrom(src => src.WeightUnitAbbreviation));
         }
     }
 }
