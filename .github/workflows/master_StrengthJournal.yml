@@ -21,11 +21,15 @@ jobs:
         with:
           node-version: '18.x'
           
-      - name: Build SPA
+      - name: Inject build commit SHA
         working-directory: ./strengthjournal-app
         run: |
-          npm install
-          npm run build
+            npm install
+            node .\inject-build-metadata.js -r '${{github.sha}}'
+          
+      - name: Build SPA
+        working-directory: ./strengthjournal-app
+        run: npm run build
 
       - name: Set up .NET Core
         uses: actions/setup-dotnet@v1
