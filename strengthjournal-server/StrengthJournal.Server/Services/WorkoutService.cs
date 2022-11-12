@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using StrengthJournal.DataAccess.Contexts;
 using StrengthJournal.DataAccess.Model;
 using StrengthJournal.Server.ApiModels;
@@ -9,19 +10,21 @@ namespace StrengthJournal.Server.Services
     public class WorkoutService
     {
         protected readonly StrengthJournalContext context;
-        public WorkoutService(StrengthJournalContext context)
+        protected readonly IMapper _mapper;
+
+        public WorkoutService(StrengthJournalContext context, IMapper mapper)
         {
             this.context = context;
+            this._mapper = mapper;
         }
 
         public async Task<IEnumerable<WorkoutListDto>> GetWorkouts(Guid userId)
         {
-            return await context.WorkoutLogEntries.Where(wle => wle.User.Id.Equals(userId)).OrderBy(wle => wle.EntryDateUTC).Select(wle => new WorkoutListDto()
-            {
-                Id = wle.Id,
-                Title = wle.Title,
-                EntryDateUTC = wle.EntryDateUTC
-            }).ToListAsync();
+            var workouts = await context.WorkoutLogEntries
+                .Where(wle => wle.User.Id.Equals(userId))
+                .OrderBy(wle => wle.EntryDateUTC)
+                .ToListAsync();
+            return workouts.Select(w => _mapper.Map<WorkoutListDto>(w));
         }
 
         public async Task<Guid> CreateWorkout(Guid userId, WorkoutCreationUpdateDto workout)
