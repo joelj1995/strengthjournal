@@ -16,6 +16,17 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Set up Node.js version
+        uses: actions/setup-node@v1
+        with:
+          node-version: '18.x'
+          
+      - name: Build SPA
+        working-directory: ./strengthjournal-app
+        run: |
+          npm install
+          npm run build
+
       - name: Set up .NET Core
         uses: actions/setup-dotnet@v1
         with:
@@ -34,7 +45,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: .net-app
-          path: ${{env.DOTNET_ROOT}}/myapp
+          path: ${{env.DOTNET_ROOT}}/strengthjournal-server/myapp
 
   deploy:
     runs-on: windows-latest
