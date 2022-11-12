@@ -27,7 +27,7 @@ builder.Services
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<StrengthJournalContext>(options =>
 {
-    options.UseSqlServer(StrengthJournalConfiguration.Instance.SqlService_ConnectionString);
+    options.UseSqlServer(StrengthJournalConfiguration.Instance.SqlServer_ConnectionString);
 });
 
 builder.Services.AddScoped<ExerciseService>();
