@@ -27,7 +27,9 @@ namespace StrengthJournal.Server.Controllers
                 case AuthenticationResponse.AuthResult.WrongPassword:
                     return RedirectToAction("Login", new { wrongPassword = true });
                 case AuthenticationResponse.AuthResult.ServiceFailure:
-                    return RedirectToAction("Login", new { wrongPassword = true });
+                    return RedirectToAction("Login", new { serviceFailure = true });
+                case AuthenticationResponse.AuthResult.EmailNotVerified:
+                    return RedirectToAction("Login", new { notVerified = true });
                 case AuthenticationResponse.AuthResult.Success:
                     return View(new SubmitLoginModel(result.Token, loginModel.Email));
                 default:
@@ -44,13 +46,15 @@ namespace StrengthJournal.Server.Controllers
         }
 
         [Route("login")]
-        public IActionResult Login([FromQuery] bool wrongPassword = false, [FromQuery] bool serviceFailure = false)
+        public IActionResult Login([FromQuery] bool wrongPassword = false, [FromQuery] bool serviceFailure = false, [FromQuery] bool notVerified = false)
         {
             string? loginError = null;
             if (wrongPassword)
                 loginError = "The email and password combination that you used is incorrect.";
             else if (serviceFailure)
                 loginError = "We encountered an unexpected error trying to log you in. Please try again.";
+            else if (notVerified)
+                loginError = "You must confirm your email address before you can continue.";
             return View(new LoginModel() { Email = "", Password = "", Error = loginError });
         }
 

@@ -6,10 +6,12 @@
         {
             Success,
             WrongPassword,
-            ServiceFailure
+            ServiceFailure,
+            EmailNotVerified
         }
 
         public AuthResult Result;
         public string? Token;
+        public dynamic? Profile { get; set; }
     }
 }

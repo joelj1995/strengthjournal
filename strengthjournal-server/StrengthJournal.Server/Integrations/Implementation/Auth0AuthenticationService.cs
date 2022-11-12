@@ -35,7 +35,7 @@ namespace StrengthJournal.Server.Integrations.Implementation
             {
                 var request = new RestRequest("oauth/token", Method.Post);
                 request.AddHeader("content-type", "application/x-www-form-urlencoded");
-                request.AddParameter("application/x-www-form-urlencoded", $"grant_type=password&username={username}&password={password}&audience={audience}&client_id={clientId}&client_secret={clientSecret}", ParameterType.RequestBody);
+                request.AddParameter("application/x-www-form-urlencoded", $"grant_type=password&scope=openid&username={username}&password={password}&audience={audience}&client_id={clientId}&client_secret={clientSecret}", ParameterType.RequestBody);
                 var response = client.Execute(request);
                 if (response.StatusCode == HttpStatusCode.Forbidden)
                 {
@@ -46,10 +46,24 @@ namespace StrengthJournal.Server.Integrations.Implementation
                 }
                 else if (response.StatusCode == HttpStatusCode.OK)
                 {
+                    var token = ExtractTokenFromResponse(response.Content);
+                    var userInfoRequest = new RestRequest("userinfo", Method.Get);
+                    userInfoRequest.AddOrUpdateHeader("Authorization", $"Bearer {token}");
+                    var userInfoResponse = client.Execute(userInfoRequest);
+                    userInfoResponse.ThrowIfError();
+                    dynamic profileData = JsonConvert.DeserializeObject(userInfoResponse.Content);
+                    if (profileData.email_verified != "True")
+                    {
+                        return new AuthenticationResponse()
+                        {
+                            Result = AuthenticationResponse.AuthResult.EmailNotVerified
+                        };
+                    }
                     return new AuthenticationResponse()
                     {
                         Result = AuthenticationResponse.AuthResult.Success,
-                        Token = ExtractTokenFromResponse(response.Content)
+                        Token = token,
+                        Profile = profileData
                     };
                 }
                 else
