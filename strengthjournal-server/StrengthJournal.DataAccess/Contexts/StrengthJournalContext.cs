@@ -17,6 +17,7 @@ namespace StrengthJournal.DataAccess.Contexts
         public DbSet<WorkoutLogEntrySet> WorkoutLogEntrySets { get; set; }
         public DbSet<WeightUnit> WeightUnits { get; set; }
         public DbSet<ExerciseHistoryLine> ExerciseHistory { get; set; }
+        public DbSet<AppError> AppErrors { get; set; }
 
         public StrengthJournalContext(DbContextOptions options) : base(options)
         { }
