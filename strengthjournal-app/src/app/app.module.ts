@@ -31,6 +31,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { WorkoutDetailsEditorComponent } from './pages/workouts/workout-details-editor.component';
 import { ExerciseHistoryComponent } from './components/exercise-history/exercise-history.component';
 import { ViewExerciseComponent } from './pages/exercises/view-exercise.component';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import { ViewExerciseComponent } from './pages/exercises/view-exercise.component
     RPEPipe,
     WorkoutDetailsEditorComponent,
     ExerciseHistoryComponent,
-    ViewExerciseComponent
+    ViewExerciseComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
