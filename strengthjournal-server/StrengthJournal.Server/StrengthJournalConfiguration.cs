@@ -5,6 +5,7 @@ namespace StrengthJournal.Server
 {
     public sealed class StrengthJournalConfiguration
     {
+        private readonly IConfiguration _configuration;
         private static StrengthJournalConfiguration? instance;
 
         public string SqlServer_ConnectionString { get; private set; }
@@ -21,25 +22,35 @@ namespace StrengthJournal.Server
             instance = new StrengthJournalConfiguration(configuration);
         }
 
-        public string GetSecret(SecretClient client, string secretName)
+        public string GetSecret(string secretName)
         {
-            KeyVaultSecret secret = client.GetSecret(secretName);
-            return secret.Value;
+            if (_configuration["AzKeyVaultEndpoint"] != null)
+            {
+                var client = new SecretClient(vaultUri: new Uri(_configuration["AzKeyVaultEndpoint"]), credential: new DefaultAzureCredential());
+                KeyVaultSecret secret = client.GetSecret(secretName);
+                return secret.Value;
+            }
+            else
+            {
+                return _configuration[$"Secrets:{secretName}"];
+            }
         }
 
         private StrengthJournalConfiguration(IConfiguration configuration)
         {
+            /*
+             * Get non-senstive configuration
+             */
+            _configuration = configuration;
             Auth0_Audience = configuration["Auth0:Audience"];
             Auth0_BaseURL = configuration["Auth0:BaseURL"];
-            if (configuration["AzKeyVaultEndpoint"] != null)
-            {
-                var client = new SecretClient(vaultUri: new Uri(configuration["AzKeyVaultEndpoint"]), credential: new DefaultAzureCredential());
-                TestSecret = GetSecret(client, "TestSecret");
-                SqlServer_ConnectionString = GetSecret(client, "SqlServer-ConnectionString");
-            }
-            SqlServer_ConnectionString = @"Server=localhost;Database=StrengthJournal;Trusted_Connection=True";
-            Auth0_ClientSecret = "XtCYN0xD2JrDyZN6hFj37qm8aVkyGhJmPipPbS3xcZfaoHmfB3Yb4txgGUsZJq__";
-            Auth0_ClientId = "KYRJbp51UUhR91b1B1oGWh3zgbpAmNau";
+            /*
+             * Get secrets
+             */
+            TestSecret = GetSecret("TestSecret");
+            SqlServer_ConnectionString = GetSecret("SqlServer-ConnectionString");
+            Auth0_ClientSecret = GetSecret("Auth0-ClientSecret");
+            Auth0_ClientId = GetSecret("Auth0-ClientId");
         }
 
         public static StrengthJournalConfiguration Instance
