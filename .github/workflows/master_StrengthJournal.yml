@@ -39,26 +39,26 @@ jobs:
 
       - name: dotnet publish
         working-directory: ./strengthjournal-server
-        run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
+        run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/server-and-spa
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
         with:
-          name: .net-app
-          path: ${{env.DOTNET_ROOT}}/strengthjournal-server/myapp
+          name: 'server-and-spa'
+          path: ${{env.DOTNET_ROOT}}/server-and-spa
 
   deploy:
     runs-on: windows-latest
     needs: build
     environment:
-      name: 'production'
+      name: 'test'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
 
     steps:
       - name: Download artifact from build job
         uses: actions/download-artifact@v2
         with:
-          name: .net-app
+          name: 'server-and-spa'
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
