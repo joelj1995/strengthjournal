@@ -1,5 +1,6 @@
 export const environment = {
   production: true,
   useResourceOwnerFlow: true,
-  api: '/api'
+  api: '/api',
+  version: '{REVISION_HASH}'
 };

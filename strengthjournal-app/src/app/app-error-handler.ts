@@ -9,7 +9,8 @@ export class AppErrorHandler implements ErrorHandler {
     const errorId = uuidv4();
     const errorData = {
       id: errorId,
-      ngData: error
+      ngData: error,
+      ngVersion: environment.version
     };
     localStorage.setItem('app_error', JSON.stringify(errorData));
     if (environment.production) {
