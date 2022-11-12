@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using StrengthJournal.DataAccess.Contexts;
+using StrengthJournal.Server;
 using StrengthJournal.Server.Integrations;
 using StrengthJournal.Server.Integrations.Implementation;
 using StrengthJournal.Server.Middleware;
@@ -23,7 +25,10 @@ builder.Services
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddDbContext<StrengthJournalContext>();
+builder.Services.AddDbContext<StrengthJournalContext>(options =>
+{
+    options.UseSqlServer(StrengthJournalConfiguration.Instance.SqlService_ConnectionString);
+});
 
 builder.Services.AddScoped<ExerciseService>();
 builder.Services.AddScoped<WorkoutService>();

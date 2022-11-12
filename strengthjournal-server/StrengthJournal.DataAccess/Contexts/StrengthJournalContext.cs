@@ -18,6 +18,9 @@ namespace StrengthJournal.DataAccess.Contexts
         public DbSet<WeightUnit> WeightUnits { get; set; }
         public DbSet<ExerciseHistoryLine> ExerciseHistory { get; set; }
 
+        public StrengthJournalContext(DbContextOptions options) : base(options)
+        { }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Exercise>()
@@ -64,8 +67,7 @@ namespace StrengthJournal.DataAccess.Contexts
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(
-                @"Server=localhost;Database=StrengthJournal;Trusted_Connection=True");
+
         }
     }
 }
