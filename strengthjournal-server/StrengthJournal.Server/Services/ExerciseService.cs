@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using StrengthJournal.DataAccess.Contexts;
 using StrengthJournal.Server.ApiModels;
 using StrengthJournal.Server.ServiceExceptions;
@@ -8,10 +9,12 @@ namespace StrengthJournal.Server.Services
     public class ExerciseService
     {
         protected readonly StrengthJournalContext context;
+        protected readonly IMapper _mapper;
 
-        public ExerciseService(StrengthJournalContext context)
+        public ExerciseService(StrengthJournalContext context, IMapper mapper)
         {
             this.context = context;
+            this._mapper = mapper;
         }
 
         public async Task<IEnumerable<ExerciseDto>> GetExercises(Guid userId)
@@ -27,17 +30,8 @@ namespace StrengthJournal.Server.Services
                 .Where(line => line.ExerciseId.Equals(exerciseId) && line.UserId.Equals(userId))
                 .OrderByDescending(line => line.EntryDateUTC)
                 .Take(pageSize)
-                .Select(line => new ExerciseHistoryDto()
-                {
-                    EntryDateUTC = line.EntryDateUTC,
-                    BodyWeightKg = line.BodyWeightKg,
-                    BodyWeightLbs = line.BodyWeightLbs,
-                    WeightKg = line.WeightKg,
-                    WeightLbs = line.WeightLbs,
-                    Reps = line.Reps,
-                    TargetReps = line.TargetReps,
-                    RPE = line.RPE
-                }).ToListAsync();
+                .Select(line => _mapper.Map<ExerciseHistoryDto>(line))
+                .ToListAsync();
             return history;
         }
 
