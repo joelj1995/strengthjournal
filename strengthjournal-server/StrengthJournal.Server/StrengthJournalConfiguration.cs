@@ -19,10 +19,15 @@ namespace StrengthJournal.Server
             if (configuration["AzKeyVaultEndpoint"] != null)
             {
                 var client = new SecretClient(vaultUri: new Uri(configuration["AzKeyVaultEndpoint"]), credential: new DefaultAzureCredential());
-                KeyVaultSecret secret = client.GetSecret("TestSecret");
-                var value = secret.Value;
-                TestSecret = value;
+                TestSecret = GetSecret(client, "TestSecret");
+                SqlServer_ConnectionString = GetSecret(client, "SqlServer-ConnectionString");
             }
+        }
+
+        public string GetSecret(SecretClient client, string secretName)
+        {
+            KeyVaultSecret secret = client.GetSecret(secretName);
+            return secret.Value;
         }
 
         private StrengthJournalConfiguration()
