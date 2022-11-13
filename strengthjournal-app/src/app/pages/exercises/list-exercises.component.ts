@@ -16,6 +16,8 @@ export class ListExercisesComponent implements OnInit {
 
   exerciseList: Exercise[] | null = null;
 
+  stagedDelete: string | null = null;
+
   constructor(private exercises : ExerciseService, private router: Router) { }
 
   ngOnInit(): void {
@@ -23,8 +25,18 @@ export class ListExercisesComponent implements OnInit {
   }
 
   deleteExercise(exerciseId: string) {
-    this.exercises.deleteExercise(exerciseId).subscribe(() => {
-      this.exerciseList = this.exerciseList?.filter(e => e.id !== exerciseId) ?? null;
+    this.stagedDelete = exerciseId;
+  }
+
+  dismissDeleteExercise() {
+    this.stagedDelete = null;
+  }
+
+  confirmDeleteExercise() {
+    if (this.stagedDelete == null) throw 'Tried to finalize delete but no record it staged';
+    this.exercises.deleteExercise(this.stagedDelete).subscribe(() => {
+      this.exerciseList = this.exerciseList?.filter(e => e.id !== this.stagedDelete) ?? null;
+      this.stagedDelete = null;
       this.getExercisePage();
     })
   }

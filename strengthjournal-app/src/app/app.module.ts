@@ -33,6 +33,7 @@ import { ExerciseHistoryComponent } from './components/exercise-history/exercise
 import { ViewExerciseComponent } from './pages/exercises/view-exercise.component';
 import { FooterComponent } from './footer/footer.component';
 import { ToastComponent } from './components/toast/toast.component';
+import { ConfirmDeleteComponent } from './components/confirm-delete/confirm-delete.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +54,8 @@ import { ToastComponent } from './components/toast/toast.component';
     ExerciseHistoryComponent,
     ViewExerciseComponent,
     FooterComponent,
-    ToastComponent
+    ToastComponent,
+    ConfirmDeleteComponent
   ],
   imports: [
     BrowserModule,

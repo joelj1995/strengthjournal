@@ -37,3 +37,7 @@
   </div>
 
 </div>
+
+<app-confirm-delete *ngIf="stagedDelete" (dismissDeleteEvent)="dismissDeleteExercise()" (confirmDeleteEvent)="confirmDeleteExercise()">
+  Deleting this exercise will also delete all related sets. Are you sure you would like to continue?
+</app-confirm-delete>
