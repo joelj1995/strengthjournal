@@ -16,6 +16,8 @@ export class ListWorkoutsComponent implements OnInit {
 
   workoutList: Workout[] | null = null;
 
+  stagedDelete: string | null = null;
+
   constructor(private workouts: WorkoutService, private router: Router) { }
 
   getWorkoutPage() {
@@ -30,10 +32,20 @@ export class ListWorkoutsComponent implements OnInit {
   }
 
   deleteWorkout(workoutId: string) {
-    this.workouts.deleteWorkout(workoutId).subscribe(() => {
-      this.workoutList = this.workoutList?.filter(w => w.id != workoutId) ?? null;
+    this.stagedDelete = workoutId;
+  }
+
+  dismissDeleteWorkout() {
+    this.stagedDelete = null;
+  }
+
+  confirmDeleteWorkout() {
+    if (this.stagedDelete == null) throw "Tried to finalize workout delete but no ID staged";
+    this.workouts.deleteWorkout(this.stagedDelete).subscribe(() => {
+      this.workoutList = this.workoutList?.filter(w => w.id != this.stagedDelete) ?? null;
       this.getWorkoutPage();
-    })
+      this.stagedDelete = null;
+    });
   }
 
   editWorkout(workoutId: string) {

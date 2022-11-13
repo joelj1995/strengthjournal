@@ -36,3 +36,7 @@
   </div>
 
 </div>
+
+<app-confirm-delete *ngIf="stagedDelete" (dismissDeleteEvent)="dismissDeleteWorkout()" (confirmDeleteEvent)="confirmDeleteWorkout()">
+  Deleting this workout will also delete all related sets. Are you sure you would like to continue?
+</app-confirm-delete>
