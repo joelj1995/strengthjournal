@@ -27,7 +27,7 @@ namespace StrengthJournal.Server.Services
                 .Skip(perPage * (pageNumber - 1))
                 .Take(perPage)
                 .ToListAsync();
-            var totalRecords = workoutsQuery.Count();
+            var totalRecords = await workoutsQuery.CountAsync();
             return new DataPage<WorkoutListDto>()
             {
                 PerPage = perPage,
