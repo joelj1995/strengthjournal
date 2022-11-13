@@ -103,7 +103,16 @@ namespace StrengthJournal.Server.Integrations.Implementation
         {
             var request = new RestRequest("dbconnections/signup", Method.Post);
             request.AddHeader("content-type", "application/x-www-form-urlencoded");
-            request.AddParameter("application/x-www-form-urlencoded", $"email={username}&password={password}&audience={audience}&client_id={clientId}&client_secret={clientSecret}&connection={connection}", ParameterType.RequestBody);
+            var body = UrlEncode(new Dictionary<string, string>()
+            {
+                { "email", username },
+                { "password", password },
+                { "audience", audience },
+                { "client_id", clientId },
+                { "client_secret", clientSecret },
+                { "connection", connection }
+            });
+            request.AddParameter("application/x-www-form-urlencoded", body, ParameterType.RequestBody);
             var response = client.Execute(request);
             try 
             {
