@@ -133,4 +133,22 @@ export class EditWorkoutComponent implements OnInit {
     })
   }
 
+  rowDragStart(ev: any, setId: string) {
+    console.log('Drag start ' + setId);
+    ev.dataTransfer.setData("application/my-app", setId);
+    ev.dataTransfer.dropEffect = 'move';
+  }
+
+  rowDragEnd(ev: any, setId: string) {
+    console.log('Drag end ' + setId);
+  }
+
+  rowDragOver(ev: any, setId: string) {
+    console.log('Drag over ' + setId);
+  }
+
+  rowDrop(ev: any, setId: string) {
+    console.log('Drop ' + setId);
+  }
+
 }
