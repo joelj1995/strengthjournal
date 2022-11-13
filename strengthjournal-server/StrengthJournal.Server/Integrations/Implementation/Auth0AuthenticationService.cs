@@ -164,5 +164,10 @@ namespace StrengthJournal.Server.Integrations.Implementation
             var response = client.Execute(request);
             return response.IsSuccessStatusCode;
         }
+
+        public bool ResendVerificationEmail(string username)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

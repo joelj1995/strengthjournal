@@ -54,7 +54,7 @@ namespace StrengthJournal.Server.Controllers
             else if (serviceFailure)
                 loginError = "We encountered an unexpected error trying to log you in. Please try again.";
             else if (notVerified)
-                loginError = "You must confirm your email address before you can continue.";
+                View(new LoginModel() { Email = "", Password = "", IsEmailConfirmed = false, Error = null });
             return View(new LoginModel() { Email = "", Password = "", Error = loginError });
         }
 
@@ -105,6 +105,21 @@ namespace StrengthJournal.Server.Controllers
         public IActionResult SubmitResetPassword(ResetPasswordModel model)
         {
             _authenticationService.ResetPassword(model.Email);
+            return View();
+        }
+
+        [HttpGet]
+        [Route("send-verification")]
+        public IActionResult SendEmailVerification()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [Route("send-verification")]
+        public IActionResult SubmitSendEmailVerification(string email)
+        {
+            _authenticationService.ResendVerificationEmail(email);
             return View();
         }
     }
