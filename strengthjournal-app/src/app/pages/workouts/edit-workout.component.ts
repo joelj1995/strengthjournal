@@ -155,11 +155,25 @@ export class EditWorkoutComponent implements OnInit {
 
   rowDrop(ev: any, setId: string) {
     if (this.dragId != null && this.dropId != null && this.dragId != this.dropId) {
+      let newSets = [];
       const dragIdx = this.workout.sets.findIndex(s => s.id == this.dragId);
       const dropIdx = this.workout.sets.findIndex(s => s.id == this.dropId);
-      const tempSet = this.workout.sets[dragIdx];
-      this.workout.sets[dragIdx] = this.workout.sets[dropIdx];
-      this.workout.sets[dropIdx] = tempSet;
+      for (let i = 0; i < this.workout.sets.length; i++) {
+        if ((i < dragIdx && i < dropIdx) || (i > dragIdx && i > dropIdx)) {
+          newSets.push(this.workout.sets[i]);
+        }
+        else if (i == dropIdx) {
+          newSets.push(this.workout.sets[dragIdx]);
+        }
+        else {
+          if (dragIdx < dropIdx) {
+            newSets.push(this.workout.sets[i+1]);
+          } else {
+            newSets.push(this.workout.sets[i-1]);
+          }
+        }
+      }
+      this.workout.sets = newSets;
     }
   }
 
