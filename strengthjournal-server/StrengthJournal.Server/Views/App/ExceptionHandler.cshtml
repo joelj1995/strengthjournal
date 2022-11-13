@@ -47,7 +47,7 @@ try {
     const errorData = JSON.parse(localStorage.getItem('app_error'));
     const payload = {
         id: errorData.id,
-        errorMessage: 'foo error' //errorData.ngData
+        errorMessage: errorData.ngData
     };
 
     fetch('api/error', {
@@ -58,12 +58,8 @@ try {
         },
         body: JSON.stringify(payload)
     })
-    .then(() => {
-        console.log('somehow that work')
-    })
-    .catch((error) => {
-        console.error(error);
-        console.log('that failed as expected')
+    .then(res => {
+        showStatus(true);
     })
 } catch {
     showStatus(false);
