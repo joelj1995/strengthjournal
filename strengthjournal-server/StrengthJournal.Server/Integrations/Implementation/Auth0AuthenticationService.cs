@@ -29,13 +29,29 @@ namespace StrengthJournal.Server.Integrations.Implementation
             return responseData.access_token;
         }
 
+        private string UrlEncode(IDictionary<string,string> bodyData)
+        {
+            var keyVals = bodyData.Select(keyval => $"{keyval.Key}={keyval.Value}");
+            return string.Join("&", keyVals);
+        }
+
         public AuthenticationResponse Authenticate(string username, string password)
         {
             try
             {
                 var request = new RestRequest("oauth/token", Method.Post);
                 request.AddHeader("content-type", "application/x-www-form-urlencoded");
-                request.AddParameter("application/x-www-form-urlencoded", $"grant_type=password&scope=openid&username={username}&password={password}&audience={audience}&client_id={clientId}&client_secret={clientSecret}", ParameterType.RequestBody);
+                var body = UrlEncode(new Dictionary<string, string>()
+                {
+                    { "grant_type", "password" },
+                    { "scope", "openid" },
+                    { "username", username },
+                    { "password", password },
+                    { "audience", audience },
+                    { "client_id", clientId },
+                    { "client_secret", clientSecret }
+                });
+                request.AddParameter("application/x-www-form-urlencoded", body, ParameterType.RequestBody);
                 var response = client.Execute(request);
                 if (response.StatusCode == HttpStatusCode.Forbidden)
                 {
