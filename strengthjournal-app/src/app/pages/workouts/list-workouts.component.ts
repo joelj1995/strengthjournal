@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { Router } from '@angular/router';
 import { Workout } from 'src/app/model/workout';
 import { WorkoutService } from 'src/app/services/workout.service';
@@ -10,14 +10,23 @@ import { WorkoutService } from 'src/app/services/workout.service';
 })
 export class ListWorkoutsComponent implements OnInit {
 
+  page: number = 1;
+  pageSize: number = 5;
+  collectionSize: number = 0;
+
   workoutList: Workout[] | null = null;
 
   constructor(private workouts: WorkoutService, private router: Router) { }
 
-  ngOnInit(): void {
-    this.workouts.getWorkouts(1, 5).subscribe(page => {
+  getWorkoutPage() {
+    this.workouts.getWorkouts(this.page, this.pageSize).subscribe(page => {
       this.workoutList = page.workouts;
-    })
+      this.collectionSize = page.totalRecords;
+    });
+  }
+
+  ngOnInit(): void {
+    this.getWorkoutPage();
   }
 
   deleteWorkout(workoutId: string) {

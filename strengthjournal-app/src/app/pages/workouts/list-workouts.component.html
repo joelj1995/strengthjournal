@@ -3,7 +3,8 @@
 
   <div class="col-12">
     <app-card cardTitle="My Workout List">
-      <table *ngIf="workoutList; else workoutListLoading" class="table table-striped dataTable no-footer dtr-inline collapsed">
+      <table *ngIf="workoutList; else workoutListLoading"
+        class="table table-striped dataTable no-footer dtr-inline collapsed">
         <thead>
           <tr>
             <th>Date</th>
@@ -16,7 +17,8 @@
             <td>{{workout.entryDateUTC | date:'short'}}</td>
             <td>{{workout.title}}</td>
             <td class="table-action">
-              <app-table-actions (deleteClicked)="this.deleteWorkout(workout.id)" (editClicked)="this.editWorkout(workout.id)"></app-table-actions>
+              <app-table-actions (deleteClicked)="this.deleteWorkout(workout.id)"
+                (editClicked)="this.editWorkout(workout.id)"></app-table-actions>
             </td>
           </tr>
         </tbody>
@@ -28,6 +30,7 @@
           </div>
         </div>
       </ng-template>
+      <ngb-pagination [(page)]="page" [pageSize]="pageSize" [collectionSize]="collectionSize" (pageChange)="getWorkoutPage()"></ngb-pagination>
       <button class="btn btn-primary buttons-copy buttons-html5" routerLink="new">Log New Workout</button>
     </app-card>
   </div>

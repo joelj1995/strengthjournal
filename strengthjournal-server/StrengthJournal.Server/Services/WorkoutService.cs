@@ -27,10 +27,11 @@ namespace StrengthJournal.Server.Services
                 .Skip(perPage * (pageNumber - 1))
                 .Take(perPage)
                 .ToListAsync();
+            var totalRecords = workoutsQuery.Count();
             return new WorkoutsPageDto()
             {
                 PerPage = perPage,
-                TotalPages = (workoutsQuery.Count() + perPage - 1) / perPage,
+                TotalRecords = totalRecords,
                 CurrentPage = pageNumber,
                 Workouts = workoutsPage.Select(w => _mapper.Map<WorkoutListDto>(w))
             };

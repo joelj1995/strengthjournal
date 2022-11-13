@@ -15,7 +15,7 @@ export class WorkoutService extends StrengthjournalBaseService {
   constructor(http: HttpClient) { super(http); }
 
   getWorkouts(pageNumber: number, perPage: number): Observable<WorkoutPage> {
-    return this.http.get<WorkoutPage>(`${this.BASE_URL}/workouts`);
+    return this.http.get<WorkoutPage>(`${this.BASE_URL}/workouts?pageNumber=${pageNumber}&perPage=${perPage}`);
   }
 
   createWorkout(workout: WorkoutCreateUpdate): Observable<string> {
