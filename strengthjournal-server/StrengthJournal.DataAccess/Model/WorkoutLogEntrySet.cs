@@ -12,11 +12,11 @@ namespace StrengthJournal.DataAccess.Model
         public WorkoutLogEntry WorkoutLogEntry { get; set; }
         public int Sequence { get; set; }
         public Exercise Exercise { get; set; }
-        public uint? Reps { get; set; }
-        public uint? TargetReps { get; set; }
+        public int? Reps { get; set; }
+        public int? TargetReps { get; set; }
         public decimal? Weight { get; set; }
         public WeightUnit? WeightUnit { get; set; }
-        public uint? RPE { get; set; }
+        public int? RPE { get; set; }
         public string WeightUnitAbbreviation { get => WeightUnit?.Abbreviation ?? ""; }
     }
 }
