@@ -3,6 +3,13 @@
   <div class="col-12">
     <app-card cardTitle="Workout Sets" [collapseBody]="true">
       <div [formGroup]="sharedSetForm">
+        <div style="padding-left: 20px">
+          <label>Editor help: </label>
+          <ul>
+            <li>Click on a row to edit</li>
+            <li>Drag and drop a row to change the sequence</li>
+          </ul>
+        </div>
         <label class="form-check form-check-inline">Weight unit:</label>
         <label class="form-check form-check-inline">
           <input class="form-check-input" type="radio" name="weightUnit" value="lbs" formControlName="weightUnit">
