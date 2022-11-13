@@ -6,6 +6,7 @@
       <p>
         * indicates a system exercise that cannot be deleted or modified.
       </p>
+      <button class="btn btn-primary buttons-copy buttons-html5" routerLink="new">New Exercise</button>
       <table *ngIf="exerciseList; else exerciseListLoading" class="table table-striped dataTable no-footer dtr-inline collapsed">
         <thead>
           <tr>
@@ -31,7 +32,7 @@
           </div>
         </div>
       </ng-template>
-      <button class="btn btn-primary buttons-copy buttons-html5" routerLink="new">New Exercise</button>
+      <ngb-pagination [(page)]="page" [pageSize]="pageSize" [collectionSize]="collectionSize" (pageChange)="getExercisePage()"></ngb-pagination>
     </app-card>
   </div>
 

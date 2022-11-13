@@ -61,8 +61,8 @@ export class EditWorkoutComponent implements OnInit {
   });
 
   ngOnInit(): void {
-    this.exercises.getExercises().subscribe(exercises => {
-      this.exerciseList = exercises;
+    this.exercises.getAllExercises().subscribe(page => {
+      this.exerciseList = page.data;
       this.loadingExercises = false;
     });
     this.route.params.subscribe(params => {

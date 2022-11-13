@@ -26,8 +26,8 @@ export class EditExerciseComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.enableSubmit = true;
       this.id = params['id'];
-      this.exercises.getExercises().subscribe(exercises => {
-        let exercise = exercises.find(e => e.id == this.id);
+      this.exercises.getAllExercises().subscribe(page => {
+        let exercise = page.data.find(e => e.id == this.id);
         this.form.setValue({'name': exercise?.name});
         this.loadingData = false;
       })

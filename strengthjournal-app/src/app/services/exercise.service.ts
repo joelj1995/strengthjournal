@@ -1,6 +1,7 @@
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { DataPage } from '../model/data-page';
 import { Exercise } from '../model/exercise';
 import { ExerciseHistory } from '../model/exercise-history';
 import { StrengthjournalBaseService } from './strengthjournalbase.service';
@@ -12,8 +13,12 @@ export class ExerciseService extends StrengthjournalBaseService {
 
   constructor(http: HttpClient) { super(http); }
 
-  getExercises(): Observable<Exercise[]> {
-    return this.http.get<Exercise[]>(`${this.BASE_URL}/exercises`);
+  getExercises(pageNumber: number, perPage: number): Observable<DataPage<Exercise>> {
+    return this.http.get<DataPage<Exercise>>(`${this.BASE_URL}/exercises?pageNumber=${pageNumber}&perPage=${perPage}`);
+  }
+
+  getAllExercises(): Observable<DataPage<Exercise>> {
+    return this.http.get<DataPage<Exercise>>(`${this.BASE_URL}/exercises?allRecords=true`);
   }
 
   getExerciseHistory(exerciseId: string): Observable<ExerciseHistory[]> {

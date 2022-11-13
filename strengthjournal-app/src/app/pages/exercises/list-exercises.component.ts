@@ -10,23 +10,33 @@ import { ExerciseService } from 'src/app/services/exercise.service';
 })
 export class ListExercisesComponent implements OnInit {
 
+  page: number = 1;
+  pageSize: number = 5;
+  collectionSize: number = 0;
+
   exerciseList: Exercise[] | null = null;
 
   constructor(private exercises : ExerciseService, private router: Router) { }
 
   ngOnInit(): void {
-    this.exercises.getExercises().subscribe(exercises => {
-      this.exerciseList = exercises;
-    })
+    this.getExercisePage();
   }
 
   deleteExercise(exerciseId: string) {
     this.exercises.deleteExercise(exerciseId).subscribe(() => {
       this.exerciseList = this.exerciseList?.filter(e => e.id !== exerciseId) ?? null;
+      this.getExercisePage();
     })
   }
 
   editExercise(exerciseId: string) {
     this.router.navigate(['exercises', 'edit', exerciseId]);
+  }
+
+  getExercisePage() {
+    this.exercises.getExercises(this.page, this.pageSize).subscribe(page => {
+      this.exerciseList = page.data;
+      this.collectionSize = page.totalRecords;
+    });
   }
 }

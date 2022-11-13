@@ -21,10 +21,10 @@ namespace StrengthJournal.Server.Controllers.API
         }
 
         [HttpGet("")]
-        public async Task<ActionResult<ExerciseDto>> GetExercises([FromQuery] int pageNumber = 1, [FromQuery] int perPage = 5)
+        public async Task<ActionResult<ExerciseDto>> GetExercises([FromQuery] int pageNumber = 1, [FromQuery] int perPage = 5, bool allRecords=false)
         {
             var userId = HttpContext.GetUserId();
-            var exercise = await exerciseService.GetExercises(userId, pageNumber, perPage);
+            var exercise = await exerciseService.GetExercises(userId, pageNumber, perPage, allRecords);
             return Ok(exercise);
         }
         

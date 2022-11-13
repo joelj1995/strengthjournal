@@ -17,12 +17,13 @@ namespace StrengthJournal.Server.Services
             this._mapper = mapper;
         }
 
-        public async Task<DataPage<ExerciseDto>> GetExercises(Guid userId, int pageNumber, int perPage)
+        public async Task<DataPage<ExerciseDto>> GetExercises(Guid userId, int pageNumber, int perPage, bool allRecords = false)
         {
             var user = context.Users.Single(u => u.Id == userId);
             var exercisesQuery = context.Exercises
                 .Where(e => e.CreatedByUser == null || e.CreatedByUser == user);
             var totalRecords = await exercisesQuery.CountAsync();
+            if (!allRecords) exercisesQuery = exercisesQuery.Skip(perPage * (pageNumber - 1)).Take(perPage);
             var data = await exercisesQuery
                 .Select(e => new ExerciseDto() { Id = e.Id, Name = e.Name, SystemDefined = e.CreatedByUser == null })
                 .ToListAsync();
