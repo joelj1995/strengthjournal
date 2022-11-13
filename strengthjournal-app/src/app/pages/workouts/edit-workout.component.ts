@@ -174,6 +174,11 @@ export class EditWorkoutComponent implements OnInit {
         }
       }
       this.workout.sets = newSets;
+      let newSequence = newSets.map(s => s.id);
+      this.addingSet = true;
+      this.workouts.updateWorkoutSetSequence(this.workout.id, newSequence).subscribe(() => {
+        this.addingSet = false;
+      })
     }
   }
 

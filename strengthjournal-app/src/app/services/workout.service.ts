@@ -37,6 +37,10 @@ export class WorkoutService extends StrengthjournalBaseService {
     return this.http.delete(`${this.BASE_URL}/workouts/${workoutId}/sets/${setId}`);
   }
 
+  updateWorkoutSetSequence(workoutId: string, newSequence: string[]) {
+    return this.http.put(`${this.BASE_URL}/workouts/${workoutId}/set-sequence`, { setSequence: newSequence });
+  }
+
   updateWorkout(workoutId: string, workout: WorkoutCreateUpdate) {
     return this.http.put(`${this.BASE_URL}/workouts/${workoutId}`, workout);
   }

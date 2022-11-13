@@ -98,6 +98,12 @@ namespace StrengthJournal.Server.Controllers.API
             return Ok();
         }
 
+        [HttpPut("{workoutId:Guid}/set-sequence")]
+        public async Task<ActionResult> UpdateWorkoutSetSequence(WorkoutSetSequenceDto setSequence)
+        {
+            return Ok();
+        }
+
         [HttpPut("{workoutId:Guid}")]
         public async Task<ActionResult> UpdateWorkout([FromRoute] Guid workoutId, WorkoutCreationUpdateDto workout)
         {
