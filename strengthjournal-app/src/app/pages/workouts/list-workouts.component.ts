@@ -15,8 +15,8 @@ export class ListWorkoutsComponent implements OnInit {
   constructor(private workouts: WorkoutService, private router: Router) { }
 
   ngOnInit(): void {
-    this.workouts.getWorkouts().subscribe(workouts => {
-      this.workoutList = workouts;
+    this.workouts.getWorkouts(1, 5).subscribe(page => {
+      this.workoutList = page.workouts;
     })
   }
 

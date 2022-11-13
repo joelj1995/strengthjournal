@@ -18,13 +18,22 @@ namespace StrengthJournal.Server.Services
             this._mapper = mapper;
         }
 
-        public async Task<IEnumerable<WorkoutListDto>> GetWorkouts(Guid userId)
+        public async Task<WorkoutsPageDto> GetWorkouts(Guid userId, int pageNumber, int perPage)
         {
-            var workouts = await context.WorkoutLogEntries
-                .Where(wle => wle.User.Id.Equals(userId))
-                .OrderBy(wle => wle.EntryDateUTC)
+            var workoutsQuery = context.WorkoutLogEntries
+                .Where(wle => wle.User.Id.Equals(userId));
+            var workoutsPage = await workoutsQuery
+                .OrderByDescending(wle => wle.EntryDateUTC)
+                .Skip(perPage * (pageNumber - 1))
+                .Take(perPage)
                 .ToListAsync();
-            return workouts.Select(w => _mapper.Map<WorkoutListDto>(w));
+            return new WorkoutsPageDto()
+            {
+                PerPage = perPage,
+                TotalPages = (workoutsQuery.Count() + perPage - 1) / perPage,
+                CurrentPage = pageNumber,
+                Workouts = workoutsPage.Select(w => _mapper.Map<WorkoutListDto>(w))
+            };
         }
 
         public async Task<Guid> CreateWorkout(Guid userId, WorkoutCreationUpdateDto workout)
