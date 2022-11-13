@@ -32,6 +32,7 @@ export class ListWorkoutsComponent implements OnInit {
   deleteWorkout(workoutId: string) {
     this.workouts.deleteWorkout(workoutId).subscribe(() => {
       this.workoutList = this.workoutList?.filter(w => w.id != workoutId) ?? null;
+      this.getWorkoutPage();
     })
   }
 
