@@ -1,0 +1,7 @@
+.drag-transparent {
+  opacity: 0.5;
+}
+
+.drag-border {
+  border: 3px dotted #666;
+}

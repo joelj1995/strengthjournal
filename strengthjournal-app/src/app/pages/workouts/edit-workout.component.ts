@@ -34,6 +34,10 @@ export class EditWorkoutComponent implements OnInit {
     bodyweightUnit: ''
   };
   exerciseList: Exercise[] = [];
+
+  dragId: string | null = null;
+  dropId: string | null = null;
+
   constructor(private route: ActivatedRoute, private workouts: WorkoutService, private exercises : ExerciseService, private toast: ToastService) { }
 
   sharedSetForm = new FormGroup({
@@ -134,21 +138,29 @@ export class EditWorkoutComponent implements OnInit {
   }
 
   rowDragStart(ev: any, setId: string) {
-    console.log('Drag start ' + setId);
+    this.dragId = setId;
     ev.dataTransfer.setData("application/my-app", setId);
     ev.dataTransfer.dropEffect = 'move';
   }
 
   rowDragEnd(ev: any, setId: string) {
-    console.log('Drag end ' + setId);
+    this.dragId = null;
+    this.dropId = null;
   }
 
   rowDragOver(ev: any, setId: string) {
-    console.log('Drag over ' + setId);
+    ev.preventDefault();
+    this.dropId = setId;
   }
 
   rowDrop(ev: any, setId: string) {
-    console.log('Drop ' + setId);
+    if (this.dragId != null && this.dropId != null && this.dragId != this.dropId) {
+      const dragIdx = this.workout.sets.findIndex(s => s.id == this.dragId);
+      const dropIdx = this.workout.sets.findIndex(s => s.id == this.dropId);
+      const tempSet = this.workout.sets[dragIdx];
+      this.workout.sets[dragIdx] = this.workout.sets[dropIdx];
+      this.workout.sets[dropIdx] = tempSet;
+    }
   }
 
 }

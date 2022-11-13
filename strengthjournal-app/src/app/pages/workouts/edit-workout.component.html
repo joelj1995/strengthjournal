@@ -37,7 +37,9 @@
               (dragstart)="rowDragStart($event,set.id)"
               (dragend)="rowDragEnd($event,set.id)"
               (dragover)="rowDragOver($event,set.id)"
-              (drop)="rowDrop($event,set.id)">
+              (drop)="rowDrop($event,set.id)"
+              [class.drag-transparent]="set.id == dragId"
+              [class.drag-border]="set.id == dropId">
               <ng-container #viewSet *ngIf="set.id != setBeingUpdated; else updateSet">
                 <td>{{set.exerciseName}}</td>
                 <td>{{set.weight}} {{set.weight ? set.weightUnit : ''}}</td>
