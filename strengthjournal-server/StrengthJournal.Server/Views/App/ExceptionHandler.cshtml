@@ -33,13 +33,41 @@
 <script>
 const statusGraphicSuccessTemplate = '<p class="display-2 fw-bold"><i class="align-middle me-2 fas fa-fw fa-check-circle"></i></p>';
 const statusTextSuccessTemplate = 'The error has been reported to our team for further investigation.';
-const statusTextFailureTemplate = 'We had some trouble reaching the server. Please try returning to your dashboard.';
+const statusTextFailureTemplate = 'The error could not be reported. Please try returning to your dashboard.';
 
-function showSuccessStatus() {
+function showStatus(success) {
     const statusGraphicElement = document.getElementById('statusGraphic');
     const statusTextElement = document.getElementById('statusText');
-    statusTextElement.innerText = statusTextSuccessTemplate;
+    statusTextElement.innerText = success ? statusTextSuccessTemplate : statusTextFailureTemplate;
+    statusGraphicElement.innerHTML = statusGraphicSuccessTemplate;
 }
 
-setTimeout(showSuccessStatus, 1000);
+try {
+    const token = localStorage.getItem('app_token');
+    const errorData = JSON.parse(localStorage.getItem('app_error'));
+    const payload = {
+        id: errorData.id,
+        errorMessage: 'foo error' //errorData.ngData
+    };
+
+    fetch('api/error', {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify(payload)
+    })
+    .then(() => {
+        console.log('somehow that work')
+    })
+    .catch((error) => {
+        console.error(error);
+        console.log('that failed as expected')
+    })
+} catch {
+    showStatus(false);
+}
+
+
 </script>
