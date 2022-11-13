@@ -3,6 +3,7 @@
 
   <div class="col-12">
     <app-card cardTitle="My Workout List">
+      <button class="btn btn-primary buttons-copy buttons-html5" routerLink="new">Log New Workout</button>
       <table *ngIf="workoutList; else workoutListLoading"
         class="table table-striped dataTable no-footer dtr-inline collapsed">
         <thead>
@@ -31,7 +32,6 @@
         </div>
       </ng-template>
       <ngb-pagination [(page)]="page" [pageSize]="pageSize" [collectionSize]="collectionSize" (pageChange)="getWorkoutPage()"></ngb-pagination>
-      <button class="btn btn-primary buttons-copy buttons-html5" routerLink="new">Log New Workout</button>
     </app-card>
   </div>
 
