@@ -32,7 +32,7 @@
             <tr 
               *ngFor="let set of workout.sets" 
               (click)="this.startUpdatingSet(set.id)" 
-              [draggable]="!setBeingUpdated" 
+              [draggable]="!setBeingUpdated && !addingSet" 
               class="cursor-grab" 
               (dragstart)="rowDragStart($event,set.id)"
               (dragend)="rowDragEnd($event,set.id)"

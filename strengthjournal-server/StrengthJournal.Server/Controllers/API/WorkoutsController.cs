@@ -99,8 +99,17 @@ namespace StrengthJournal.Server.Controllers.API
         }
 
         [HttpPut("{workoutId:Guid}/set-sequence")]
-        public async Task<ActionResult> UpdateWorkoutSetSequence(WorkoutSetSequenceDto setSequence)
+        public async Task<ActionResult> UpdateWorkoutSetSequence([FromRoute] Guid workoutId, WorkoutSetSequenceDto setSequence)
         {
+            try
+            {
+                var userId = HttpContext.GetUserId();
+                await workoutService.UpdateSetSequence(userId, workoutId, setSequence);
+            }
+            catch (EntityNotFoundException e)
+            {
+                return NotFound();
+            }
             return Ok();
         }
 

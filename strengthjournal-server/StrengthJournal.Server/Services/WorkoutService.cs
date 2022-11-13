@@ -139,6 +139,24 @@ namespace StrengthJournal.Server.Services
             await context.SaveChangesAsync();
         }
 
+        public async Task UpdateSetSequence(Guid userId, Guid workoutId, WorkoutSetSequenceDto sequenceData)
+        {
+            var existingWorkout = context.WorkoutLogEntries
+                .Include(wle => wle.Sets)
+                .FirstOrDefault(wle => wle.User.Id.Equals(userId) && wle.Id.Equals(workoutId)) ?? throw new EntityNotFoundException();
+            var workoutSets = existingWorkout.Sets.ToList();
+            var newSequence = sequenceData.SetSequence;
+            if (workoutSets.Count() != newSequence.Count())
+                throw new Exception("Source sequence and target set count do match");
+            for (int i = 0; i < workoutSets.Count(); i++)
+            {
+                var set = workoutSets.First(set => set.Id.Equals(newSequence.ElementAt(i)));
+                set.Sequence = i;
+                context.WorkoutLogEntrySets.Update(set);
+            }
+            await context.SaveChangesAsync();
+        }
+
         public async Task UpdateWorkout(Guid userId, Guid workoutId, WorkoutCreationUpdateDto workout)
         {
             var user = context.Users.Single(u => u.Id == userId);
