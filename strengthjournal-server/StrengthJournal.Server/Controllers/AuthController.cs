@@ -93,5 +93,19 @@ namespace StrengthJournal.Server.Controllers
                 return NotFound();
             return View("SubmitSignUp");
         }
+
+        [Route("reset-password")]
+        public IActionResult ResetPassword()
+        {
+            return View(new ResetPasswordModel());
+        }
+
+        [HttpPost]
+        [Route("reset-password")]
+        public IActionResult SubmitResetPassword(ResetPasswordModel model)
+        {
+            _authenticationService.ResetPassword(model.Email);
+            return View();
+        }
     }
 }

@@ -148,5 +148,21 @@ namespace StrengthJournal.Server.Integrations.Implementation
                 ErrorMessage = "Unknown Error"
             };
         }
+
+        public bool ResetPassword(string username)
+        {
+            var request = new RestRequest("dbconnections/change_password", Method.Post);
+            request.AddHeader("content-type", "application/x-www-form-urlencoded");
+            var body = UrlEncode(new Dictionary<string, string>()
+            {
+                { "email", username },
+                { "client_id", clientId },
+                { "client_secret", clientSecret },
+                { "connection", connection }
+            });
+            request.AddParameter("application/x-www-form-urlencoded", body, ParameterType.RequestBody);
+            var response = client.Execute(request);
+            return response.IsSuccessStatusCode;
+        }
     }
 }

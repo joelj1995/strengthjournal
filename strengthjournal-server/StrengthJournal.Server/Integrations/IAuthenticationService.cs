@@ -6,5 +6,6 @@ namespace StrengthJournal.Server.Integrations
     {
         AuthenticationResponse Authenticate(string username, string password);
         CreateAccountResponse CreateAccount(string username, string password);
+        bool ResetPassword(string username);
     }
 }
