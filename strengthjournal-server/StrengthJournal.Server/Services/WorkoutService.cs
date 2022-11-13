@@ -18,7 +18,7 @@ namespace StrengthJournal.Server.Services
             this._mapper = mapper;
         }
 
-        public async Task<WorkoutsPageDto> GetWorkouts(Guid userId, int pageNumber, int perPage)
+        public async Task<DataPage<WorkoutListDto>> GetWorkouts(Guid userId, int pageNumber, int perPage)
         {
             var workoutsQuery = context.WorkoutLogEntries
                 .Where(wle => wle.User.Id.Equals(userId));
@@ -28,12 +28,12 @@ namespace StrengthJournal.Server.Services
                 .Take(perPage)
                 .ToListAsync();
             var totalRecords = workoutsQuery.Count();
-            return new WorkoutsPageDto()
+            return new DataPage<WorkoutListDto>()
             {
                 PerPage = perPage,
                 TotalRecords = totalRecords,
                 CurrentPage = pageNumber,
-                Workouts = workoutsPage.Select(w => _mapper.Map<WorkoutListDto>(w))
+                Data = workoutsPage.Select(w => _mapper.Map<WorkoutListDto>(w))
             };
         }
 

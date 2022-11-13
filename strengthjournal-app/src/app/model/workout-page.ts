@@ -4,5 +4,5 @@ export interface WorkoutPage {
   perPage: number,
   totalRecords: number,
   currentPage: number,
-  workouts: Workout[]
+  data: Workout[]
 }

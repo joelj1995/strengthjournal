@@ -20,7 +20,7 @@ export class ListWorkoutsComponent implements OnInit {
 
   getWorkoutPage() {
     this.workouts.getWorkouts(this.page, this.pageSize).subscribe(page => {
-      this.workoutList = page.workouts;
+      this.workoutList = page.data;
       this.collectionSize = page.totalRecords;
     });
   }

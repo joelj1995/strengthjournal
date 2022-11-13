@@ -21,7 +21,7 @@ namespace StrengthJournal.Server.Controllers.API
         }
 
         [HttpGet]
-        public async Task<ActionResult<WorkoutsPageDto>> GetWorkouts([FromQuery] int pageNumber = 1, [FromQuery] int perPage = 5)
+        public async Task<ActionResult<DataPage<WorkoutListDto>>> GetWorkouts([FromQuery] int pageNumber = 1, [FromQuery] int perPage = 5)
         {
             // TODO: paginate this endpoint
             var userId = HttpContext.GetUserId();
