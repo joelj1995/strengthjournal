@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ExerciseService } from 'src/app/services/exercise.service';
+import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
   selector: 'app-edit-exercise',
@@ -18,7 +19,7 @@ export class EditExerciseComponent implements OnInit {
     name: new FormControl('')
   });
 
-  constructor(private exercises: ExerciseService, private router: Router, private route: ActivatedRoute) { }
+  constructor(private exercises: ExerciseService, private router: Router, private route: ActivatedRoute, private toast: ToastService) { }
 
   ngOnInit(): void {
     this.enableSubmit = false;
@@ -37,6 +38,7 @@ export class EditExerciseComponent implements OnInit {
   onSubmit() {
     this.enableSubmit = false;
     this.exercises.updateExercise(this.id, this.form.value.name).subscribe(e => {
+      this.toast.setToast({ message: 'Exercise updated', domClass: 'bg-success text-light' })
       this.enableSubmit = true;
       this.router.navigate(['exercises']);
     });

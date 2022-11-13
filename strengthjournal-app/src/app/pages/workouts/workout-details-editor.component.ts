@@ -5,6 +5,7 @@ import { WorkoutCreateUpdate } from 'src/app/model/workout-create-update';
 import { WorkoutService } from 'src/app/services/workout.service';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { NgbTime } from '@ng-bootstrap/ng-bootstrap/timepicker/ngb-time';
+import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
   selector: 'app-workout-details-editor',
@@ -40,7 +41,7 @@ export class WorkoutDetailsEditorComponent implements OnInit {
     bodyweightUnit: new FormControl('lbs')
   });
 
-  constructor(private workouts: WorkoutService, private router: Router) { 
+  constructor(private workouts: WorkoutService, private router: Router, private toast: ToastService) { 
 
   }
 
@@ -82,10 +83,12 @@ export class WorkoutDetailsEditorComponent implements OnInit {
     };
     if (this.workoutId) {
       this.workouts.updateWorkout(this.workoutId, workoutData).subscribe(() => {
+        this.toast.setToast({ message: 'Workout updated', domClass: 'bg-success text-light' });
         this.enableSubmit = true;
       })
     } else {
       this.workouts.createWorkout(workoutData).subscribe(workoutId => {
+        this.toast.setToast({ message: 'Workout created', domClass: 'bg-success text-light' });
         this.router.navigate(['workouts', 'edit', workoutId]);
       });
     }
