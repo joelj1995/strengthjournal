@@ -5,6 +5,7 @@ using StrengthJournal.DataAccess.Contexts;
 using StrengthJournal.Server;
 using StrengthJournal.Server.Integrations;
 using StrengthJournal.Server.Integrations.Implementation;
+using StrengthJournal.Server.Middleware;
 using StrengthJournal.Server.Services;
 using System.Security.Claims;
 
@@ -66,6 +67,8 @@ app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseMiddleware<Auth0IDToUser>();
 
 app.MapControllerRoute(
     name: "default",
