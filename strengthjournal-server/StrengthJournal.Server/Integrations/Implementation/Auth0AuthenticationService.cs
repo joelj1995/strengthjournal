@@ -160,11 +160,14 @@ namespace StrengthJournal.Server.Integrations.Implementation
         {
             try
             {
-                var request = new RestRequest("oauth/token", Method.Post);
+                var token = GetManagementToken();
+                var userId = GetUserIdByEmail(username, token);
+                var request = new RestRequest("api/v2/jobs/verification-email", Method.Post);
+                request.AddHeader("Authorization", $"Bearer {token}");
                 request.AddHeader("content-type", "application/x-www-form-urlencoded");
                 var body = UrlEncode(new Dictionary<string, string>()
                 {
-                    { "user_id", "" }
+                    { "user_id", $"auth0|{userId}" }
                 });
                 request.AddParameter("application/x-www-form-urlencoded", body, ParameterType.RequestBody);
                 var response = client.Execute(request);
@@ -204,9 +207,13 @@ namespace StrengthJournal.Server.Integrations.Implementation
             return ExtractTokenFromResponse(response.Content);
         }
 
-        private string GetUserIdByEmail()
+        private string GetUserIdByEmail(string email, string token)
         {
-
+            var request = new RestRequest($"/api/v2/users?q=email:\"{email}\"&search_engine=v3", Method.Get);
+            request.AddHeader("Authorization", $"Bearer {token}");
+            var response = client.Execute(request);
+            dynamic responseData = JsonConvert.DeserializeObject(response.Content);
+            return responseData[0].identities[0].user_id;
         }
     }
 }
