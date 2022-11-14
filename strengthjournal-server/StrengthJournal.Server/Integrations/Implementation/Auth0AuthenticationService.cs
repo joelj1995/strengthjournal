@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using RestSharp;
+using StrengthJournal.DataAccess.Contexts;
 using StrengthJournal.Server.Integrations.Models;
 using System.Net;
 
@@ -7,6 +8,7 @@ namespace StrengthJournal.Server.Integrations.Implementation
 {
     public class Auth0AuthenticationService : IAuthenticationService
     {
+        private readonly StrengthJournalContext context;
         private readonly RestClient client;
 
         private readonly string clientSecret;
@@ -14,25 +16,14 @@ namespace StrengthJournal.Server.Integrations.Implementation
         private readonly string audience;
         private readonly string connection;
 
-        public Auth0AuthenticationService()
+        public Auth0AuthenticationService(StrengthJournalContext context)
         {
             clientSecret = StrengthJournalConfiguration.Instance.Auth0_ClientSecret;
             clientId = StrengthJournalConfiguration.Instance.Auth0_ClientId;
             audience = StrengthJournalConfiguration.Instance.Auth0_Audience;
             client = new RestClient(StrengthJournalConfiguration.Instance.Auth0_BaseURL);
             connection = "Username-Password-Authentication";
-        }
-
-        protected string ExtractTokenFromResponse(string response)
-        {
-            dynamic responseData = JsonConvert.DeserializeObject(response);
-            return responseData.access_token;
-        }
-
-        private string UrlEncode(IDictionary<string,string> bodyData)
-        {
-            var keyVals = bodyData.Select(keyval => $"{keyval.Key}={keyval.Value}");
-            return string.Join("&", keyVals);
+            this.context = context;
         }
 
         public AuthenticationResponse Authenticate(string username, string password)
@@ -114,7 +105,7 @@ namespace StrengthJournal.Server.Integrations.Implementation
             });
             request.AddParameter("application/x-www-form-urlencoded", body, ParameterType.RequestBody);
             var response = client.Execute(request);
-            try 
+            try
             {
                 if (response.IsSuccessStatusCode)
                 {
@@ -167,7 +158,55 @@ namespace StrengthJournal.Server.Integrations.Implementation
 
         public bool ResendVerificationEmail(string username)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var request = new RestRequest("oauth/token", Method.Post);
+                request.AddHeader("content-type", "application/x-www-form-urlencoded");
+                var body = UrlEncode(new Dictionary<string, string>()
+                {
+                    { "user_id", "" }
+                });
+                request.AddParameter("application/x-www-form-urlencoded", body, ParameterType.RequestBody);
+                var response = client.Execute(request);
+                return response.IsSuccessStatusCode;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        private string ExtractTokenFromResponse(string response)
+        {
+            dynamic responseData = JsonConvert.DeserializeObject(response);
+            return responseData.access_token;
+        }
+
+        private string UrlEncode(IDictionary<string, string> bodyData)
+        {
+            var keyVals = bodyData.Select(keyval => $"{keyval.Key}={keyval.Value}");
+            return string.Join("&", keyVals);
+        }
+
+        private string GetManagementToken()
+        {
+            var request = new RestRequest("oauth/token", Method.Post);
+            request.AddHeader("content-type", "application/x-www-form-urlencoded");
+            var body = UrlEncode(new Dictionary<string, string>()
+            {
+                { "grant_type", "client_credentials" },
+                { "audience", $"{StrengthJournalConfiguration.Instance.Auth0_BaseURL}api/v2/" },
+                { "client_id", clientId },
+                { "client_secret", clientSecret }
+            });
+            request.AddParameter("application/x-www-form-urlencoded", body, ParameterType.RequestBody);
+            var response = client.Execute(request);
+            return ExtractTokenFromResponse(response.Content);
+        }
+
+        private string GetUserIdByEmail()
+        {
+
         }
     }
 }
