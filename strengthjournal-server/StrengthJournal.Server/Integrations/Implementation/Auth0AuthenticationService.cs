@@ -2,6 +2,7 @@
 using RestSharp;
 using StrengthJournal.DataAccess.Contexts;
 using StrengthJournal.Server.Integrations.Models;
+using StrengthJournal.Server.Services;
 using System.Net;
 
 namespace StrengthJournal.Server.Integrations.Implementation
@@ -9,6 +10,7 @@ namespace StrengthJournal.Server.Integrations.Implementation
     public class Auth0AuthenticationService : IAuthenticationService
     {
         private readonly StrengthJournalContext context;
+        private readonly UserService userService;
         private readonly RestClient client;
 
         private readonly string clientSecret;
@@ -16,7 +18,7 @@ namespace StrengthJournal.Server.Integrations.Implementation
         private readonly string audience;
         private readonly string connection;
 
-        public Auth0AuthenticationService(StrengthJournalContext context)
+        public Auth0AuthenticationService(StrengthJournalContext context, UserService userService)
         {
             clientSecret = StrengthJournalConfiguration.Instance.Auth0_ClientSecret;
             clientId = StrengthJournalConfiguration.Instance.Auth0_ClientId;
@@ -24,6 +26,7 @@ namespace StrengthJournal.Server.Integrations.Implementation
             client = new RestClient(StrengthJournalConfiguration.Instance.Auth0_BaseURL);
             connection = "Username-Password-Authentication";
             this.context = context;
+            this.userService = userService;
         }
 
         public AuthenticationResponse Authenticate(string username, string password)
@@ -90,7 +93,7 @@ namespace StrengthJournal.Server.Integrations.Implementation
             }
         }
 
-        public CreateAccountResponse CreateAccount(string username, string password)
+        public CreateAccountResponse CreateAccount(string username, string password, bool consentCEM)
         {
             var request = new RestRequest("dbconnections/signup", Method.Post);
             request.AddHeader("content-type", "application/x-www-form-urlencoded");
@@ -107,8 +110,11 @@ namespace StrengthJournal.Server.Integrations.Implementation
             var response = client.Execute(request);
             try
             {
+                dynamic responseData = JsonConvert.DeserializeObject(response.Content);
                 if (response.IsSuccessStatusCode)
                 {
+                    var userId = $"auth0|{responseData._id}";
+                    userService.RegisterUser(username, userId, consentCEM);
                     return new CreateAccountResponse()
                     {
                         Result = CreateAccountResponse.CreateResult.Success
@@ -116,7 +122,6 @@ namespace StrengthJournal.Server.Integrations.Implementation
                 }
                 else if (response.StatusCode == HttpStatusCode.BadRequest)
                 {
-                    dynamic responseData = JsonConvert.DeserializeObject(response.Content);
                     return new CreateAccountResponse()
                     {
                         Result = CreateAccountResponse.CreateResult.ValidationError,

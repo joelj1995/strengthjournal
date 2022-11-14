@@ -29,13 +29,7 @@ namespace StrengthJournal.Server.Middleware
                 }
                 else
                 {
-                    var newUser = new StrengthJournal.DataAccess.Model.User()
-                    {
-                        ExternalId = auth0UserId,
-                    };
-                    strengthJournalContext.Users.Add(newUser);
-                    await strengthJournalContext.SaveChangesAsync();
-                    dbUserId = newUser.Id;
+                    throw new Exception("User ID not registered in the database.");
                 }
                 httpContext.Items["UserID"] = dbUserId;
             }

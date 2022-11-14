@@ -72,7 +72,7 @@ namespace StrengthJournal.Server.Controllers
             {
                 return RedirectToAction("signup", new { errorMessage = "Passwords do not match" });
             }
-            var result = _authenticationService.CreateAccount(model.Email, model.Password);
+            var result = _authenticationService.CreateAccount(model.Email, model.Password, model.ConsentCEM);
             switch (result.Result)
             {
                 case CreateAccountResponse.CreateResult.ValidationError:
