@@ -54,7 +54,7 @@ namespace StrengthJournal.Server.Controllers
             else if (serviceFailure)
                 loginError = "We encountered an unexpected error trying to log you in. Please try again.";
             else if (notVerified)
-                View(new LoginModel() { Email = "", Password = "", IsEmailConfirmed = false, Error = null });
+                return View(new LoginModel() { Email = "", Password = "", IsEmailConfirmed = false, Error = null });
             return View(new LoginModel() { Email = "", Password = "", Error = loginError });
         }
 

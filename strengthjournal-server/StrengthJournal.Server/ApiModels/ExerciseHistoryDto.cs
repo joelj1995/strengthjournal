@@ -7,8 +7,8 @@
         public decimal? BodyWeightLbs { get; set; }
         public decimal? WeightKg { get; set; }
         public decimal? WeightLbs { get; set; }
-        public uint? Reps { get; set; }
-        public uint? TargetReps { get; set; }
-        public uint? RPE { get; set; }
+        public int? Reps { get; set; }
+        public int? TargetReps { get; set; }
+        public int? RPE { get; set; }
     }
 }
