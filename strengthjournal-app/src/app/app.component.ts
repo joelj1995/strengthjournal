@@ -8,6 +8,9 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+
+  navCollapsed: boolean = true;
+
   title = 'strengthjournal-app';
   userFullName = '';
 
@@ -32,4 +35,8 @@ export class AppComponent {
       this.redirectLoginFlow();
     }
   };
+
+  toggleNav() {
+    this.navCollapsed = !this.navCollapsed;
+  }
 }

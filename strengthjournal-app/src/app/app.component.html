@@ -1,10 +1,10 @@
 <app-toast></app-toast>
 
 <div class="wrapper">
-  <app-nav id="sidebar" class="sidebar"></app-nav>
+  <app-nav id="sidebar" class="sidebar" [class.collapsed]="navCollapsed"></app-nav>
   
   <div class="main">
-    <app-header [userFullName]="userFullName"></app-header>
+    <app-header [userFullName]="userFullName" (navToggleClicked)="toggleNav()"></app-header>
     <main class="content">
       <div class="container-fluid p-0">
         <router-outlet></router-outlet>
