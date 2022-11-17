@@ -40,33 +40,28 @@ export class EditWorkoutComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, private workouts: WorkoutService, private exercises : ExerciseService, private toast: ToastService) { }
 
+  static createSetForm(): FormGroup {
+    return new FormGroup({
+      exerciseId: new FormControl(null, [
+        Validators.required
+      ]),
+      reps: new FormControl(),
+      targetReps: new FormControl(),
+      weight: new FormControl(),
+      rpe: new FormControl(null, [
+        Validators.min(0),
+        Validators.max(10)
+      ])
+    })
+  }
+
   sharedSetForm = new FormGroup({
     weightUnit: new FormControl('lbs')
   });
 
-  updateSetForm = new FormGroup({
-    exerciseId: new FormControl(null, [
-      Validators.required
-    ]),
-    reps: new FormControl(),
-    targetReps: new FormControl(),
-    weight: new FormControl(),
-    rpe: new FormControl(null, [
-      Validators.min(0),
-      Validators.max(10)
-    ])
-  });
+  updateSetForm = EditWorkoutComponent.createSetForm();
 
-  newSetForm = new FormGroup({
-    exerciseId: new FormControl(''),
-    reps: new FormControl(),
-    targetReps: new FormControl(),
-    weight: new FormControl(),
-    rpe: new FormControl(null, [
-      Validators.min(0),
-      Validators.max(10)
-    ])
-  });
+  newSetForm = EditWorkoutComponent.createSetForm();
 
   ngOnInit(): void {
     this.exercises.getAllExercises().subscribe(page => {
