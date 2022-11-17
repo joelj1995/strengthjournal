@@ -80,7 +80,7 @@
           </tbody>
         </table>
         <div class="btn-group card-footer">
-          <button class="btn btn-primary" (click)="logNewSet()" [class.disabled]="this.addingSet">{{setBeingUpdated ? 'Update' : 'Add'}}</button>
+          <button class="btn btn-primary" (click)="logNewSet()" [class.disabled]="this.addingSet || !(setBeingUpdated ? updateSetForm.valid : newSetForm.valid)">{{setBeingUpdated ? 'Update' : 'Add'}}</button>
           <button class="btn btn-danger" [class.disabled]="this.addingSet" (click)="deleteSet()" *ngIf="setBeingUpdated">Delete</button>
           <button class="btn btn-warning" [class.disabled]="this.addingSet" (click)="stopUpdatingSet()" *ngIf="setBeingUpdated">Cancel</button>
         </div>

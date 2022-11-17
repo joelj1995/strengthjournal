@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Exercise } from 'src/app/model/exercise';
 import { Workout } from 'src/app/model/workout';
@@ -45,11 +45,16 @@ export class EditWorkoutComponent implements OnInit {
   });
 
   updateSetForm = new FormGroup({
-    exerciseId: new FormControl(''),
+    exerciseId: new FormControl(null, [
+      Validators.required
+    ]),
     reps: new FormControl(),
     targetReps: new FormControl(),
     weight: new FormControl(),
-    rpe: new FormControl()
+    rpe: new FormControl(null, [
+      Validators.min(0),
+      Validators.max(10)
+    ])
   });
 
   newSetForm = new FormGroup({
@@ -57,7 +62,10 @@ export class EditWorkoutComponent implements OnInit {
     reps: new FormControl(),
     targetReps: new FormControl(),
     weight: new FormControl(),
-    rpe: new FormControl()
+    rpe: new FormControl(null, [
+      Validators.min(0),
+      Validators.max(10)
+    ])
   });
 
   ngOnInit(): void {
@@ -75,11 +83,8 @@ export class EditWorkoutComponent implements OnInit {
   }
 
   logNewSet() {
-    const setData = this.setBeingUpdated ? this.updateSetForm.value : this.newSetForm.value;
-    if (!setData.exerciseId) {
-      this.toast.setToast({ message: 'Exercise name is requried', domClass: 'bg-danger text-light' });
-      return;
-    }
+    const targetForm = this.setBeingUpdated ? this.updateSetForm : this.newSetForm
+    const setData = targetForm.value;
     const newWorkoutSet: WorkoutSet = {
       id: this.setBeingUpdated ?? uuidv4(),
       exerciseId: setData.exerciseId,
