@@ -13,7 +13,7 @@ export class AppComponent {
   readonly lgBreakpoint: number = 992; // defined as map-get($grid-breakpoints, 'lg') by appstack
   screenWidth: number = 0;
 
-  navCollapsed: boolean = true;
+  navCollapsed: boolean = false;
 
   title = 'strengthjournal-app';
   userFullName = '';
