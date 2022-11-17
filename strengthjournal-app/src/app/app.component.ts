@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
+import { ActivatedRoute, Router, RouterEvent } from '@angular/router';
 import { AuthService } from '@auth0/auth0-angular';
 import { environment } from 'src/environments/environment';
 
@@ -9,10 +10,18 @@ import { environment } from 'src/environments/environment';
 })
 export class AppComponent {
 
+  readonly lgBreakpoint: number = 992; // defined as map-get($grid-breakpoints, 'lg') by appstack
+  screenWidth: number = 0;
+
   navCollapsed: boolean = true;
 
   title = 'strengthjournal-app';
   userFullName = '';
+
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+   this.screenWidth = window.innerWidth;
+  }
 
   redirectLoginFlow() {
     this.auth.user$.subscribe(user => {
@@ -28,12 +37,17 @@ export class AppComponent {
     this.userFullName = localStorage.getItem('app_username') ?? '';
   }
 
-  constructor(public auth: AuthService) {
+  constructor(public auth: AuthService, private router: Router) {
     if (environment.useResourceOwnerFlow) {
       this.resourceOwnerLoginFlow();
     } else {
       this.redirectLoginFlow();
     }
+    this.router.events.subscribe(ev => {
+      if (this.screenWidth < this.lgBreakpoint)
+        this.navCollapsed = false;
+    })
+    this.onResize();
   };
 
   toggleNav() {
