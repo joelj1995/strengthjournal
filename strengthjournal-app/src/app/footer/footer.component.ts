@@ -8,7 +8,7 @@ import { environment } from 'src/environments/environment';
 })
 export class FooterComponent implements OnInit {
 
-  version: string = environment.version;
+  version: string = environment.version.slice(0, 6);
 
   constructor() { }
 
