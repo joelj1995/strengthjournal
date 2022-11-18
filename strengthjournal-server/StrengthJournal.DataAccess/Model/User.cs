@@ -19,5 +19,6 @@ namespace StrengthJournal.DataAccess.Model
         public string Email { get; set; }
         [DefaultValue("false")]
         public bool ConsentCEM { get; set; }
+        public WeightUnit PreferredWeightUnit { get; set; }
     }
 }
