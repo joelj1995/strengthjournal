@@ -5,11 +5,26 @@
       <form *ngIf="settings; else loading" [formGroup]="settingsForm" (ngSubmit)="onSubmit()">
         <div class="mb-3 error-placeholder">
           <label>Preferred Weight Unit</label>
-          <input type="text" class="form-control" id="preferredWeightUnit" formControlName="preferredWeightUnit">
+          <br>
+          <label class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="preferredWeightUnit" value="lbs" formControlName="preferredWeightUnit">
+            <span class="form-check-label">
+              lbs
+            </span>
+          </label>
+          <label class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="preferredWeightUnit" value="kg" formControlName="preferredWeightUnit">
+            <span class="form-check-label">
+              kg
+            </span>
+          </label>
         </div>
         <div class="mb-3 error-placeholder">
-          <label>Communication Preferences</label>
-          <input type="text" class="form-control" id="consentCEM" formControlName="consentCEM">
+          <label>Communication Preferences</label><br>
+          <label class="form-check m-0">
+            <input type="checkbox" class="form-check-input" id="consentCEM" formControlName="consentCEM">
+            <span class="form-check-label">I would like to receive promotional emails from Strength Journal</span>
+          </label>
         </div>
         <div class="btn-group">
           <button type="submit" class="btn btn-primary" >Save</button>
