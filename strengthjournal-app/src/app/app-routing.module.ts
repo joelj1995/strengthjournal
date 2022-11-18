@@ -8,6 +8,7 @@ import { EditWorkoutComponent } from './pages/workouts/edit-workout.component';
 import { ListWorkoutsComponent } from './pages/workouts/list-workouts.component';
 import { EditExerciseComponent } from './pages/exercises/edit-exercise.component';
 import { ViewExerciseComponent } from './pages/exercises/view-exercise.component';
+import { ProfileComponent } from './pages/profile/profile.component';
 
 const routes: Routes = [
   { path: '', component: DashboardComponent },
@@ -17,7 +18,8 @@ const routes: Routes = [
   { path: 'exercises/:id', component: ViewExerciseComponent },
   { path: 'workouts', component: ListWorkoutsComponent },
   { path: 'workouts/new', component: NewWorkoutComponent },
-  { path: 'workouts/edit/:id', component: EditWorkoutComponent }
+  { path: 'workouts/edit/:id', component: EditWorkoutComponent },
+  { path: 'profile', component: ProfileComponent }
 ];
 
 @NgModule({

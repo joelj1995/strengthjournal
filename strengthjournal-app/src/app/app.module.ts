@@ -34,6 +34,7 @@ import { ViewExerciseComponent } from './pages/exercises/view-exercise.component
 import { FooterComponent } from './footer/footer.component';
 import { ToastComponent } from './components/toast/toast.component';
 import { ConfirmDeleteComponent } from './components/confirm-delete/confirm-delete.component';
+import { ProfileComponent } from './pages/profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -55,7 +56,8 @@ import { ConfirmDeleteComponent } from './components/confirm-delete/confirm-dele
     ViewExerciseComponent,
     FooterComponent,
     ToastComponent,
-    ConfirmDeleteComponent
+    ConfirmDeleteComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
