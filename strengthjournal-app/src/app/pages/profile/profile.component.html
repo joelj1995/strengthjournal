@@ -4,6 +4,13 @@
     <app-card cardTitle="Profile Settings">
       <form *ngIf="settings; else loading" [formGroup]="settingsForm" (ngSubmit)="onSubmit()">
         <div class="mb-3 error-placeholder">
+          <label>Reset Password</label>
+          <p>
+            Our IAM provider, Auth0, will send an email with instructions for setting a new password.
+          </p>
+          <button (click)="resetPassword()" class="btn btn-secondary" >Reset Password</button>
+        </div>
+        <div class="mb-3 error-placeholder">
           <label>Preferred Weight Unit</label>
           <br>
           <label class="form-check form-check-inline">

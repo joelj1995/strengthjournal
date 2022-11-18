@@ -31,12 +31,17 @@ export class ProfileComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.settingsForm.value.consentCEM);
     this.profile.updateSettings({
       preferredWeightUnit: this.settingsForm.value.preferredWeightUnit,
       consentCEM: this.settingsForm.value.consentCEM == true
     }).subscribe(() => {
       this.toast.setToast({ message: 'Profile updated', domClass: 'bg-success text-light' });
+    });
+  }
+
+  resetPassword() {
+    this.profile.resetPasword().subscribe(() => {
+      this.toast.setToast({ message: 'Password reset sent', domClass: 'bg-success text-light' });
     });
   }
 

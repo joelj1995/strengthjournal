@@ -18,5 +18,9 @@ export class ProfileService extends StrengthjournalBaseService {
   updateSettings(settings: ProfileSettings): Observable<void> {
     return this.http.post<void>(`${this.BASE_URL}/profile/settings`, settings);
   }
+
+  resetPasword(): Observable<void> {
+    return this.http.put<void>(`${this.BASE_URL}/profile/password-reset`, null);
+  }
   
 }

@@ -19,6 +19,14 @@ namespace StrengthJournal.Server.Controllers.API
             this.profileService = profileService;
         }
 
+        [HttpPut("password-reset")]
+        public async Task<ActionResult> ResetPassword()
+        {
+            var userId = HttpContext.GetUserId();
+            await profileService.ResetPassword(userId);
+            return Ok();
+        }
+
         [HttpGet("settings")]
         public async Task<ProfileSettingsDto> GetSettings()
         {
