@@ -11,7 +11,7 @@ import { WorkoutService } from 'src/app/services/workout.service';
 export class ListWorkoutsComponent implements OnInit {
 
   page: number = 1;
-  pageSize: number = 5;
+  pageSize: number = 10;
   collectionSize: number = 0;
 
   workoutList: Workout[] | null = null;
