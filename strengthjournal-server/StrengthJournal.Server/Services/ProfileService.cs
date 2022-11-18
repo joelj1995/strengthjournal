@@ -31,7 +31,7 @@ namespace StrengthJournal.Server.Services
                 .Include(u => u.PreferredWeightUnit)
                 .SingleAsync(u => u.Id == userId);
             user.PreferredWeightUnit = context.WeightUnits.First(wu => wu.Abbreviation.Equals(settings.PreferredWeightUnit));
-            settings.ConsentCEM = user.ConsentCEM;
+            user.ConsentCEM = settings.ConsentCEM;
             context.Users.Update(user);
             await context.SaveChangesAsync();
         }

@@ -2,7 +2,7 @@
 <div class="row">
   <div class="col-12">
     <app-card cardTitle="Profile Settings">
-      <form *ngIf="settings; else loading" [formGroup]="settingsForm">
+      <form *ngIf="settings; else loading" [formGroup]="settingsForm" (ngSubmit)="onSubmit()">
         <div class="mb-3 error-placeholder">
           <label>Preferred Weight Unit</label>
           <input type="text" class="form-control" id="preferredWeightUnit" formControlName="preferredWeightUnit">

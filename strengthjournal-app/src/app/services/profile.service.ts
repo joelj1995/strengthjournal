@@ -14,4 +14,9 @@ export class ProfileService extends StrengthjournalBaseService {
   getSettings(): Observable<ProfileSettings> {
     return this.http.get<ProfileSettings>(`${this.BASE_URL}/profile/settings`);
   }
+
+  updateSettings(settings: ProfileSettings): Observable<void> {
+    return this.http.post<void>(`${this.BASE_URL}/profile/settings`, settings);
+  }
+  
 }
