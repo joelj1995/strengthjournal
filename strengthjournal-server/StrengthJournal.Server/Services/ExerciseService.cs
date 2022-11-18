@@ -21,9 +21,10 @@ namespace StrengthJournal.Server.Services
         {
             var user = context.Users.Single(u => u.Id == userId);
             var exercisesQuery = context.Exercises
-                .Where(e => e.CreatedByUser == null || e.CreatedByUser == user);
+                .Where(e => e.CreatedByUser == null || e.CreatedByUser == user)
+                .OrderBy(e => e.Name);
             var totalRecords = await exercisesQuery.CountAsync();
-            if (!allRecords) exercisesQuery = exercisesQuery.Skip(perPage * (pageNumber - 1)).Take(perPage);
+            if (!allRecords) exercisesQuery = (IOrderedQueryable<DataAccess.Model.Exercise>)exercisesQuery.Skip(perPage * (pageNumber - 1)).Take(perPage);
             var data = await exercisesQuery
                 .Select(e => new ExerciseDto() { Id = e.Id, Name = e.Name, SystemDefined = e.CreatedByUser == null })
                 .ToListAsync();
