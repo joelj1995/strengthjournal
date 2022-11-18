@@ -2,6 +2,11 @@
 <div class="row">
   <div class="col-12">
     <app-card cardTitle="Profile Settings">
+      <div *ngIf="settings">
+        <p>Settings Loaded</p>
+        <p>{{settings.consentCEM}}</p>
+        <p>{{settings.preferredWeightUnit}}</p>
+      </div>
     </app-card>
   </div>
 </div>

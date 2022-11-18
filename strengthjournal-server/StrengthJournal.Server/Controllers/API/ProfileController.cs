@@ -14,19 +14,19 @@ namespace StrengthJournal.Server.Controllers.API
     {
         private readonly ProfileService profileService;
 
-        ProfileController(ProfileService profileService)
+        public ProfileController(ProfileService profileService)
         {
             this.profileService = profileService;
         }
 
-        [HttpGet]
+        [HttpGet("settings")]
         public async Task<ProfileSettingsDto> GetSettings()
         {
             var userId = HttpContext.GetUserId();
             return await profileService.GetSettings(userId);
         }
 
-        [HttpPost]
+        [HttpPost("settings")]
         public async Task<ActionResult> UpdateSettings(ProfileSettingsDto settings)
         {
             var userId = HttpContext.GetUserId();

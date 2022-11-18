@@ -20,7 +20,7 @@ namespace StrengthJournal.Server.Services
                 .SingleAsync(u => u.Id == userId);
             return new ProfileSettingsDto()
             {
-                PreferredWeightUnit = context.WeightUnits.First(wu => wu.Abbreviation.Equals(user.PreferredWeightUnit.Id)).Abbreviation,
+                PreferredWeightUnit = context.WeightUnits.First(wu => wu.Id.Equals(user.PreferredWeightUnit.Id)).Abbreviation,
                 ConsentCEM = user.ConsentCEM
             };
         }
