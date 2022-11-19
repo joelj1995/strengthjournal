@@ -184,6 +184,33 @@ namespace StrengthJournal.Server.Integrations.Implementation
             }
         }
 
+        public bool UpdateEmailAddress(string externalUserId, string newEmail)
+        {
+            try
+            {
+                var token = GetManagementToken();
+                var request = new RestRequest($"api/v2/users/{externalUserId}", Method.Patch);
+                request.AddHeader("Authorization", $"Bearer {token}");
+                request.AddHeader("content-type", "application/x-www-form-urlencoded");
+                var body = UrlEncode(new Dictionary<string, string>()
+                {
+                    { "email", newEmail }
+                });
+                request.AddParameter("application/x-www-form-urlencoded", body, ParameterType.RequestBody);
+                var response = client.Execute(request);
+                if (response.IsSuccessStatusCode)
+                {
+                    userService.UpdateEmailAddress(externalUserId, newEmail);
+                    return true;
+                }
+                return false;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
         private string ExtractTokenFromResponse(string response)
         {
             dynamic responseData = JsonConvert.DeserializeObject(response);

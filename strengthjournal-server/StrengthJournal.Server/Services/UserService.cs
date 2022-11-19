@@ -24,5 +24,13 @@ namespace StrengthJournal.Server.Services
             context.Users.Add(newUser);
             context.SaveChanges();
         }
+
+        public void UpdateEmailAddress(string externalId, string newEmail)
+        {
+            var user = context.Users.Single(u => u.ExternalId.Equals(externalId));
+            user.Email = newEmail;
+            context.Users.Update(user);
+            context.SaveChanges();
+        }
     }
 }

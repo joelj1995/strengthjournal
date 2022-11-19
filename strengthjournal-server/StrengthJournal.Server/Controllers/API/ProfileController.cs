@@ -47,5 +47,15 @@ namespace StrengthJournal.Server.Controllers.API
             await profileService.UpdateSettings(userId, settings);
             return Ok();
         }
+
+        [HttpPut("email")]
+        public async Task<ActionResult> UpdateEmail([FromBody] string newEmail)
+        {
+            var userId = HttpContext.GetUserId();
+            var result = await profileService.UpdateEmail(userId, newEmail);
+            if (result)
+                return Ok();
+            return new StatusCodeResult(500);
+        }
     }
 }

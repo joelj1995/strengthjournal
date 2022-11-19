@@ -55,6 +55,12 @@ namespace StrengthJournal.Server.Services
             authenticationService.ResetPassword(email);
         }
 
+        public async Task<bool> UpdateEmail(Guid userId, string newEmail)
+        {
+            var externalId = (await context.Users.SingleAsync(u => u.Id.Equals(userId))).ExternalId;
+            return authenticationService.UpdateEmailAddress(externalId, newEmail);
+        }
+
         public async Task<IEnumerable<CountryDto>> GetCountries()
         {
             return await context.Countries

@@ -8,5 +8,6 @@ namespace StrengthJournal.Server.Integrations
         CreateAccountResponse CreateAccount(string username, string password, bool consentCEM, string countryCode);
         bool ResetPassword(string username);
         bool ResendVerificationEmail(string username);
+        bool UpdateEmailAddress(string externalUserId, string newEmail);
     }
 }
