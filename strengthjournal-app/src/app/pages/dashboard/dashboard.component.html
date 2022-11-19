@@ -14,13 +14,11 @@
     <app-card cardTitle="Weekly Volume Report" >
       <canvas id="volume-chart">
       </canvas>
-      <ng-template *ngIf="!volumeChartLoaded">
-        <div class="mb-2 text-center">
-          <div class="spinner-grow me-2" role="status">
-            <span class="sr-only">Loading...</span>
-          </div>
+      <div class="mb-2 text-center" *ngIf="!volumeChartLoaded">
+        <div class="spinner-grow me-2" role="status">
+          <span class="sr-only">Loading...</span>
         </div>
-      </ng-template>
+      </div>
     </app-card>
   </div>
 
@@ -28,13 +26,11 @@
     <app-card cardTitle="Weekly SBD Tonnage Report">
       <canvas id="tonnage-chart">
       </canvas>
-      <ng-template *ngIf="!tonnageChartLoaded">
-        <div class="mb-2 text-center">
-          <div class="spinner-grow me-2" role="status">
-            <span class="sr-only">Loading...</span>
-          </div>
+      <div class="mb-2 text-center" *ngIf="!tonnageChartLoaded">
+        <div class="spinner-grow me-2" role="status">
+          <span class="sr-only">Loading...</span>
         </div>
-      </ng-template>
+      </div>
     </app-card>
   </div>
 
