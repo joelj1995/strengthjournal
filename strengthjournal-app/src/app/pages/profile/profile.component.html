@@ -1,15 +1,21 @@
 <h1 class="h3 mb-3">Profile</h1>
 <div class="row">
   <div class="col-12">
+    <app-card cardTitle="Identity and Access">
+      <div class="mb-3 error-placeholder">
+        <label>Reset Password</label>
+        <p>
+          Our IAM provider, Auth0, will send an email with instructions for setting a new password.
+        </p>
+        <button (click)="resetPassword()" class="btn btn-secondary" type="button">Reset Password</button>
+      </div>
+    </app-card>
+  </div>
+</div>
+<div class="row">
+  <div class="col-12">
     <app-card cardTitle="Profile Settings">
       <form *ngIf="settings && countryList; else loading" [formGroup]="settingsForm" (ngSubmit)="onSubmit()">
-        <div class="mb-3 error-placeholder">
-          <label>Reset Password</label>
-          <p>
-            Our IAM provider, Auth0, will send an email with instructions for setting a new password.
-          </p>
-          <button (click)="resetPassword()" class="btn btn-secondary" type="button">Reset Password</button>
-        </div>
         <div>
           <label>Country</label>
           <select class="form-control mb-3" formControlName="countryCode">
