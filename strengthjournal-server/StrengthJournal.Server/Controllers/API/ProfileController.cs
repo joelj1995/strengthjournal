@@ -19,6 +19,12 @@ namespace StrengthJournal.Server.Controllers.API
             this.profileService = profileService;
         }
 
+        [HttpGet("countries")]
+        public async Task<IEnumerable<CountryDto>> GetCountries()
+        {
+            return await profileService.GetCountries();
+        }
+
         [HttpPut("password-reset")]
         public async Task<ActionResult> ResetPassword()
         {

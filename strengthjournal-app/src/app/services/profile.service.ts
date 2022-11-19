@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Country } from '../model/country';
 import { ProfileSettings } from '../model/profile-settings';
 import { StrengthjournalBaseService } from './strengthjournalbase.service';
 
@@ -10,6 +11,10 @@ import { StrengthjournalBaseService } from './strengthjournalbase.service';
 export class ProfileService extends StrengthjournalBaseService {
 
   constructor(http: HttpClient) { super(http); }
+
+  getCountries(): Observable<Country[]> {
+    return this.http.get<Country[]>(`${this.BASE_URL}/profile/countries`);
+  }
 
   getSettings(): Observable<ProfileSettings> {
     return this.http.get<ProfileSettings>(`${this.BASE_URL}/profile/settings`);

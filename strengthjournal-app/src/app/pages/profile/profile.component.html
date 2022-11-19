@@ -2,13 +2,19 @@
 <div class="row">
   <div class="col-12">
     <app-card cardTitle="Profile Settings">
-      <form *ngIf="settings; else loading" [formGroup]="settingsForm" (ngSubmit)="onSubmit()">
+      <form *ngIf="settings && countryList; else loading" [formGroup]="settingsForm" (ngSubmit)="onSubmit()">
         <div class="mb-3 error-placeholder">
           <label>Reset Password</label>
           <p>
             Our IAM provider, Auth0, will send an email with instructions for setting a new password.
           </p>
           <button (click)="resetPassword()" class="btn btn-secondary" type="button">Reset Password</button>
+        </div>
+        <div>
+          <label>Country</label>
+          <select class="form-control mb-3" formControlName="countryCode">
+            <option *ngFor="let country of countryList" [value]="country.code">{{country.name}}</option>
+          </select>
         </div>
         <div class="mb-3 error-placeholder">
           <label>Preferred Weight Unit</label>

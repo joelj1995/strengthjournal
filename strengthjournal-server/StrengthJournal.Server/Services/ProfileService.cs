@@ -26,11 +26,13 @@ namespace StrengthJournal.Server.Services
         {
             var user = await context.Users
                 .Include(u => u.PreferredWeightUnit)
+                .Include(u => u.UserCountry)
                 .SingleAsync(u => u.Id == userId);
             return new ProfileSettingsDto()
             {
                 PreferredWeightUnit = context.WeightUnits.First(wu => wu.Id.Equals(user.PreferredWeightUnit.Id)).Abbreviation,
-                ConsentCEM = user.ConsentCEM
+                ConsentCEM = user.ConsentCEM,
+                CountryCode = user.UserCountry?.Code ?? ""
             };
         }
 
@@ -41,6 +43,7 @@ namespace StrengthJournal.Server.Services
                 .SingleAsync(u => u.Id == userId);
             user.PreferredWeightUnit = context.WeightUnits.First(wu => wu.Abbreviation.Equals(settings.PreferredWeightUnit));
             user.ConsentCEM = settings.ConsentCEM;
+            user.UserCountry = context.Countries.Single(c => c.Code.Equals(settings.CountryCode));
             context.Users.Update(user);
             await context.SaveChangesAsync();
         }
