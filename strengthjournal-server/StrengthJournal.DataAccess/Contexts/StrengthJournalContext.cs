@@ -19,6 +19,7 @@ namespace StrengthJournal.DataAccess.Contexts
         public DbSet<ExerciseHistoryLine> ExerciseHistory { get; set; }
         public DbSet<AppError> AppErrors { get; set; }
         public DbSet<Country> Countries { get; set; }
+        public DbSet<WeeklyVolumeReportLine> WeeklyVolumeReportLines { get; set; }
 
         public StrengthJournalContext(DbContextOptions options) : base(options)
         { }
@@ -65,11 +66,14 @@ namespace StrengthJournal.DataAccess.Contexts
             modelBuilder.Entity<ExerciseHistoryLine>()
                 .ToView("vwExerciseHistory")
                 .HasNoKey();
+
+            modelBuilder.Entity<WeeklyVolumeReportLine>()
+                .ToTable(nameof(WeeklyVolumeReportLine), t => t.ExcludeFromMigrations())
+                .HasNoKey();
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-
         }
     }
 }
