@@ -10,10 +10,31 @@
     </app-card>
   </div>
 
-  <div class="col-12">
-    <app-card cardTitle="Weekly Volume Report">
-      <canvas id="my-chart">
+  <div class="col-12 col-lg-6">
+    <app-card cardTitle="Weekly Volume Report" >
+      <canvas id="volume-chart">
       </canvas>
+      <ng-template *ngIf="!volumeChartLoaded">
+        <div class="mb-2 text-center">
+          <div class="spinner-grow me-2" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+        </div>
+      </ng-template>
+    </app-card>
+  </div>
+
+  <div class="col-12 col-lg-6">
+    <app-card cardTitle="Weekly SBD Tonnage Report">
+      <canvas id="tonnage-chart">
+      </canvas>
+      <ng-template *ngIf="!tonnageChartLoaded">
+        <div class="mb-2 text-center">
+          <div class="spinner-grow me-2" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+        </div>
+      </ng-template>
     </app-card>
   </div>
 

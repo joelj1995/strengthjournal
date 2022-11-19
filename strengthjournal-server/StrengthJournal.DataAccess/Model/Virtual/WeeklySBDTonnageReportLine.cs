@@ -11,8 +11,8 @@ namespace StrengthJournal.DataAccess.Model.Virtual
     public class WeeklySBDTonnageReportLine
     {
         public DateTime WeekStart { get; set; }
-        public int SquatTonnage { get; set; }
-        public int BenchTonnage { get; set; }
-        public int DeadliftTonnage { get; set; }
+        public decimal SquatTonnage { get; set; }
+        public decimal BenchTonnage { get; set; }
+        public decimal DeadliftTonnage { get; set; }
     }
 }

@@ -9,7 +9,7 @@ namespace StrengthJournal.Server.AutoMapperProfiles
         public DashboardProfile()
         {
             CreateMap<WeeklyVolumeReportLine, WeeklyVolumeReportLineDto>();
-            CreateMap<WeeklySBDTonnageReportLine, WeeklyVolumeReportLineDto>();
+            CreateMap<WeeklySBDTonnageReportLine, WeeklySBDTonnageReportLineDto>();
         }
     }
 }
