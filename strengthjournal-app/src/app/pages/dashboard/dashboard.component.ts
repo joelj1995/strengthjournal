@@ -26,7 +26,7 @@ export class DashboardComponent implements OnInit {
     const data = {
       labels: lines.map(l => new Date(l.weekStart).toLocaleDateString("en-US")),
       datasets: [{
-        label: 'Nubmer of sets',
+        label: 'Number of sets',
         backgroundColor: 'rgb(63, 128, 234)',
         borderColor: 'rgb(63, 128, 234)',
         data: lines.map(l => l.numberOfSets),
