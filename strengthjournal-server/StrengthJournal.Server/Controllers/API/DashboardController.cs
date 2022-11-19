@@ -25,5 +25,12 @@ namespace StrengthJournal.Server.Controllers.API
             var userId = HttpContext.GetUserId();
             return await dashboardService.GetWeeklyVolumeReport(userId);
         }
+
+        [HttpGet("weekly-tonnage-report")]
+        public async Task<IEnumerable<WeeklySBDTonnageReportLineDto>> GetWeeklyTonnageReport()
+        {
+            var userId = HttpContext.GetUserId();
+            return await dashboardService.GetWeeklySBDTonnageReport(userId);
+        }
     }
 }

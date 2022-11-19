@@ -24,5 +24,13 @@ namespace StrengthJournal.Server.Services
                 .AsEnumerable()
                 .Select(line => mapper.Map<WeeklyVolumeReportLineDto>(line));
         }
+
+        public async Task<IEnumerable<WeeklySBDTonnageReportLineDto>> GetWeeklySBDTonnageReport(Guid userId)
+        {
+            return context.WeeklySBDTonnageReportLines
+                .FromSqlRaw("EXEC spGenerateWeeklySBDTonnageReport @userId", new SqlParameter("userId", userId))
+                .AsEnumerable()
+                .Select(line => mapper.Map<WeeklySBDTonnageReportLineDto>(line));
+        }
     }
 }

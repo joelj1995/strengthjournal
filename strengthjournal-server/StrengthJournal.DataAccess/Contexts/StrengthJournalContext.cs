@@ -20,6 +20,7 @@ namespace StrengthJournal.DataAccess.Contexts
         public DbSet<AppError> AppErrors { get; set; }
         public DbSet<Country> Countries { get; set; }
         public DbSet<WeeklyVolumeReportLine> WeeklyVolumeReportLines { get; set; }
+        public DbSet<WeeklySBDTonnageReportLine> WeeklySBDTonnageReportLines { get; set; }
 
         public StrengthJournalContext(DbContextOptions options) : base(options)
         { }
@@ -69,6 +70,10 @@ namespace StrengthJournal.DataAccess.Contexts
 
             modelBuilder.Entity<WeeklyVolumeReportLine>()
                 .ToTable(nameof(WeeklyVolumeReportLine), t => t.ExcludeFromMigrations())
+                .HasNoKey();
+
+            modelBuilder.Entity<WeeklySBDTonnageReportLine>()
+                .ToTable(nameof(WeeklySBDTonnageReportLine), t => t.ExcludeFromMigrations())
                 .HasNoKey();
         }
 
