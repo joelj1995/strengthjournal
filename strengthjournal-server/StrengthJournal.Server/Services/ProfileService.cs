@@ -43,7 +43,7 @@ namespace StrengthJournal.Server.Services
         {
             // TODO: potentially create an audit trail for these and rate limit
             var email = (await context.Users.SingleAsync(u => u.Id.Equals(userId))).Email;
-            authenticationService.ResendVerificationEmail(email);
+            authenticationService.ResetPassword(email);
         }
     }
 }
