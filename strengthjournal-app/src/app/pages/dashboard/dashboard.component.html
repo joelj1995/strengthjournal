@@ -10,9 +10,11 @@
     </app-card>
   </div>
 
-  <p *ngFor="let line of weeklyVolumeLines">
-    {{line.numberOfSets}}
-    {{line.weekStart}}
-  </p> 
+  <div class="col-12">
+    <app-card cardTitle="Weekly Volume Report">
+      <canvas id="my-chart">
+      </canvas>
+    </app-card>
+  </div>
 
 </div>
