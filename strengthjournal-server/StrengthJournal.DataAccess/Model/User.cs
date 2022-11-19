@@ -20,5 +20,6 @@ namespace StrengthJournal.DataAccess.Model
         [DefaultValue("false")]
         public bool ConsentCEM { get; set; }
         public WeightUnit PreferredWeightUnit { get; set; }
+        public Country? UserCountry { get; set; }
     }
 }
