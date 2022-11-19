@@ -38,6 +38,7 @@ builder.Services.AddScoped<WorkoutService>();
 builder.Services.AddScoped<ErrorService>();
 builder.Services.AddScoped<UserService>();
 builder.Services.AddScoped<ProfileService>();
+builder.Services.AddScoped<DashboardService>();
 builder.Services.AddScoped<IAuthenticationService, Auth0AuthenticationService>();
 
 var devCorsRule = "_allowAngularDevServer";
