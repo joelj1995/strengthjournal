@@ -93,7 +93,7 @@ namespace StrengthJournal.Server.Integrations.Implementation
             }
         }
 
-        public CreateAccountResponse CreateAccount(string username, string password, bool consentCEM)
+        public CreateAccountResponse CreateAccount(string username, string password, bool consentCEM, string countryCode)
         {
             var request = new RestRequest("dbconnections/signup", Method.Post);
             request.AddHeader("content-type", "application/x-www-form-urlencoded");
@@ -114,7 +114,7 @@ namespace StrengthJournal.Server.Integrations.Implementation
                 if (response.IsSuccessStatusCode)
                 {
                     var userId = $"auth0|{responseData._id}";
-                    userService.RegisterUser(username, userId, consentCEM);
+                    userService.RegisterUser(username, userId, consentCEM, countryCode);
                     return new CreateAccountResponse()
                     {
                         Result = CreateAccountResponse.CreateResult.Success

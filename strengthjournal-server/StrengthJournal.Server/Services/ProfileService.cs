@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using StrengthJournal.DataAccess.Contexts;
 using StrengthJournal.Server.ApiModels;
 using StrengthJournal.Server.Integrations;
@@ -9,11 +10,16 @@ namespace StrengthJournal.Server.Services
     {
         protected readonly StrengthJournalContext context;
         protected readonly IAuthenticationService authenticationService;
+        protected readonly IMapper mapper;
 
-        public ProfileService(StrengthJournalContext context, IAuthenticationService authenticationService)
+        public ProfileService(
+            StrengthJournalContext context, 
+            IAuthenticationService authenticationService,
+            IMapper mapper)
         {
             this.context = context;
             this.authenticationService = authenticationService;
+            this.mapper = mapper;
         }
 
         public async Task<ProfileSettingsDto> GetSettings(Guid userId)
@@ -44,6 +50,14 @@ namespace StrengthJournal.Server.Services
             // TODO: potentially create an audit trail for these and rate limit
             var email = (await context.Users.SingleAsync(u => u.Id.Equals(userId))).Email;
             authenticationService.ResetPassword(email);
+        }
+
+        public async Task<IEnumerable<CountryDto>> GetCountries()
+        {
+            return await context.Countries
+                .OrderBy(c => c.Name)
+                .Select(c => mapper.Map<CountryDto>(c))
+                .ToListAsync();
         }
     }
 }

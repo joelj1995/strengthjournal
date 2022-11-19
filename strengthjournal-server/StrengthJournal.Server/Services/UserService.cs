@@ -11,13 +11,15 @@ namespace StrengthJournal.Server.Services
             this.context = context;
         }
 
-        public void RegisterUser(string email, string externalId, bool consentCEM)
+        public void RegisterUser(string email, string externalId, bool consentCEM, string countryCode)
         {
             var newUser = new StrengthJournal.DataAccess.Model.User()
             {
                 Email = email,
                 ExternalId = externalId,
-                ConsentCEM = consentCEM
+                ConsentCEM = consentCEM,
+                UserCountry = context.Countries.Single(c => c.Code.Equals(countryCode)),
+                PreferredWeightUnit = context.WeightUnits.Single(wu => wu.Abbreviation == "lbs")
             };
             context.Users.Add(newUser);
             context.SaveChanges();

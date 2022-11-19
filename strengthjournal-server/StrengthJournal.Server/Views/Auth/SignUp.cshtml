@@ -41,6 +41,23 @@
                                             <label class="form-label">Confirm Password</label>
                                             <input class="form-control form-control-lg" type="password" name="password2" placeholder="Enter password" />
                                         </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Country</label>
+                                            <select class="form-select form-select-lg" name="countryCode">
+                                                @foreach(var country in Model.CountryList)
+                                                {
+                                                    @if(country.Code == Model.SelectedCountryCode)
+                                                    {
+                                                        <option value="@country.Code" selected>@country.Name</option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="@country.Code">@country.Name</option>
+                                                    }
+                                                    
+                                                }
+                                            </select>
+                                        </div>
                                         <div class="form-check align-items-center">
                                             @Html.CheckBoxFor(m => m.ConsentCEM)
                                             <label class="form-check-label text-small" for="consentCEM">I would like to receive promotional emails from Strength Journal</label>

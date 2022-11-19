@@ -3,18 +3,24 @@ using RestSharp;
 using StrengthJournal.Server.Integrations;
 using StrengthJournal.Server.Integrations.Models;
 using StrengthJournal.Server.Models;
+using StrengthJournal.Server.Services;
 
 namespace StrengthJournal.Server.Controllers
 {
     public class AuthController : Controller
     {
         private readonly IAuthenticationService _authenticationService;
+        private readonly ProfileService profileService;
         private readonly IHostEnvironment _hostEnvironment;
 
-        public AuthController(IAuthenticationService authenticationService, IHostEnvironment hostEnvironment)
+        public AuthController(
+            IAuthenticationService authenticationService, 
+            IHostEnvironment hostEnvironment,
+            ProfileService profileService)
         {
             _authenticationService = authenticationService;
             _hostEnvironment = hostEnvironment;
+            this.profileService = profileService;
         }
 
         [HttpPost]
@@ -61,7 +67,14 @@ namespace StrengthJournal.Server.Controllers
         [Route("signup")]
         public IActionResult SignUp([FromQuery] string errorMessage)
         {
-            return View(new SignUpModel() { Email = "", Password = "", Password2 = "", Error = errorMessage == String.Empty ? null : errorMessage });
+            return View(new SignUpModel() 
+            { 
+                Email = "", 
+                Password = "", 
+                Password2 = "", 
+                Error = errorMessage == String.Empty ? null : errorMessage, 
+                CountryList = profileService.GetCountries().Result 
+            });
         }
 
         [HttpPost]
@@ -72,7 +85,7 @@ namespace StrengthJournal.Server.Controllers
             {
                 return RedirectToAction("signup", new { errorMessage = "Passwords do not match" });
             }
-            var result = _authenticationService.CreateAccount(model.Email, model.Password, model.ConsentCEM);
+            var result = _authenticationService.CreateAccount(model.Email, model.Password, model.ConsentCEM, model.CountryCode);
             switch (result.Result)
             {
                 case CreateAccountResponse.CreateResult.ValidationError:
