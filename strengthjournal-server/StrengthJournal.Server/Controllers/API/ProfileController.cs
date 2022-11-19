@@ -49,10 +49,10 @@ namespace StrengthJournal.Server.Controllers.API
         }
 
         [HttpPut("email")]
-        public async Task<ActionResult> UpdateEmail([FromBody] string newEmail)
+        public async Task<ActionResult> UpdateEmail([FromBody] UpdateEmailDto updateEmail)
         {
             var userId = HttpContext.GetUserId();
-            var result = await profileService.UpdateEmail(userId, newEmail);
+            var result = await profileService.UpdateEmail(userId, updateEmail.NewEmail);
             if (result)
                 return Ok();
             return new StatusCodeResult(500);

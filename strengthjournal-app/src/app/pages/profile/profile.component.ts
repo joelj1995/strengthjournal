@@ -21,6 +21,8 @@ export class ProfileComponent implements OnInit {
     countryCode: new FormControl('')
   });
 
+  emailFormControl = new FormControl(localStorage.getItem('app_username'));
+
   constructor(private profile: ProfileService, private toast: ToastService) { }
 
   ngOnInit(): void {
@@ -50,6 +52,15 @@ export class ProfileComponent implements OnInit {
   resetPassword() {
     this.profile.resetPasword().subscribe(() => {
       this.toast.setToast({ message: 'Password reset sent', domClass: 'bg-success text-light' });
+    });
+  }
+
+  updateEmail() {
+    const newEmail = this.emailFormControl.value;
+    this.profile.updateEmail(newEmail).subscribe(() => {
+      this.toast.setToast({ message: 'Email updated successfully', domClass: 'bg-success text-light' });
+      localStorage.setItem('app_username', newEmail);
+      location.reload();
     });
   }
 

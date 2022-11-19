@@ -30,6 +30,7 @@ export class AppComponent {
         return;
       }
       this.userFullName = user?.name ?? '';
+      localStorage.setItem('app_username', this.userFullName);
     });
   }
 

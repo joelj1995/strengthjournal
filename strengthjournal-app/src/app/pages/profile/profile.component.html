@@ -3,11 +3,16 @@
   <div class="col-12">
     <app-card cardTitle="Identity and Access">
       <div class="mb-3 error-placeholder">
+        <label>Update Email</label>
+        <input type="text" class="form-control mb-3" [formControl]="emailFormControl">
+        <button (click)="updateEmail()" class="btn btn-secondary btn-sm" type="button">Update Email</button>
+      </div>
+      <div class="mb-3 error-placeholder">
         <label>Reset Password</label>
         <p>
           Our IAM provider, Auth0, will send an email with instructions for setting a new password.
         </p>
-        <button (click)="resetPassword()" class="btn btn-secondary" type="button">Reset Password</button>
+        <button (click)="resetPassword()" class="btn btn-secondary btn-sm" type="button">Reset Password</button>
       </div>
     </app-card>
   </div>
