@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { WeeklyVolumeReportLine } from 'src/app/model/weekly-volume-report-line';
+import { DashboardService } from 'src/app/services/dashboard.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -7,9 +9,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DashboardComponent implements OnInit {
 
-  constructor() { }
+  weeklyVolumeLines: WeeklyVolumeReportLine[] | null = null;
+
+  constructor(private dashboard: DashboardService) { }
 
   ngOnInit(): void {
+    this.dashboard.getWeeklyVolumeReport().subscribe(lines => {
+      this.weeklyVolumeLines = lines;
+    });
   }
 
 }

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using StrengthJournal.DataAccess.Contexts;
 using StrengthJournal.Server.ApiModels;
@@ -18,10 +19,10 @@ namespace StrengthJournal.Server.Services
 
         public async Task<IEnumerable<WeeklyVolumeReportLineDto>> GetWeeklyVolumeReport(Guid userId)
         {
-            return await context.WeeklyVolumeReportLines
-                .FromSqlRaw("EXEC spGenerateWeeklyVolumeReport @userId", userId)
-                .Select(line => mapper.Map<WeeklyVolumeReportLineDto>(line))
-                .ToListAsync();
+            return context.WeeklyVolumeReportLines
+                .FromSqlRaw("EXEC spGenerateWeeklyVolumeReport @userId", new SqlParameter("userId", userId))
+                .AsEnumerable()
+                .Select(line => mapper.Map<WeeklyVolumeReportLineDto>(line));
         }
     }
 }
