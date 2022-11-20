@@ -1,4 +1,4 @@
-<div id="page-mask" *ngIf="show"></div>
+<div id="page-mask" *ngIf="show" (click)="closeEvent.emit()"></div>
 <div class="offcanvas offcanvas-start" [class.show]="show" tabindex="-1" role="dialog">
   
   <div class="offcanvas-header">

@@ -24,8 +24,8 @@
           </span>
         </label>
       </div>
-      <div *ngIf="!loadingSets && !loadingExercises && workout; else loading" >
-        <table  class="table table-striped no-footer table-hover">
+      <div *ngIf="!loadingSets && !loadingExercises && workout; else loading">
+        <table class="table table-striped no-footer table-hover">
           <thead>
             <tr>
               <th>Exercise</th>
@@ -36,16 +36,10 @@
             </tr>
           </thead>
           <tbody>
-            <tr 
-              *ngFor="let set of workout.sets" 
-              (click)="this.startUpdatingSet(set.id)" 
-              [draggable]="!setBeingUpdated && !addingSet" 
-              class="cursor-grab" 
-              (dragstart)="rowDragStart($event,set.id)"
-              (dragend)="rowDragEnd($event,set.id)"
-              (dragover)="rowDragOver($event,set.id)"
-              (drop)="rowDrop($event,set.id)"
-              [class.drag-transparent]="set.id == dragId"
+            <tr *ngFor="let set of workout.sets" (click)="this.startUpdatingSet(set.id)"
+              [draggable]="!setBeingUpdated && !addingSet" class="cursor-grab" (dragstart)="rowDragStart($event,set.id)"
+              (dragend)="rowDragEnd($event,set.id)" (dragover)="rowDragOver($event,set.id)"
+              (drop)="rowDrop($event,set.id)" [class.drag-transparent]="set.id == dragId"
               [class.drag-border]="set.id == dropId">
               <ng-container #viewSet *ngIf="set.id != setBeingUpdated; else updateSet">
                 <td>{{set.exerciseName}}</td>
@@ -60,10 +54,13 @@
                     <option *ngFor="let exercise of exerciseList" [value]="exercise.id">{{exercise.name}}</option>
                   </select>
                 </td>
-                <td><input type="number" class="form-control" id="weight" formControlName="weight" min="0" step="1"></td>
+                <td><input type="number" class="form-control" id="weight" formControlName="weight" min="0" step="1">
+                </td>
                 <td><input type="number" class="form-control" id="reps" formControlName="reps" min="0" step="1"></td>
-                <td><input type="number" class="form-control" id="targetReps" formControlName="targetReps" min="0" step="1"></td>
-                <td style="padding: 6px"><input type="number" class="form-control" id="rpe" formControlName="rpe" min="0" max="10" step="0.5"></td>
+                <td><input type="number" class="form-control" id="targetReps" formControlName="targetReps" min="0"
+                    step="1"></td>
+                <td style="padding: 6px"><input type="number" class="form-control" id="rpe" formControlName="rpe"
+                    min="0" max="10" step="0.5"></td>
               </ng-template>
             </tr>
             <tr [formGroup]="newSetForm" *ngIf="!setBeingUpdated">
@@ -74,15 +71,21 @@
               </td>
               <td><input type="number" class="form-control" id="weight" formControlName="weight" min="0" step="1"></td>
               <td><input type="number" class="form-control" id="reps" formControlName="reps" min="0" step="1"></td>
-              <td><input type="number" class="form-control" id="targetReps" formControlName="targetReps" min="0" step="1"></td>
-              <td style="padding: 6px"><input type="number" class="form-control" id="rpe" formControlName="rpe" min="0" max="10" step="0.5"></td>
+              <td><input type="number" class="form-control" id="targetReps" formControlName="targetReps" min="0"
+                  step="1"></td>
+              <td style="padding: 6px"><input type="number" class="form-control" id="rpe" formControlName="rpe" min="0"
+                  max="10" step="0.5"></td>
             </tr>
           </tbody>
         </table>
         <div class="card-footer">
-          <button class="btn btn-primary btn-sm" (click)="logNewSet()" [class.disabled]="this.addingSet || !(setBeingUpdated ? updateSetForm.valid : newSetForm.valid)">{{setBeingUpdated ? 'Update' : 'Add'}}</button>
-          <button class="btn btn-secondary btn-sm" [class.disabled]="this.addingSet" (click)="deleteSet()" *ngIf="setBeingUpdated">Delete</button>
-          <button class="btn btn-secondary btn-sm" [class.disabled]="this.addingSet" (click)="stopUpdatingSet()" *ngIf="setBeingUpdated">Cancel</button>
+          <button class="btn btn-primary btn-sm" (click)="logNewSet()"
+            [class.disabled]="this.addingSet || !(setBeingUpdated ? updateSetForm.valid : newSetForm.valid)">{{setBeingUpdated
+            ? 'Update' : 'Add'}}</button>
+          <button class="btn btn-secondary btn-sm" [class.disabled]="this.addingSet" (click)="deleteSet()"
+            *ngIf="setBeingUpdated">Delete</button>
+          <button class="btn btn-secondary btn-sm" [class.disabled]="this.addingSet" (click)="stopUpdatingSet()"
+            *ngIf="setBeingUpdated">Cancel</button>
           <button class="btn btn-secondary btn-sm" (click)="showHistory = true">Exercise History</button>
         </div>
       </div>
@@ -97,22 +100,12 @@
   </div>
 </div>
 
-<div class="row">
-  <div class="col-12">
-    <app-exercise-history [exerciseId]="setBeingUpdated ? updateSetForm.value.exerciseId : newSetForm.value.exerciseId"
-      [displayKg]="sharedSetForm.value.weightUnit == 'kg'">
-    </app-exercise-history>
-  </div>
-</div>
-
-<app-workout-details-editor 
-  [workoutId]="id"
-  [initialDate]="workout.entryDateUTC"
-  [initialTitle]="workout.title"
-  [bodyweight]="workout.bodyweight"
-  [bodyweightUnit]="workout.bodyweightUnit">
+<app-workout-details-editor [workoutId]="id" [initialDate]="workout.entryDateUTC" [initialTitle]="workout.title"
+  [bodyweight]="workout.bodyweight" [bodyweightUnit]="workout.bodyweightUnit">
 </app-workout-details-editor>
 
 <app-off-canvas [show]="showHistory" (closeEvent)="showHistory = false" title="Exercise History">
-  
+  <app-exercise-history [exerciseId]="setBeingUpdated ? updateSetForm.value.exerciseId : newSetForm.value.exerciseId"
+    [displayKg]="sharedSetForm.value.weightUnit == 'kg'">
+  </app-exercise-history>
 </app-off-canvas>
