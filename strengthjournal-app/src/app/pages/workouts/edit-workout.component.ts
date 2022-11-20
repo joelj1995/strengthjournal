@@ -40,6 +40,7 @@ export class EditWorkoutComponent implements OnInit {
   dropId: string | null = null;
 
   showHistory: boolean = false;
+  showDetailsEditor: boolean = false;
 
   constructor(
     private route: ActivatedRoute, 
