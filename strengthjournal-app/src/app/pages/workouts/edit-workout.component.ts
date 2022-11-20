@@ -4,6 +4,7 @@ import { FormControl, FormGroup, ValidationErrors, Validators } from '@angular/f
 import { ActivatedRoute } from '@angular/router';
 import { Exercise } from 'src/app/model/exercise';
 import { Workout } from 'src/app/model/workout';
+import { WorkoutCreateUpdateResult } from 'src/app/model/workout-create-update-result';
 import { WorkoutSet } from 'src/app/model/workout-set';
 import { ConfigService } from 'src/app/services/config.service';
 import { ExerciseService } from 'src/app/services/exercise.service';
@@ -191,4 +192,9 @@ export class EditWorkoutComponent implements OnInit {
     }
   }
 
-}
+  onWorkoutUpdateComplete(workoutData: WorkoutCreateUpdateResult) {
+    this.showDetailsEditor = false;
+    this.workout.entryDateUTC = workoutData.entryDateUTC;
+  }
+
+} 

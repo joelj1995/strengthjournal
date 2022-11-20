@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { WorkoutCreateUpdate } from 'src/app/model/workout-create-update';
 import { WorkoutService } from 'src/app/services/workout.service';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
+import { WorkoutCreateUpdateResult } from 'src/app/model/workout-create-update-result';
 
 @Component({
   selector: 'app-new-workout',
@@ -15,5 +16,9 @@ export class NewWorkoutComponent implements OnInit {
   constructor(private workouts: WorkoutService, private router: Router) { }
 
   ngOnInit(): void { }
+
+  updateDone(workoutData: WorkoutCreateUpdateResult) {
+    this.router.navigate(['workouts', 'edit', workoutData.id]);
+  }
 
 }

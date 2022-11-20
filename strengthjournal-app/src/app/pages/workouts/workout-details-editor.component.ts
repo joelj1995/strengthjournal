@@ -1,12 +1,12 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { WorkoutCreateUpdate } from 'src/app/model/workout-create-update';
 import { WorkoutService } from 'src/app/services/workout.service';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
-import { NgbTime } from '@ng-bootstrap/ng-bootstrap/timepicker/ngb-time';
 import { ToastService } from 'src/app/services/toast.service';
 import { ConfigService } from 'src/app/services/config.service';
+import { WorkoutCreateUpdateResult } from 'src/app/model/workout-create-update-result';
 
 @Component({
   selector: 'app-workout-details-editor',
@@ -29,6 +29,9 @@ export class WorkoutDetailsEditorComponent implements OnInit {
 
   @Input()
   bodyweightUnit: string = this.config.getPreferredWeigthUnit();
+
+  @Output()
+  public updateComplete = new EventEmitter<WorkoutCreateUpdateResult>();
 
   pickerDate: NgbDateStruct = { year: 1789, month: 7, day: 14 };
   pickerTime = {hour: 0, minute: 0};
@@ -87,14 +90,16 @@ export class WorkoutDetailsEditorComponent implements OnInit {
       bodyweightUnit: this.form.value.bodyweightUnit
     };
     if (this.workoutId) {
-      this.workouts.updateWorkout(this.workoutId, workoutData).subscribe(() => {
+      const workoutId = this.workoutId;
+      this.workouts.updateWorkout(workoutId, workoutData).subscribe(() => {
         this.toast.setToast({ message: 'Workout updated', domClass: 'bg-success text-light' });
+        this.updateComplete.emit({...workoutData, id: workoutId });
         this.enableSubmit = true;
       })
     } else {
       this.workouts.createWorkout(workoutData).subscribe(workoutId => {
         this.toast.setToast({ message: 'Workout created', domClass: 'bg-success text-light' });
-        this.router.navigate(['workouts', 'edit', workoutId]);
+        this.updateComplete.emit({...workoutData, id: workoutId });
       });
     }
   }
