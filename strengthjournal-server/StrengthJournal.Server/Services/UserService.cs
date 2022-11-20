@@ -1,4 +1,6 @@
-﻿using StrengthJournal.DataAccess.Contexts;
+﻿using Microsoft.EntityFrameworkCore;
+using StrengthJournal.DataAccess.Contexts;
+using StrengthJournal.Server.Models;
 
 namespace StrengthJournal.Server.Services
 {
@@ -31,6 +33,18 @@ namespace StrengthJournal.Server.Services
             user.Email = newEmail;
             context.Users.Update(user);
             context.SaveChanges();
+        }
+
+        public AppConfig GetConfig(string email)
+        {
+            var user = context.Users
+                .Include(u => u.PreferredWeightUnit)
+                .Single(u => u.Email.Equals(email));
+            var config = new AppConfig()
+            {
+                PrefferedWeightUnit = user.PreferredWeightUnit?.Abbreviation ?? "lbs"
+            };
+            return config;
         }
     }
 }

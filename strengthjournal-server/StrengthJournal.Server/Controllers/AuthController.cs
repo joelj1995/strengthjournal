@@ -12,15 +12,18 @@ namespace StrengthJournal.Server.Controllers
         private readonly IAuthenticationService _authenticationService;
         private readonly ProfileService profileService;
         private readonly IHostEnvironment _hostEnvironment;
+        private readonly UserService userService;
 
         public AuthController(
             IAuthenticationService authenticationService, 
             IHostEnvironment hostEnvironment,
-            ProfileService profileService)
+            ProfileService profileService,
+            UserService userService)
         {
             _authenticationService = authenticationService;
             _hostEnvironment = hostEnvironment;
             this.profileService = profileService;
+            this.userService = userService;
         }
 
         [HttpPost]
@@ -37,7 +40,8 @@ namespace StrengthJournal.Server.Controllers
                 case AuthenticationResponse.AuthResult.EmailNotVerified:
                     return RedirectToAction("Login", new { notVerified = true });
                 case AuthenticationResponse.AuthResult.Success:
-                    return View(new SubmitLoginModel(result.Token, loginModel.Email));
+                    var config = userService.GetConfig(loginModel.Email);
+                    return View(new SubmitLoginModel(result.Token, loginModel.Email, config));
                 default:
                     throw new NotImplementedException("Authentication result not recognized");
             }
@@ -48,7 +52,7 @@ namespace StrengthJournal.Server.Controllers
         {
             if (!_hostEnvironment.IsDevelopment())
                 return NotFound();
-            return View("SubmitLogin", new SubmitLoginModel("", "", true));
+            return View("SubmitLogin", new SubmitLoginModel(new AppConfig { PrefferedWeightUnit = "kg" }));
         }
 
         [Route("login")]

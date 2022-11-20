@@ -26,10 +26,12 @@
 @if(!Model.SuppressRedirect)
 {
     <script>
+		var configJson = '@Html.Raw(Model.ConfigJson)'
         var appUserName = '@Model.UserName';
         var appToken = '@Model.Token';
         localStorage.setItem('app_username', appUserName);
         localStorage.setItem('app_token', appToken);
+		localStorage.setItem('app_config', configJson);
         window.location.replace('/app');
     </script>
 }
