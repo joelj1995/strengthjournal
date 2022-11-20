@@ -35,10 +35,12 @@ namespace StrengthJournal.Server.Controllers
             var runtimeFileName = distFiles.FirstOrDefault(f => f.StartsWith("runtime")) ?? throw new Exception("No runtime file in Angular build output");
             var polyfillsFileName = distFiles.FirstOrDefault(f => f.StartsWith("polyfills")) ?? throw new Exception("No polyfills file in Angular build output");
             var mainFileName = distFiles.FirstOrDefault(f => f.StartsWith("main")) ?? throw new Exception("No main file in Angular build output");
+            var stylesFileName = distFiles.FirstOrDefault(f => f.StartsWith("styles")) ?? throw new Exception("No main file in Angular build output");
             return new AppViewModel(
                 ExtractHashFromAngularDistFile(runtimeFileName),
                 ExtractHashFromAngularDistFile(polyfillsFileName),
-                ExtractHashFromAngularDistFile(mainFileName)
+                ExtractHashFromAngularDistFile(mainFileName),
+                ExtractHashFromAngularDistFile(stylesFileName)
             );
         }
 

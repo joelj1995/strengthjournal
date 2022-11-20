@@ -4,6 +4,7 @@
 @model AppViewModel
 @{
     ViewData["Title"] = "My Journal";
+    ViewData["AddedStyleSheet"] = Model.stylesUrl;
 }
 <app-root></app-root>
 <script src="@Model.mainUrl" type="module"></script>
