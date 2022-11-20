@@ -35,6 +35,7 @@ import { FooterComponent } from './footer/footer.component';
 import { ToastComponent } from './components/toast/toast.component';
 import { ConfirmDeleteComponent } from './components/confirm-delete/confirm-delete.component';
 import { ProfileComponent } from './pages/profile/profile.component';
+import { OffCanvasComponent } from './components/off-canvas/off-canvas.component';
 
 @NgModule({
   declarations: [
@@ -57,7 +58,8 @@ import { ProfileComponent } from './pages/profile/profile.component';
     FooterComponent,
     ToastComponent,
     ConfirmDeleteComponent,
-    ProfileComponent
+    ProfileComponent,
+    OffCanvasComponent
   ],
   imports: [
     BrowserModule,

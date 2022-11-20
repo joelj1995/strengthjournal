@@ -39,6 +39,8 @@ export class EditWorkoutComponent implements OnInit {
   dragId: string | null = null;
   dropId: string | null = null;
 
+  showHistory: boolean = false;
+
   constructor(
     private route: ActivatedRoute, 
     private workouts: WorkoutService, 

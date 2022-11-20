@@ -83,6 +83,7 @@
           <button class="btn btn-primary btn-sm" (click)="logNewSet()" [class.disabled]="this.addingSet || !(setBeingUpdated ? updateSetForm.valid : newSetForm.valid)">{{setBeingUpdated ? 'Update' : 'Add'}}</button>
           <button class="btn btn-secondary btn-sm" [class.disabled]="this.addingSet" (click)="deleteSet()" *ngIf="setBeingUpdated">Delete</button>
           <button class="btn btn-secondary btn-sm" [class.disabled]="this.addingSet" (click)="stopUpdatingSet()" *ngIf="setBeingUpdated">Cancel</button>
+          <button class="btn btn-secondary btn-sm" (click)="showHistory = true">Exercise History</button>
         </div>
       </div>
       <ng-template #loading>
@@ -111,3 +112,7 @@
   [bodyweight]="workout.bodyweight"
   [bodyweightUnit]="workout.bodyweightUnit">
 </app-workout-details-editor>
+
+<app-off-canvas [show]="showHistory" (closeEvent)="showHistory = false" title="Exercise History">
+  
+</app-off-canvas>
