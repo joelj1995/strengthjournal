@@ -69,20 +69,22 @@ export class WorkoutDetailsEditorComponent implements OnInit {
     this.bindInputDateToPicker();
   }
 
-  getDate(): Date {
+  getDate(forceUtc: boolean = true): Date {
     const date = this.form.value.date;
     const time = this.form.value.time;
     let dateString = `${date.year}-${date.month}-${date.day}`;
     if (time) {
       dateString += ` ${time.hour}:${time.minute}`;
     }
-    dateString += ' UTC';
+    if (forceUtc)
+      dateString += ' UTC';
     const returnDate = new Date(dateString);
     return returnDate;
   }
 
   onSubmit() {
     this.enableSubmit = false;
+    const localDate = this.getDate(false);
     const workoutData: WorkoutCreateUpdate = {
       title: this.form.value.title,
       entryDateUTC: this.getDate(),
@@ -93,12 +95,14 @@ export class WorkoutDetailsEditorComponent implements OnInit {
       const workoutId = this.workoutId;
       this.workouts.updateWorkout(workoutId, workoutData).subscribe(() => {
         this.toast.setToast({ message: 'Workout updated', domClass: 'bg-success text-light' });
+        workoutData.entryDateUTC = localDate;
         this.updateComplete.emit({...workoutData, id: workoutId });
         this.enableSubmit = true;
       })
     } else {
       this.workouts.createWorkout(workoutData).subscribe(workoutId => {
         this.toast.setToast({ message: 'Workout created', domClass: 'bg-success text-light' });
+        workoutData.entryDateUTC = localDate;
         this.updateComplete.emit({...workoutData, id: workoutId });
       });
     }
