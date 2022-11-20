@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { Country } from '../model/country';
 import { ProfileSettings } from '../model/profile-settings';
+import { ConfigService } from './config.service';
 import { StrengthjournalBaseService } from './strengthjournalbase.service';
 
 @Injectable({
@@ -10,7 +11,7 @@ import { StrengthjournalBaseService } from './strengthjournalbase.service';
 })
 export class ProfileService extends StrengthjournalBaseService {
 
-  constructor(http: HttpClient) { super(http); }
+  constructor(http: HttpClient, private config: ConfigService) { super(http); }
 
   getCountries(): Observable<Country[]> {
     return this.http.get<Country[]>(`${this.BASE_URL}/profile/countries`);
@@ -21,7 +22,12 @@ export class ProfileService extends StrengthjournalBaseService {
   }
 
   updateSettings(settings: ProfileSettings): Observable<void> {
-    return this.http.post<void>(`${this.BASE_URL}/profile/settings`, settings);
+    return this.http.post<void>(`${this.BASE_URL}/profile/settings`, settings)
+      .pipe(
+        tap(() => {
+          this.config.update(settings);
+        })
+      );
   }
 
   resetPasword(): Observable<void> {

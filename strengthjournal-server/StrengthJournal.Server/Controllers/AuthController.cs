@@ -52,7 +52,7 @@ namespace StrengthJournal.Server.Controllers
         {
             if (!_hostEnvironment.IsDevelopment())
                 return NotFound();
-            return View("SubmitLogin", new SubmitLoginModel(new AppConfig { PrefferedWeightUnit = "kg" }));
+            return View("SubmitLogin", new SubmitLoginModel(new AppConfig { PreferredWeightUnit = "kg" }));
         }
 
         [Route("login")]

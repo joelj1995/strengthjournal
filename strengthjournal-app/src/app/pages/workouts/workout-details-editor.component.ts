@@ -6,6 +6,7 @@ import { WorkoutService } from 'src/app/services/workout.service';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { NgbTime } from '@ng-bootstrap/ng-bootstrap/timepicker/ngb-time';
 import { ToastService } from 'src/app/services/toast.service';
+import { ConfigService } from 'src/app/services/config.service';
 
 @Component({
   selector: 'app-workout-details-editor',
@@ -27,7 +28,7 @@ export class WorkoutDetailsEditorComponent implements OnInit {
   bodyweight: number | null = null;
 
   @Input()
-  bodyweightUnit: string = 'kg';
+  bodyweightUnit: string = this.config.getPreferredWeigthUnit();
 
   pickerDate: NgbDateStruct = { year: 1789, month: 7, day: 14 };
   pickerTime = {hour: 0, minute: 0};
@@ -38,10 +39,14 @@ export class WorkoutDetailsEditorComponent implements OnInit {
     date: new FormControl(''),
     time: new FormControl(''),
     bodyweight: new FormControl(''),
-    bodyweightUnit: new FormControl('lbs')
+    bodyweightUnit: new FormControl(this.bodyweightUnit)
   });
 
-  constructor(private workouts: WorkoutService, private router: Router, private toast: ToastService) { 
+  constructor(
+    private workouts: WorkoutService, 
+    private router: Router, 
+    private toast: ToastService,
+    private config: ConfigService) { 
 
   }
 

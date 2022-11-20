@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Exercise } from 'src/app/model/exercise';
 import { Workout } from 'src/app/model/workout';
 import { WorkoutSet } from 'src/app/model/workout-set';
+import { ConfigService } from 'src/app/services/config.service';
 import { ExerciseService } from 'src/app/services/exercise.service';
 import { ToastService } from 'src/app/services/toast.service';
 import { WorkoutService } from 'src/app/services/workout.service';
@@ -38,7 +39,12 @@ export class EditWorkoutComponent implements OnInit {
   dragId: string | null = null;
   dropId: string | null = null;
 
-  constructor(private route: ActivatedRoute, private workouts: WorkoutService, private exercises : ExerciseService, private toast: ToastService) { }
+  constructor(
+    private route: ActivatedRoute, 
+    private workouts: WorkoutService, 
+    private exercises : ExerciseService, 
+    private toast: ToastService,
+    private config: ConfigService) { }
 
   static createSetForm(): FormGroup {
     return new FormGroup({
@@ -56,7 +62,7 @@ export class EditWorkoutComponent implements OnInit {
   }
 
   sharedSetForm = new FormGroup({
-    weightUnit: new FormControl('lbs')
+    weightUnit: new FormControl(this.config.getPreferredWeigthUnit())
   });
 
   updateSetForm = EditWorkoutComponent.createSetForm();

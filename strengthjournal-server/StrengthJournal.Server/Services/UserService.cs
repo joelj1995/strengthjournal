@@ -42,7 +42,7 @@ namespace StrengthJournal.Server.Services
                 .Single(u => u.Email.Equals(email));
             var config = new AppConfig()
             {
-                PrefferedWeightUnit = user.PreferredWeightUnit?.Abbreviation ?? "lbs"
+                PreferredWeightUnit = user.PreferredWeightUnit?.Abbreviation ?? "lbs"
             };
             return config;
         }
