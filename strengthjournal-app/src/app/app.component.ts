@@ -1,14 +1,15 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterEvent } from '@angular/router';
 import { AuthService } from '@auth0/auth0-angular';
 import { environment } from 'src/environments/environment';
+import { ConfigService } from './services/config.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
 
   readonly lgBreakpoint: number = 992; // defined as map-get($grid-breakpoints, 'lg') by appstack
   screenWidth: number = 0;
@@ -39,7 +40,7 @@ export class AppComponent {
     this.userFullName = localStorage.getItem('app_username') ?? '';
   }
 
-  constructor(public auth: AuthService, private router: Router) {
+  constructor(public auth: AuthService, private router: Router, private config: ConfigService) {
     if (environment.useResourceOwnerFlow) {
       this.resourceOwnerLoginFlow();
     } else {
@@ -50,7 +51,16 @@ export class AppComponent {
         this.navCollapsed = false;
     })
     this.onResize();
-  };
+  }
+  
+  ngOnInit(): void {
+    if (this.config.configTooOld) {
+      this.configUpdating = true;
+      this.config.pullUpdate().subscribe(() => {
+        this.configUpdating = false;
+      });
+    }
+  }
 
   toggleNav() {
     this.navCollapsed = !this.navCollapsed;

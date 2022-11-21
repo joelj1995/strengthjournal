@@ -46,5 +46,17 @@ namespace StrengthJournal.Server.Services
             };
             return config;
         }
+
+        public AppConfig GetConfig(Guid userId)
+        {
+            var user = context.Users
+                .Include(u => u.PreferredWeightUnit)
+                .Single(u => u.Id.Equals(userId));
+            var config = new AppConfig()
+            {
+                PreferredWeightUnit = user.PreferredWeightUnit?.Abbreviation ?? "lbs"
+            };
+            return config;
+        }
     }
 }

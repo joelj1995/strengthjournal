@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using StrengthJournal.Server.ApiModels;
 using StrengthJournal.Server.Extensions;
+using StrengthJournal.Server.Models;
 using StrengthJournal.Server.Services;
 
 namespace StrengthJournal.Server.Controllers.API
@@ -13,10 +14,12 @@ namespace StrengthJournal.Server.Controllers.API
     public class ProfileController : ControllerBase
     {
         private readonly ProfileService profileService;
+        private readonly UserService userService;
 
-        public ProfileController(ProfileService profileService)
+        public ProfileController(ProfileService profileService, UserService userService)
         {
             this.profileService = profileService;
+            this.userService = userService;
         }
 
         [HttpGet("countries")]
@@ -56,6 +59,13 @@ namespace StrengthJournal.Server.Controllers.API
             if (result)
                 return Ok();
             return new StatusCodeResult(500);
+        }
+
+        [HttpGet("config")]
+        public async Task<AppConfig> GetConfig()
+        {
+            var userId = HttpContext.GetUserId();
+            return userService.GetConfig(userId);
         }
     }
 }
