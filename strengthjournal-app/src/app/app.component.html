@@ -1,6 +1,6 @@
 <app-toast></app-toast>
 
-<div class="wrapper">
+<div class="wrapper" *ngIf="!configUpdating">
   <app-nav id="sidebar" class="sidebar" [class.collapsed]="navCollapsed"></app-nav>
   
   <div class="main">
