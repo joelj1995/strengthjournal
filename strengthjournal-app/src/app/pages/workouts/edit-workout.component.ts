@@ -188,8 +188,52 @@ export class EditWorkoutComponent implements OnInit {
       this.addingSet = true;
       this.workouts.updateWorkoutSetSequence(this.workout.id, newSequence).subscribe(() => {
         this.addingSet = false;
-      })
+      });
     }
+  }
+
+  moveUp() {
+    if (!this.setBeingUpdated)
+      throw 'There is no set being updated';
+    const i = this.indexOfSetBeingUpdate();
+    if (i == 0)
+      return;
+    const newSets = [...this.workout.sets];
+    newSets[i-1] = this.workout.sets[i];
+    newSets[i] = this.workout.sets[i-1];
+    this.workout.sets = newSets;
+    let newSequence = newSets.map(s => s.id);
+    this.addingSet = true;
+    this.workouts.updateWorkoutSetSequence(this.workout.id, newSequence).subscribe(() => {
+      this.addingSet = false;
+    });
+  }
+
+  moveDown() {
+    if (!this.setBeingUpdated)
+      throw 'There is no set being updated';
+    const i = this.indexOfSetBeingUpdate();
+    if (i == this.workout.sets.length - 1)
+      return;
+    const newSets = [...this.workout.sets];
+    newSets[i+1] = this.workout.sets[i];
+    newSets[i] = this.workout.sets[i+1];
+    this.workout.sets = newSets;
+    let newSequence = newSets.map(s => s.id);
+    this.addingSet = true;
+    this.workouts.updateWorkoutSetSequence(this.workout.id, newSequence).subscribe(() => {
+      this.addingSet = false;
+    });
+  }
+
+  indexOfSetBeingUpdate(): number {
+    if (!this.setBeingUpdated)
+      throw 'There is no set being updated';
+    return this.workout.sets.findIndex(s => s.id == this.setBeingUpdated);
+  }
+
+  numberOfSets() {
+    return this.workout.sets.length;
   }
 
   onWorkoutUpdateComplete(workoutData: WorkoutCreateUpdateResult) {

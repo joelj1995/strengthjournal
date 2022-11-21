@@ -86,6 +86,8 @@
             *ngIf="setBeingUpdated">Delete</button>
           <button class="btn btn-secondary btn-sm" [class.disabled]="this.addingSet" (click)="stopUpdatingSet()"
             *ngIf="setBeingUpdated">Cancel</button>
+          <button class="btn btn-secondary btn-sm" *ngIf="setBeingUpdated" (click)="moveDown()" [class.disabled]="addingSet || indexOfSetBeingUpdate() == numberOfSets() - 1">Move Down</button>
+          <button class="btn btn-secondary btn-sm" *ngIf="setBeingUpdated" (click)="moveUp()" [class.disabled]="addingSet || indexOfSetBeingUpdate() == 0">Move Up</button>
           <button class="btn btn-secondary btn-sm" (click)="showHistory = true">Exercise History</button>
         </div>
       </div>
