@@ -11,14 +11,12 @@
         <thead>
           <tr>
             <th>Name</th>
-            <th>Personal Best</th>
             <th style="width: 10%">Actions</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let exercise of exerciseList">
             <td><a [routerLink]="exercise.id">{{exercise.name}}</a><span *ngIf="exercise.systemDefined"> *</span></td>
-            <td>0</td>
             <td class="table-action">
               <app-table-actions *ngIf="!exercise.systemDefined" (deleteClicked)="this.deleteExercise(exercise.id)" (editClicked)="this.editExercise(exercise.id)"></app-table-actions>
             </td>
