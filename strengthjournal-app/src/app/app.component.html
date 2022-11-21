@@ -14,3 +14,7 @@
     <app-footer></app-footer>
   </div>
 </div>
+
+<app-blocking-spinner *ngIf="configUpdating">
+  <p>Please wait while we pull in some important updates.</p>
+</app-blocking-spinner>

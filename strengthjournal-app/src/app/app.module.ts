@@ -36,6 +36,7 @@ import { ToastComponent } from './components/toast/toast.component';
 import { ConfirmDeleteComponent } from './components/confirm-delete/confirm-delete.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { OffCanvasComponent } from './components/off-canvas/off-canvas.component';
+import { BlockingSpinnerComponent } from './components/blocking-spinner/blocking-spinner.component';
 
 @NgModule({
   declarations: [
@@ -59,7 +60,8 @@ import { OffCanvasComponent } from './components/off-canvas/off-canvas.component
     ToastComponent,
     ConfirmDeleteComponent,
     ProfileComponent,
-    OffCanvasComponent
+    OffCanvasComponent,
+    BlockingSpinnerComponent
   ],
   imports: [
     BrowserModule,

@@ -14,6 +14,7 @@ export class AppComponent {
   screenWidth: number = 0;
 
   navCollapsed: boolean = false;
+  configUpdating: boolean = false;
 
   title = 'strengthjournal-app';
   userFullName = '';
