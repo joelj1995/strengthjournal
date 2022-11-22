@@ -10,20 +10,14 @@ import { ToastService } from 'src/app/services/toast.service';
 })
 export class ToastComponent implements OnInit {
 
-  toastMessage: ToastMessage | null = null;
+  toastMessages: ToastMessage[] = [];
 
   constructor(private toast: ToastService) { }
 
   ngOnInit(): void {
     this.toast.getToast()
-    .pipe(
-      tap(message => {
-        this.toastMessage = message;
-      }),
-      debounceTime(3000)
-    )
-    .subscribe(message => {
-      this.toastMessage = null;
+    .subscribe(messages => {
+      this.toastMessages = messages;
     });
   }
 

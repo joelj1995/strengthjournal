@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, of, Subscriber } from 'rxjs';
+import { BehaviorSubject, Observable, of, Subscriber } from 'rxjs';
 import { ToastMessage } from '../model/toast-message';
 
 @Injectable({
@@ -7,22 +7,20 @@ import { ToastMessage } from '../model/toast-message';
 })
 export class ToastService {
 
-  subscribers: Subscriber<ToastMessage>[] = [];
-
-  private toastMessage: Observable<ToastMessage> = new Observable<ToastMessage>(subscriber => {
-    this.subscribers.push(subscriber);
-  });
-
-  constructor() { }
+  private toastMessages: ToastMessage[] = [];
+  private toastMessagesSubject = new BehaviorSubject<ToastMessage[]>([]);
 
   setToast(message: ToastMessage) {
-    this.subscribers.forEach(sub => {
-      sub.next(message);
-    });
+    this.toastMessages = [message, ...this.toastMessages];
+    this.toastMessagesSubject.next(this.toastMessages);
+    setTimeout(() => {
+      this.toastMessages.pop();
+      this.toastMessagesSubject.next(this.toastMessages);
+    }, 3000);
   }
 
-  getToast(): Observable<ToastMessage> {
-    return this.toastMessage;
+  getToast(): Observable<ToastMessage[]> {
+    return this.toastMessagesSubject;
   }
 
 }
