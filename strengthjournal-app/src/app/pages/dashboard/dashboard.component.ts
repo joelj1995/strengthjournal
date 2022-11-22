@@ -28,7 +28,7 @@ export class DashboardComponent implements OnInit {
   createWeeklyVolumeReportChart(lines: WeeklyVolumeReportLine[]) {
     Chart.register(...registerables);
     const data = {
-      labels: lines.map(l => new Date(l.weekStart)).map(d => `${d.getDate()}/${d.getMonth()}`),
+      labels: lines.map(l => new Date(l.weekStart)).map(d => `${d.getDate()}/${d.getMonth()+1}`),
       datasets: [{
         label: 'Number of sets',
         backgroundColor: 'rgb(63, 128, 234)',
@@ -57,7 +57,7 @@ export class DashboardComponent implements OnInit {
   createWeeklyTonnageReport(lines: WeeklyTonnageReportLine[]) {
     Chart.register(...registerables);
     const data = {
-      labels: lines.map(l => new Date(l.weekStart)).map(d => `${d.getDate()}/${d.getMonth()}`),
+      labels: lines.map(l => new Date(l.weekStart)).map(d => `${d.getDate()}/${d.getMonth()+1}`),
       datasets: [{
         label: 'Squat',
         backgroundColor: 'rgb(63, 128, 234)',
