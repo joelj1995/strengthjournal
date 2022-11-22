@@ -15,7 +15,7 @@
         </thead>
         <tbody>
           <tr *ngFor="let workout of workoutList">
-            <td>{{workout.entryDateUTC | date:'short'}}</td>
+            <td><a [routerLink]="['edit', workout.id]">{{workout.entryDateUTC | date:'short'}}</a></td>
             <td>{{workout.title}}</td>
             <td class="table-action">
               <app-table-actions (deleteClicked)="this.deleteWorkout(workout.id)"
