@@ -6,6 +6,8 @@ namespace StrengthJournal.Server.ApiModels
     {
         [MinLength(2)]
         [MaxLength(255)]
+        [Required]
         public string Name { get; set; } = string.Empty;
+        public Guid? ParentExerciseId { get; set; }
     }
 }

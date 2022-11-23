@@ -26,11 +26,11 @@ export class ExerciseService extends StrengthjournalBaseService {
   }
 
   createExercise(name: string): Observable<void> {
-    return this.http.post<void>(`${this.BASE_URL}/exercises`, {name});
+    return this.http.post<void>(`${this.BASE_URL}/exercises`, { name, parentExerciseId: null });
   }
 
   updateExercise(exerciseId: string, name: string): Observable<void> {
-    return this.http.put<void>(`${this.BASE_URL}/exercises/${exerciseId}`, {name});
+    return this.http.put<void>(`${this.BASE_URL}/exercises/${exerciseId}`, { name, parentExerciseId: null });
   }
 
   deleteExercise(exerciseId: string): Observable<void> {

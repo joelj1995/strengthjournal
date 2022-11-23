@@ -48,21 +48,34 @@ namespace StrengthJournal.Server.Services
             return history;
         }
 
-        public async Task CreateExercise(string name, Guid userId)
+        public async Task CreateExercise(string name, Guid userId, Guid? parentExerciseId)
         {
             var createdByUser = context.Users.Single(u => u.Id == userId);
-            await context.Exercises.AddAsync(new DataAccess.Model.Exercise() { Name = name, CreatedByUser = createdByUser });
+            if (parentExerciseId != null)
+            {
+                var parentExercsie = context.Exercises.Single(e => e.Id.Equals(parentExerciseId));
+                if (parentExercsie.ParentExerciseId != null)
+                    throw new Exception("Cannot add non-root exercise as parent");
+            }
+            await context.Exercises.AddAsync(new DataAccess.Model.Exercise() { Name = name, CreatedByUser = createdByUser, ParentExerciseId = parentExerciseId });
             await context.SaveChangesAsync();
         }
 
-        public async Task UpdateExercise(Guid userId, Guid exerciseId, string name)
+        public async Task UpdateExercise(Guid userId, Guid exerciseId, string name, Guid? parentExerciseId)
         {
             var exercise = context.Exercises.FirstOrDefault(exercise => exercise.Id.Equals(exerciseId) && exercise.CreatedByUser.Id.Equals(userId));
             if (exercise == null)
             {
                 throw new EntityNotFoundException();
             }
+            if (parentExerciseId != null)
+            {
+                var parentExercsie = context.Exercises.Single(e => e.Id.Equals(parentExerciseId));
+                if (parentExercsie.ParentExerciseId != null)
+                    throw new Exception("Cannot add non-root exercise as parent");
+            }
             exercise.Name = name;
+            exercise.ParentExerciseId = parentExerciseId;
             context.Exercises.Update(exercise);
             await context.SaveChangesAsync();
         }

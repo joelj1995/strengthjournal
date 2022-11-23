@@ -47,17 +47,17 @@ namespace StrengthJournal.Server.Controllers.API
         public async Task<ActionResult> CreateExercise([FromBody]ExerciseCreationDto exercise)
         {
             var userId = HttpContext.GetUserId();
-            await exerciseService.CreateExercise(exercise.Name, userId);
+            await exerciseService.CreateExercise(exercise.Name, userId, exercise.ParentExerciseId);
             return Ok();
         }
 
         [HttpPut("{exerciseId:Guid}")]
-        public async Task<ActionResult> UpdateExercise([FromRoute]Guid exerciseId, ExerciseUpdateDto exercise)
+        public async Task<ActionResult> UpdateExercise([FromRoute]Guid exerciseId, ExerciseCreationDto exercise)
         {
             var userId = HttpContext.GetUserId();
             try
             {
-                await exerciseService.UpdateExercise(userId, exerciseId, exercise.Name);
+                await exerciseService.UpdateExercise(userId, exerciseId, exercise.Name, exercise.ParentExerciseId);
             }
             catch(EntityNotFoundException)
             {
