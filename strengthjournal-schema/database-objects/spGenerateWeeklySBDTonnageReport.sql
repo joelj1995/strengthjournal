@@ -33,27 +33,30 @@ BEGIN
 			FROM 
 			WorkoutLogEntries [entry]
 			INNER JOIN WorkoutLogEntrySets [set] ON [set].WorkoutLogEntryId = [entry].Id
+			LEFT JOIN Exercises e ON e.Id = [set].ExerciseId
 		WHERE 
 			DATEPART(week, [entry].EntryDateUTC) = DATEPART(week, w.WeekStart)
-			AND [set].ExerciseId = @SquatID
+			AND [set].ExerciseId = @SquatID OR e.ParentExerciseId = @SquatID
 			AND [entry].UserId = @UserID) [SquatTonnage],
 		(SELECT 
 			COALESCE(SUM([set].[Weight] * [set].Reps), 0)
 			FROM 
 			WorkoutLogEntries [entry]
 			INNER JOIN WorkoutLogEntrySets [set] ON [set].WorkoutLogEntryId = [entry].Id
+			LEFT JOIN Exercises e ON e.Id = [set].ExerciseId
 		WHERE 
 			DATEPART(week, [entry].EntryDateUTC) = DATEPART(week, w.WeekStart)
-			AND [set].ExerciseId = @BenchID
+			AND [set].ExerciseId = @BenchID OR e.ParentExerciseId = @BenchID
 			AND [entry].UserId = @UserID) [BenchTonnage],
 		(SELECT 
 			COALESCE(SUM([set].[Weight] * [set].Reps), 0)
 			FROM 
 			WorkoutLogEntries [entry]
 			INNER JOIN WorkoutLogEntrySets [set] ON [set].WorkoutLogEntryId = [entry].Id
+			LEFT JOIN Exercises e ON e.Id = [set].ExerciseId
 		WHERE 
 			DATEPART(week, [entry].EntryDateUTC) = DATEPART(week, w.WeekStart)
-			AND [set].ExerciseId = @DeadliftID
+			AND [set].ExerciseId = @DeadliftID OR e.ParentExerciseId = @DeadliftID
 			AND [entry].UserId = @UserID) [DeadliftTonnage]
 
 	FROM
