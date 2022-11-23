@@ -35,7 +35,7 @@ export class ExerciseHistoryComponent implements OnInit {
     this.loading = true;
     this.exercises.getExerciseHistory(this.exerciseId).subscribe(historyList => {
       this.loading = false;
-      this.historyList = historyList;
+      this.historyList = historyList.data;
     })
   }
 

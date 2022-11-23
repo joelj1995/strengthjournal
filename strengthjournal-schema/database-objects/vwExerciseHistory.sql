@@ -3,6 +3,7 @@ CREATE OR ALTER VIEW vwExerciseHistory AS
 SELECT
 	wle.UserId,
 	e.Id [ExerciseId],
+	wle.Id [WorkoutId],
 	wle.EntryDateUTC,
 	[wle].BodyWeightPIT / COALESCE(bwu.RatioToKg, 1) [BodyWeightKg],
 	[wle].BodyWeightPIT  / (COALESCE(bwu.RatioToKg, 1) / (SELECT TOP 1 RatioToKg FROM dbo.WeightUnits WHERE Abbreviation = 'lbs')) [BodyWeightLbs],
