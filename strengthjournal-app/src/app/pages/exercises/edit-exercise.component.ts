@@ -37,7 +37,7 @@ export class EditExerciseComponent implements OnInit {
 
   onSubmit() {
     this.enableSubmit = false;
-    this.exercises.updateExercise(this.id, this.form.value.name).subscribe(e => {
+    this.exercises.updateExercise(this.id, this.form.value.name, null).subscribe(e => {
       this.toast.setToast({ message: 'Exercise updated', domClass: 'bg-success text-light' })
       this.enableSubmit = true;
       this.router.navigate(['exercises']);

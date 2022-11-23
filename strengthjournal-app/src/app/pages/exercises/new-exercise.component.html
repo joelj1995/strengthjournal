@@ -7,6 +7,13 @@
         <label>Name</label>
         <input type="text" class="form-control" id="name" formControlName="name">
       </div>
+      <div class="mb-3 error-placeholder">
+        <label>Parent Exercise</label>
+        <select class="form-control" formControlName="parentExerciseId" [class.disabled]="!exerciseList">
+          <option [ngValue]="null"></option>
+          <option *ngFor="let exercise of exerciseList ?? []" [value]="exercise.id">{{exercise.name}}</option>
+        </select>
+      </div>
       <div class="btn-group">
         <button type="submit" class="btn btn-primary" [class.disabled]="!this.enableSubmit">Create</button>
         <button class="btn btn-warning" [class.disabled]="!this.enableSubmit" routerLink="/exercises">Cancel</button>

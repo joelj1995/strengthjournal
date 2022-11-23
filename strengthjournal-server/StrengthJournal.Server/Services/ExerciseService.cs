@@ -26,7 +26,7 @@ namespace StrengthJournal.Server.Services
             var totalRecords = await exercisesQuery.CountAsync();
             if (!allRecords) exercisesQuery = (IOrderedQueryable<DataAccess.Model.Exercise>)exercisesQuery.Skip(perPage * (pageNumber - 1)).Take(perPage);
             var data = await exercisesQuery
-                .Select(e => new ExerciseDto() { Id = e.Id, Name = e.Name, SystemDefined = e.CreatedByUser == null })
+                .Select(e => new ExerciseDto() { Id = e.Id, Name = e.Name, SystemDefined = e.CreatedByUser == null, ParentExerciseId = e.ParentExerciseId })
                 .ToListAsync();
             return new DataPage<ExerciseDto>()
             {
