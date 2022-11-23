@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Exercise } from 'src/app/model/exercise';
 import { ExerciseService } from 'src/app/services/exercise.service';
 import { ToastService } from 'src/app/services/toast.service';
 
@@ -14,9 +15,11 @@ export class EditExerciseComponent implements OnInit {
   loadingData: boolean = true;
   enableSubmit: boolean = true;
   id: string = '';
+  exerciseList: Exercise[] | null = null;
 
   form = new FormGroup({
-    name: new FormControl('')
+    name: new FormControl(''),
+    parentExerciseId: new FormControl(null)
   });
 
   constructor(private exercises: ExerciseService, private router: Router, private route: ActivatedRoute, private toast: ToastService) { }
@@ -24,20 +27,23 @@ export class EditExerciseComponent implements OnInit {
   ngOnInit(): void {
     this.enableSubmit = false;
     this.loadingData = true;
+    this.exercises.getAllExercises().subscribe(page => {
+      this.exerciseList = page.data.filter(e => e.parentExerciseId == null);
+    });
     this.route.params.subscribe(params => {
       this.enableSubmit = true;
       this.id = params['id'];
       this.exercises.getAllExercises().subscribe(page => {
         let exercise = page.data.find(e => e.id == this.id);
-        this.form.setValue({'name': exercise?.name});
+        this.form.setValue({ 'name': exercise?.name, 'parentExerciseId': exercise?.parentExerciseId });
         this.loadingData = false;
-      })
+      });
     });
   }
 
   onSubmit() {
     this.enableSubmit = false;
-    this.exercises.updateExercise(this.id, this.form.value.name, null).subscribe(e => {
+    this.exercises.updateExercise(this.id, this.form.value.name, this.form.value.parentExerciseId).subscribe(e => {
       this.toast.setToast({ message: 'Exercise updated', domClass: 'bg-success text-light' })
       this.enableSubmit = true;
       this.router.navigate(['exercises']);
