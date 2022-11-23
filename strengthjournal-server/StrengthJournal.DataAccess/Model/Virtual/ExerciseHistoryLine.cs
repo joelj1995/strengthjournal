@@ -10,6 +10,7 @@ namespace StrengthJournal.DataAccess.Model.Virtual
     {
         public Guid UserId { get; set; }
         public Guid ExerciseId { get; set; }
+        public Guid WorkoutId { get; set; }
         public DateTime EntryDateUTC { get; set; }
         public decimal? BodyWeightKg { get; set; }
         public decimal? BodyWeightLbs { get; set; }
