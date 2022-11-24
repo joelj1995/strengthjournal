@@ -38,7 +38,7 @@ namespace StrengthJournal.Server.Controllers.API
             var userId = HttpContext.GetUserId();
             try
             {
-                var history = await exerciseService.GetExerciseHistory(userId, exerciseId, pageNumber, perPage);
+                var history = await exerciseService.GetExerciseHistory(userId, exerciseId, pageNumber, perPage, excludeWorkoutId);
                 return Ok(history);
             }
             catch (EntityNotFoundException)

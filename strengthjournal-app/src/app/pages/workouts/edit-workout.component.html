@@ -110,6 +110,7 @@
 
 <app-off-canvas [show]="showHistory" (closeEvent)="showHistory = false" title="Exercise History">
   <app-exercise-history [exerciseId]="setBeingUpdated ? updateSetForm.value.exerciseId : newSetForm.value.exerciseId"
-    [displayKg]="sharedSetForm.value.weightUnit == 'kg'">
+    [displayKg]="sharedSetForm.value.weightUnit == 'kg'"
+    [excludeWorkoutId]="workout.id">
   </app-exercise-history>
 </app-off-canvas>

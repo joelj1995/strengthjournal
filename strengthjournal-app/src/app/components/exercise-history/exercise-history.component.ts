@@ -21,6 +21,9 @@ export class ExerciseHistoryComponent implements OnInit {
   exerciseId: string | null = null;
 
   @Input()
+  excludeWorkoutId: string | null = null;
+
+  @Input()
   displayKg: boolean = true;
 
   constructor(private exercises: ExerciseService) { }
@@ -41,7 +44,7 @@ export class ExerciseHistoryComponent implements OnInit {
     this.loadingMore = false;
     this.pageNumber = 1;
     this.loading = true;
-    this.exercises.getExerciseHistory(this.exerciseId, this.pageNumber, this.perPage).subscribe(historyList => {
+    this.exercises.getExerciseHistory(this.exerciseId, this.pageNumber, this.perPage, this.excludeWorkoutId).subscribe(historyList => {
       this.loading = false;
       if (historyList.totalRecords <= this.pageNumber * this.perPage)
         this.noMoreRecords = true;
@@ -55,7 +58,7 @@ export class ExerciseHistoryComponent implements OnInit {
     }
     this.loadingMore = true;
     this.pageNumber += 1;
-    this.exercises.getExerciseHistory(this.exerciseId, this.pageNumber, this.perPage).subscribe(historyList => {
+    this.exercises.getExerciseHistory(this.exerciseId, this.pageNumber, this.perPage, this.excludeWorkoutId).subscribe(historyList => {
       this.loadingMore = false;
       if (historyList.totalRecords <= this.pageNumber * this.perPage)
         this.noMoreRecords = true;
