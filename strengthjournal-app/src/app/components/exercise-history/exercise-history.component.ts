@@ -11,6 +11,11 @@ export class ExerciseHistoryComponent implements OnInit {
 
   historyList: ExerciseHistory[] = [];
   loading: boolean = true;
+  loadingMore = false;
+  noMoreRecords = false;
+
+  pageNumber = 1;
+  readonly perPage = 10;
 
   @Input()
   exerciseId: string | null = null;
@@ -32,11 +37,30 @@ export class ExerciseHistoryComponent implements OnInit {
     if (!this.exerciseId) {
       return;
     }
+    this.noMoreRecords = false;
+    this.loadingMore = false;
+    this.pageNumber = 1;
     this.loading = true;
-    this.exercises.getExerciseHistory(this.exerciseId).subscribe(historyList => {
+    this.exercises.getExerciseHistory(this.exerciseId, this.pageNumber, this.perPage).subscribe(historyList => {
       this.loading = false;
+      if (historyList.totalRecords <= this.pageNumber * this.perPage)
+        this.noMoreRecords = true;
       this.historyList = historyList.data;
-    })
+    });
+  }
+
+  loadMore() {
+    if (!this.exerciseId) {
+      return;
+    }
+    this.loadingMore = true;
+    this.pageNumber += 1;
+    this.exercises.getExerciseHistory(this.exerciseId, this.pageNumber, this.perPage).subscribe(historyList => {
+      this.loadingMore = false;
+      if (historyList.totalRecords <= this.pageNumber * this.perPage)
+        this.noMoreRecords = true;
+      this.historyList = this.historyList.concat(historyList.data);
+    });
   }
 
 }
