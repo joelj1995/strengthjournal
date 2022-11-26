@@ -23,6 +23,12 @@ namespace StrengthJournal.Server.Controllers
             return View(model);
         }
 
+        [Route("app/assets/{*more}")]
+        public ActionResult Index(string more)
+        {
+            return Redirect($"/dist/assets/{more}");
+        }
+
         [Route("app/{*more}")]
         public IActionResult Index()
         {
