@@ -36,7 +36,7 @@
         </label>
       </div>
       <div class="btn-group">
-        <button type="submit" class="btn btn-primary" [class.disabled]="!this.enableSubmit">{{workoutId ? 'Update':
+        <button type="submit" class="btn btn-primary" [class.disabled]="!enableSubmit || !form.valid">{{workoutId ? 'Update':
           'Create'}}</button>
         <button class="btn btn-warning" [class.disabled]="!this.enableSubmit" routerLink="/workouts"
           *ngIf="!workoutId">Cancel</button>

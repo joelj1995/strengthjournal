@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { WorkoutCreateUpdate } from 'src/app/model/workout-create-update';
 import { WorkoutService } from 'src/app/services/workout.service';
@@ -38,10 +38,17 @@ export class WorkoutDetailsEditorComponent implements OnInit {
 
   enableSubmit: boolean = true;
   form = new FormGroup({
-    title: new FormControl(''),
-    date: new FormControl(''),
+    title: new FormControl('', [
+      Validators.maxLength(255)
+    ]),
+    date: new FormControl('', [
+      Validators.required
+    ]),
     time: new FormControl(''),
-    bodyweight: new FormControl(''),
+    bodyweight: new FormControl('', [
+      Validators.min(0),
+      Validators.max(1000)
+    ]),
     bodyweightUnit: new FormControl(this.bodyweightUnit)
   });
 
