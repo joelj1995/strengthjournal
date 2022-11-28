@@ -245,4 +245,14 @@ export class EditWorkoutComponent implements OnInit {
     this.workout.entryDateUTC = workoutData.entryDateUTC;
   }
 
+  differentExerciseSelectedForNewSet() {
+    this.newSetForm.setValue({ 
+      exerciseId: this.newSetForm.value.exerciseId,
+      reps: null,
+      targetReps: null,
+      weight: null,
+      rpe: null
+    });
+  }
+
 } 

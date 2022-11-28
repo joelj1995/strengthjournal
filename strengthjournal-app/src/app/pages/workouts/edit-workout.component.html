@@ -65,7 +65,7 @@
             </tr>
             <tr [formGroup]="newSetForm" *ngIf="!setBeingUpdated">
               <td>
-                <select class="form-control" formControlName="exerciseId">
+                <select class="form-control" formControlName="exerciseId" (change)="differentExerciseSelectedForNewSet()">
                   <option *ngFor="let exercise of exerciseList" [value]="exercise.id">{{exercise.name}}</option>
                 </select>
               </td>
