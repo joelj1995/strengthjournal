@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Exercise } from 'src/app/model/exercise';
 import { Workout } from 'src/app/model/workout';
 import { WorkoutCreateUpdateResult } from 'src/app/model/workout-create-update-result';
@@ -47,8 +47,8 @@ export class EditWorkoutComponent implements OnInit {
     private route: ActivatedRoute, 
     private workouts: WorkoutService, 
     private exercises : ExerciseService, 
-    private toast: ToastService,
-    private config: ConfigService) { }
+    private config: ConfigService,
+    private router: Router) { }
 
   static createSetForm(): FormGroup {
     return new FormGroup({
@@ -87,7 +87,7 @@ export class EditWorkoutComponent implements OnInit {
     });
   }
 
-  logNewSet() {
+  logNewSet(doneLogging: boolean = false) {
     const targetForm = this.setBeingUpdated ? this.updateSetForm : this.newSetForm
     const setData = targetForm.value;
     const newWorkoutSet: WorkoutSet = {
@@ -110,7 +110,11 @@ export class EditWorkoutComponent implements OnInit {
       else {
         this.workout.sets.push(newWorkoutSet);
       }
-      this.addingSet = false;
+      if (doneLogging) {
+        this.router.navigate(['/workouts']);
+      } else {
+        this.addingSet = false;
+      }
     });
   }
 
