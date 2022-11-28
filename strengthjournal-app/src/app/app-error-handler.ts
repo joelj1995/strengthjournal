@@ -5,14 +5,19 @@ import { v4 as uuidv4 } from 'uuid';
 @Injectable()
 export class AppErrorHandler implements ErrorHandler {
   handleError(error: any) {
-    console.error(error);
     const errorId = uuidv4();
-    const errorData = {
-      id: errorId,
-      ngData: error.stack,
-      ngVersion: environment.version
-    };
-    localStorage.setItem('app_error', JSON.stringify(errorData));
+    try {
+      console.error(error);
+      const errorData = {
+        id: errorId,
+        ngData: error.stack || error.message,
+        ngVersion: environment.version
+      };
+      localStorage.setItem('app_error', JSON.stringify(errorData));
+      console.debug(errorData);
+    } catch {
+      console.error('Failed to set message data.')
+    }
     if (environment.production) {
       if (error.name != 'HandledHttpError') window.location.replace(`/app-exception?errorId=${errorId}`);
     } else {
