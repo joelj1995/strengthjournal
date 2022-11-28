@@ -6,7 +6,7 @@ namespace StrengthJournal.Server.ApiModels
     {
         public Guid Id { get; set; }
         [MaxLength(4048)]
-        public string ErrorMessage { get; set; }
+        public string? ErrorMessage { get; set; }
         public Guid? ApiTraceId { get; set; }
     }
 }

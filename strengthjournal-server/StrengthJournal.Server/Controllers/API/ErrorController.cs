@@ -23,7 +23,7 @@ namespace StrengthJournal.Server.Controllers.API
         public async Task<ActionResult> LogError(AppErrorDto appError)
         {
             var userId = HttpContext.GetUserId();
-            await errorService.LogError(appError.Id, userId, appError.ErrorMessage, appError.ApiTraceId);
+            await errorService.LogError(appError.Id, userId, appError.ErrorMessage ?? "", appError.ApiTraceId);
             return Ok();
         }
     }
