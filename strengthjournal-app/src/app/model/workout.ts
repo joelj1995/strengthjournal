@@ -6,5 +6,6 @@ export interface Workout {
   entryDateUTC: Date;
   bodyweight: number | null;
   bodyweightUnit: string;
-  sets: WorkoutSet[]
+  sets: WorkoutSet[];
+  notes: string;
 }

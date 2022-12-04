@@ -33,7 +33,8 @@ export class EditWorkoutComponent implements OnInit {
     entryDateUTC: new Date(),
     sets: [],
     bodyweight: null,
-    bodyweightUnit: ''
+    bodyweightUnit: '',
+    notes: ''
   };
   exerciseList: Exercise[] = [];
 

@@ -30,6 +30,9 @@ export class WorkoutDetailsEditorComponent implements OnInit {
   @Input()
   bodyweightUnit: string = this.config.getPreferredWeigthUnit();
 
+  @Input()
+  notes: string = '';
+
   @Output()
   public updateComplete = new EventEmitter<WorkoutCreateUpdateResult>();
 
@@ -49,12 +52,14 @@ export class WorkoutDetailsEditorComponent implements OnInit {
       Validators.min(0),
       Validators.max(1000)
     ]),
-    bodyweightUnit: new FormControl(this.bodyweightUnit)
+    bodyweightUnit: new FormControl(this.bodyweightUnit),
+    notes: new FormControl(this.notes, [
+      Validators.maxLength(2048)
+    ])
   });
 
   constructor(
     private workouts: WorkoutService, 
-    private router: Router, 
     private toast: ToastService,
     private config: ConfigService) { 
 
@@ -73,7 +78,16 @@ export class WorkoutDetailsEditorComponent implements OnInit {
   }
 
   ngOnChanges() {
+    this.form.setValue({
+      title: this.initialTitle,
+      date: this.initialDate,
+      time: '',
+      bodyweight: this.bodyweight,
+      bodyweightUnit: this.bodyweightUnit,
+      notes: this.notes
+    });
     this.bindInputDateToPicker();
+    
   }
 
   getDate(forceUtc: boolean = true): Date {
@@ -97,7 +111,7 @@ export class WorkoutDetailsEditorComponent implements OnInit {
       entryDateUTC: this.getDate(),
       bodyweight: this.form.value.bodyweight,
       bodyweightUnit: this.form.value.bodyweightUnit,
-      notes: ''
+      notes: this.form.value.notes
     };
     if (this.workoutId) {
       const workoutId = this.workoutId;

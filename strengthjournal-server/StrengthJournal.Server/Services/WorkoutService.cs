@@ -70,7 +70,8 @@ namespace StrengthJournal.Server.Services
                 BodyweightUnit = workout.BodyWeightPITUnit?.Abbreviation ?? "",
                 Sets = workout.Sets
                     .OrderBy(s => s.Sequence)
-                    .Select(set => _mapper.Map<WorkoutSetSync>(set))
+                    .Select(set => _mapper.Map<WorkoutSetSync>(set)),
+                Notes = workout.Notes
             };
         }
 

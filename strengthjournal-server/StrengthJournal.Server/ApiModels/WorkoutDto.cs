@@ -8,5 +8,6 @@
         public decimal? Bodyweight { get; set; }
         public string BodyweightUnit { get; set; }
         public IEnumerable<WorkoutSetSync> Sets { get; set; }
+        public string Notes { get; set; }
     }
 }

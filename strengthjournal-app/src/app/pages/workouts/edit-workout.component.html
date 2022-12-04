@@ -118,7 +118,8 @@
 
 <app-off-canvas (closeEvent)="showDetailsEditor = false" [show]="showDetailsEditor" title="Workout Details">
   <app-workout-details-editor [workoutId]="id" [initialDate]="workout.entryDateUTC" [initialTitle]="workout.title"
-    [bodyweight]="workout.bodyweight" [bodyweightUnit]="workout.bodyweightUnit" (updateComplete)="onWorkoutUpdateComplete($event)">
+    [bodyweight]="workout.bodyweight" [bodyweightUnit]="workout.bodyweightUnit" [notes]="workout.notes"
+    (updateComplete)="onWorkoutUpdateComplete($event)">
   </app-workout-details-editor>
 </app-off-canvas>
 
