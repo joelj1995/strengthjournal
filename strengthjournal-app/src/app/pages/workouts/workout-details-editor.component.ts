@@ -1,12 +1,12 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { WorkoutCreateUpdate } from 'src/app/model/workout-create-update';
 import { WorkoutService } from 'src/app/services/workout.service';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { ToastService } from 'src/app/services/toast.service';
 import { ConfigService } from 'src/app/services/config.service';
 import { WorkoutCreateUpdateResult } from 'src/app/model/workout-create-update-result';
+import { WorkoutUpdate } from 'src/app/model/workout-update';
 
 @Component({
   selector: 'app-workout-details-editor',
@@ -92,11 +92,12 @@ export class WorkoutDetailsEditorComponent implements OnInit {
   onSubmit() {
     this.enableSubmit = false;
     const localDate = this.getDate(false);
-    const workoutData: WorkoutCreateUpdate = {
+    const workoutData: WorkoutUpdate = {
       title: this.form.value.title,
       entryDateUTC: this.getDate(),
       bodyweight: this.form.value.bodyweight,
-      bodyweightUnit: this.form.value.bodyweightUnit
+      bodyweightUnit: this.form.value.bodyweightUnit,
+      notes: ''
     };
     if (this.workoutId) {
       const workoutId = this.workoutId;

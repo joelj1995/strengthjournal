@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { WorkoutCreateUpdate } from 'src/app/model/workout-create-update';
+import { WorkoutCreate } from 'src/app/model/workout-create';
 import { WorkoutService } from 'src/app/services/workout.service';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { WorkoutCreateUpdateResult } from 'src/app/model/workout-create-update-result';

@@ -45,7 +45,7 @@ namespace StrengthJournal.Server.Controllers.API
         }
 
         [HttpPost]
-        public async Task<Guid> CreateWorkout(WorkoutCreationUpdateDto workout)
+        public async Task<Guid> CreateWorkout(WorkoutCreationDto workout)
         {
             var userId = HttpContext.GetUserId();
             var workoutId = await workoutService.CreateWorkout(userId, workout);
@@ -114,7 +114,7 @@ namespace StrengthJournal.Server.Controllers.API
         }
 
         [HttpPut("{workoutId:Guid}")]
-        public async Task<ActionResult> UpdateWorkout([FromRoute] Guid workoutId, WorkoutCreationUpdateDto workout)
+        public async Task<ActionResult> UpdateWorkout([FromRoute] Guid workoutId, WorkoutUpdateDto workout)
         {
             try
             {

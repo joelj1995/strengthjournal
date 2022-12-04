@@ -2,9 +2,10 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Workout } from '../model/workout';
-import { WorkoutCreateUpdate } from '../model/workout-create-update';
+import { WorkoutCreate } from '../model/workout-create';
 import { WorkoutPage } from '../model/workout-page';
 import { WorkoutSet } from '../model/workout-set';
+import { WorkoutUpdate } from '../model/workout-update';
 import { StrengthjournalBaseService } from './strengthjournalbase.service';
 
 @Injectable({
@@ -18,7 +19,7 @@ export class WorkoutService extends StrengthjournalBaseService {
     return this.http.get<WorkoutPage>(`${this.BASE_URL}/workouts?pageNumber=${pageNumber}&perPage=${perPage}`);
   }
 
-  createWorkout(workout: WorkoutCreateUpdate): Observable<string> {
+  createWorkout(workout: WorkoutCreate): Observable<string> {
     return this.http.post<string>(`${this.BASE_URL}/workouts`, workout);
   }
 
@@ -42,7 +43,7 @@ export class WorkoutService extends StrengthjournalBaseService {
     return this.http.put(`${this.BASE_URL}/workouts/${workoutId}/set-sequence`, { setSequence: newSequence });
   }
 
-  updateWorkout(workoutId: string, workout: WorkoutCreateUpdate) {
+  updateWorkout(workoutId: string, workout: WorkoutUpdate) {
     return this.http.put(`${this.BASE_URL}/workouts/${workoutId}`, workout);
   }
 

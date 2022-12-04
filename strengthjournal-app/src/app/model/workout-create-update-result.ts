@@ -1,5 +1,5 @@
-import { WorkoutCreateUpdate } from "./workout-create-update";
+import { WorkoutCreate } from "./workout-create";
 
-export interface WorkoutCreateUpdateResult extends WorkoutCreateUpdate {
+export interface WorkoutCreateUpdateResult extends WorkoutCreate {
   id: string;
 }
