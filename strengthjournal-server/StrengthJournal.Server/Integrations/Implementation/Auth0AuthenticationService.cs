@@ -125,7 +125,7 @@ namespace StrengthJournal.Server.Integrations.Implementation
                     return new CreateAccountResponse()
                     {
                         Result = CreateAccountResponse.CreateResult.ValidationError,
-                        ErrorMessage = responseData.message
+                        ErrorMessage = responseData.message ?? responseData.description
                     };
                 }
             }

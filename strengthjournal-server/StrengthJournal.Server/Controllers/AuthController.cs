@@ -76,7 +76,7 @@ namespace StrengthJournal.Server.Controllers
                 Email = "", 
                 Password = "", 
                 Password2 = "", 
-                Error = errorMessage == String.Empty ? null : errorMessage, 
+                Error = errorMessage == string.Empty ? null : errorMessage, 
                 CountryList = profileService.GetCountries().Result 
             });
         }
