@@ -37,6 +37,7 @@ import { ConfirmDeleteComponent } from './components/confirm-delete/confirm-dele
 import { ProfileComponent } from './pages/profile/profile.component';
 import { OffCanvasComponent } from './components/off-canvas/off-canvas.component';
 import { BlockingSpinnerComponent } from './components/blocking-spinner/blocking-spinner.component';
+import { NotFoundComponent } from './pages/special/not-found.component';
 
 @NgModule({
   declarations: [
@@ -61,7 +62,8 @@ import { BlockingSpinnerComponent } from './components/blocking-spinner/blocking
     ConfirmDeleteComponent,
     ProfileComponent,
     OffCanvasComponent,
-    BlockingSpinnerComponent
+    BlockingSpinnerComponent,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,

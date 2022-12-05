@@ -9,6 +9,7 @@ import { ListWorkoutsComponent } from './pages/workouts/list-workouts.component'
 import { EditExerciseComponent } from './pages/exercises/edit-exercise.component';
 import { ViewExerciseComponent } from './pages/exercises/view-exercise.component';
 import { ProfileComponent } from './pages/profile/profile.component';
+import { NotFoundComponent } from './pages/special/not-found.component';
 
 const routes: Routes = [
   { path: '', component: DashboardComponent },
@@ -19,7 +20,8 @@ const routes: Routes = [
   { path: 'workouts', component: ListWorkoutsComponent },
   { path: 'workouts/new', component: NewWorkoutComponent },
   { path: 'workouts/:id/edit', component: EditWorkoutComponent },
-  { path: 'profile', component: ProfileComponent }
+  { path: 'profile', component: ProfileComponent },
+  { path: '**', component: NotFoundComponent }
 ];
 
 @NgModule({
