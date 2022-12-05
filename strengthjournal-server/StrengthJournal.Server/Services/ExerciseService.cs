@@ -17,6 +17,21 @@ namespace StrengthJournal.Server.Services
             this._mapper = mapper;
         }
 
+        public async Task<ExerciseDto> GetExercise(Guid userId, Guid exerciseId)
+        {
+            var exercise = await context.Exercises
+                .SingleOrDefaultAsync(e => e.Id.Equals(exerciseId) && (e.CreatedByUser == null || e.CreatedByUser.Id.Equals(userId)));
+            if (exercise == null)
+                throw new EntityNotFoundException();
+            return new ExerciseDto()
+            {
+                Id = exerciseId,
+                Name = exercise.Name,
+                SystemDefined = exercise.CreatedByUser == null,
+                ParentExerciseId = exercise.ParentExerciseId
+            };
+        }
+
         public async Task<DataPage<ExerciseDto>> GetExercises(Guid userId, int pageNumber, int perPage, bool allRecords = false)
         {
             var user = context.Users.Single(u => u.Id == userId);
