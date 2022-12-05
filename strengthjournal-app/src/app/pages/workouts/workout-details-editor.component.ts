@@ -19,19 +19,7 @@ export class WorkoutDetailsEditorComponent implements OnInit {
   workoutId: string | null = null;
 
   @Input()
-  initialTitle: string = '';
-
-  @Input()
-  initialDate: Date = new Date();
-
-  @Input()
-  bodyweight: number | null = null;
-
-  @Input()
-  bodyweightUnit: string = this.config.getPreferredWeigthUnit();
-
-  @Input()
-  notes: string = '';
+  workoutData: WorkoutUpdate | null = null;
 
   @Output()
   public updateComplete = new EventEmitter<WorkoutCreateUpdateResult>();
@@ -52,8 +40,8 @@ export class WorkoutDetailsEditorComponent implements OnInit {
       Validators.min(0),
       Validators.max(1000)
     ]),
-    bodyweightUnit: new FormControl(this.bodyweightUnit),
-    notes: new FormControl(this.notes, [
+    bodyweightUnit: new FormControl(''),
+    notes: new FormControl('', [
       Validators.maxLength(2048)
     ])
   });
@@ -61,33 +49,43 @@ export class WorkoutDetailsEditorComponent implements OnInit {
   constructor(
     private workouts: WorkoutService, 
     private toast: ToastService,
-    private config: ConfigService) { 
-
-  }
+    private config: ConfigService) { }
 
   bindInputDateToPicker() {
-    const date = new Date(this.initialDate);
+    if (this.workoutData == null)
+      throw 'Cannot bind date to null workout';
+    const date = new Date(this.workoutData.entryDateUTC);
     const datePickerValue = { year: date.getFullYear(), month: date.getMonth() + 1, day: date.getDate() };
     this.pickerDate = datePickerValue;
     const timePickerValue = { hour: date.getHours(), minute: date.getMinutes() };
     this.pickerTime = timePickerValue;
   }
 
+  bindFormToWorkout() {
+    if (this.workoutData == null)
+      throw 'Cannot bind form to null workout';
+    this.form.setValue({
+      title: this.workoutData.title,
+      date: '',
+      time: '',
+      bodyweight: this.workoutData.bodyweight,
+      bodyweightUnit: this.workoutData.bodyweightUnit,
+      notes: this.workoutData.notes
+    });
+  }
+
   ngOnInit(): void {
+    if (this.workoutData == null)
+      return;
+    this.bindFormToWorkout();
     this.bindInputDateToPicker();
   }
 
   ngOnChanges() {
-    this.form.setValue({
-      title: this.initialTitle,
-      date: this.initialDate,
-      time: '',
-      bodyweight: this.bodyweight,
-      bodyweightUnit: this.bodyweightUnit,
-      notes: this.notes
-    });
+    if (this.workoutData == null)
+      return;
+    this.bindFormToWorkout();
     this.bindInputDateToPicker();
-    
   }
 
   getDate(forceUtc: boolean = true): Date {
@@ -113,7 +111,7 @@ export class WorkoutDetailsEditorComponent implements OnInit {
       bodyweightUnit: this.form.value.bodyweightUnit,
       notes: this.form.value.notes
     };
-    if (this.workoutId) {
+    if (this.workoutId != null) {
       const workoutId = this.workoutId;
       this.workouts.updateWorkout(workoutId, workoutData).subscribe(() => {
         this.toast.setToast({ message: 'Workout updated', domClass: 'bg-success text-light' });

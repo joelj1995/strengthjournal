@@ -15,12 +15,11 @@
       </div>
       <div class="mb-3 error-placeholder">
         <label>Title</label>
-        <input type="text" class="form-control" id="title" formControlName="title" [(ngModel)]="initialTitle">
+        <input type="text" class="form-control" id="title" formControlName="title">
       </div>
       <div class="mb-3 error-placeholder">
         <label>Bodyweight</label>
-        <input type="number" min="0" max="1000" class="form-control" id="bodyweight" formControlName="bodyweight"
-          [(ngModel)]="bodyweight">
+        <input type="number" min="0" max="1000" class="form-control" id="bodyweight" formControlName="bodyweight">
         <br>
         <label class="form-check form-check-inline">
           <input class="form-check-input" type="radio" name="bodyweightUnit" value="lbs" formControlName="bodyweightUnit">
@@ -35,7 +34,7 @@
           </span>
         </label>
       </div>
-      <div class="mb-3 error-placeholder">
+      <div class="mb-3 error-placeholder" *ngIf="workoutId">
         <label>Notes</label>
         <textarea type="text" class="form-control" id="notes" formControlName="notes" style="height: 200px"></textarea>
       </div>

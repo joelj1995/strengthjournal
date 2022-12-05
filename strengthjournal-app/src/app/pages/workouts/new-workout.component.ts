@@ -5,6 +5,8 @@ import { WorkoutCreate } from 'src/app/model/workout-create';
 import { WorkoutService } from 'src/app/services/workout.service';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { WorkoutCreateUpdateResult } from 'src/app/model/workout-create-update-result';
+import { WorkoutUpdate } from 'src/app/model/workout-update';
+import { ConfigService } from 'src/app/services/config.service';
 
 @Component({
   selector: 'app-new-workout',
@@ -12,10 +14,22 @@ import { WorkoutCreateUpdateResult } from 'src/app/model/workout-create-update-r
   styleUrls: ['./new-workout.component.css']
 })
 export class NewWorkoutComponent implements OnInit {
-  
-  constructor(private workouts: WorkoutService, private router: Router) { }
 
-  ngOnInit(): void { }
+  workoutData: WorkoutUpdate;
+  
+  constructor(private workouts: WorkoutService, private router: Router, private config: ConfigService) { 
+    this.workoutData = {
+      title: '',
+      entryDateUTC: new Date(),
+      bodyweight: null,
+      bodyweightUnit: this.config.getPreferredWeigthUnit(),
+      notes: ''
+    }
+  }
+
+  ngOnInit(): void { 
+    
+  }
 
   updateDone(workoutData: WorkoutCreateUpdateResult) {
     this.router.navigate(['workouts', 'edit', workoutData.id]);
