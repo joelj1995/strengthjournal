@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { ConfigService } from 'src/app/services/config.service';
 import { ExerciseService } from 'src/app/services/exercise.service';
 
 @Component({
@@ -13,7 +14,11 @@ export class ViewExerciseComponent implements OnInit {
 
   name: string = '';
 
-  constructor(private route: ActivatedRoute, private exercise: ExerciseService) { }
+  constructor(private route: ActivatedRoute, private exercise: ExerciseService, private config: ConfigService) { }
+
+  displayKg(): boolean {
+    return this.config.getPreferredWeigthUnit() == 'kg';
+  }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
