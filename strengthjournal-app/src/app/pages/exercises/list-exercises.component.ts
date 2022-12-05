@@ -42,7 +42,7 @@ export class ListExercisesComponent implements OnInit {
   }
 
   editExercise(exerciseId: string) {
-    this.router.navigate(['exercises', 'edit', exerciseId]);
+    this.router.navigate(['exercises', exerciseId, 'edit']);
   }
 
   getExercisePage() {

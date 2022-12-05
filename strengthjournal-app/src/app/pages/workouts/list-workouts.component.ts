@@ -49,7 +49,7 @@ export class ListWorkoutsComponent implements OnInit {
   }
 
   editWorkout(workoutId: string) {
-    this.router.navigate(['workouts', 'edit', workoutId]);
+    this.router.navigate(['workouts', workoutId, 'edit']);
   }
 
 }
