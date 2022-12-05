@@ -13,8 +13,12 @@ export class ExerciseService extends StrengthjournalBaseService {
 
   constructor(http: HttpClient) { super(http); }
 
-  getExercises(pageNumber: number, perPage: number): Observable<DataPage<Exercise>> {
-    return this.http.get<DataPage<Exercise>>(`${this.BASE_URL}/exercises?pageNumber=${pageNumber}&perPage=${perPage}`);
+  getExercises(pageNumber: number, perPage: number, search: string): Observable<DataPage<Exercise>> {
+    let route = `${this.BASE_URL}/exercises?pageNumber=${pageNumber}&perPage=${perPage}`;
+    if (search != '') {
+      route += `&search=${search}`;
+    }
+    return this.http.get<DataPage<Exercise>>(route);
   }
 
   getExercise(exerciseId: string): Observable<Exercise> {

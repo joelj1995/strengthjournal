@@ -32,13 +32,14 @@ namespace StrengthJournal.Server.Services
             };
         }
 
-        public async Task<DataPage<ExerciseDto>> GetExercises(Guid userId, int pageNumber, int perPage, bool allRecords = false)
+        public async Task<DataPage<ExerciseDto>> GetExercises(Guid userId, int pageNumber, int perPage, string? search, bool allRecords = false)
         {
             var user = context.Users.Single(u => u.Id == userId);
             var exercisesQuery = context.Exercises
                 .Where(e => e.CreatedByUser == null || e.CreatedByUser == user)
                 .OrderBy(e => e.Name);
             var totalRecords = await exercisesQuery.CountAsync();
+            if (search != null) exercisesQuery = (IOrderedQueryable<DataAccess.Model.Exercise>)exercisesQuery.Where(e => e.Name.ToLower().StartsWith(search.ToLower()));
             if (!allRecords) exercisesQuery = (IOrderedQueryable<DataAccess.Model.Exercise>)exercisesQuery.Skip(perPage * (pageNumber - 1)).Take(perPage);
             var data = await exercisesQuery
                 .Select(e => new ExerciseDto() { Id = e.Id, Name = e.Name, SystemDefined = e.CreatedByUser == null, ParentExerciseId = e.ParentExerciseId })

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { debounceTime, Subject } from 'rxjs';
 import { Exercise } from 'src/app/model/exercise';
 import { ExerciseService } from 'src/app/services/exercise.service';
 
@@ -18,10 +19,21 @@ export class ListExercisesComponent implements OnInit {
 
   stagedDelete: string | null = null;
 
+  exerciseSearchInput = new Subject();
+  exerciseSearch: string = '';
+
   constructor(private exercises : ExerciseService, private router: Router) { }
 
   ngOnInit(): void {
     this.getExercisePage();
+    this.exerciseSearchInput
+      .pipe(
+        debounceTime(1000)
+      )
+      .subscribe(search => {
+        this.exerciseSearch = search as string;
+        this.getExercisePage();
+      });
   }
 
   deleteExercise(exerciseId: string) {
@@ -46,9 +58,15 @@ export class ListExercisesComponent implements OnInit {
   }
 
   getExercisePage() {
-    this.exercises.getExercises(this.page, this.pageSize).subscribe(page => {
+    this.exerciseList = null;
+    this.exercises.getExercises(this.page, this.pageSize, this.exerciseSearch).subscribe(page => {
       this.exerciseList = page.data;
       this.collectionSize = page.totalRecords;
     });
   }
+
+  searchInputChange(e: any) {
+    this.exerciseSearchInput.next(e.target.value);
+  }
+
 }

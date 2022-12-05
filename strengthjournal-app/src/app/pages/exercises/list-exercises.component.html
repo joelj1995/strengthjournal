@@ -3,10 +3,14 @@
 
   <div class="col-12">
     <app-card cardTitle="My Exercise List">
+      <button class="btn btn-primary buttons-copy buttons-html5" routerLink="new">New Exercise</button>
+      <div class="mt-3 error-placeholder">
+        <label>Search by name</label>
+        <input (input)="searchInputChange($event)" class="form-control mb-3" id="nameSearch">
+      </div>
       <p>
         * indicates a system exercise that cannot be deleted or modified.
       </p>
-      <button class="btn btn-primary buttons-copy buttons-html5" routerLink="new">New Exercise</button>
       <table *ngIf="exerciseList; else exerciseListLoading" class="table table-striped dataTable no-footer dtr-inline collapsed">
         <thead>
           <tr>
