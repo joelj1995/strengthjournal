@@ -10,6 +10,7 @@ import { EditExerciseComponent } from './pages/exercises/edit-exercise.component
 import { ViewExerciseComponent } from './pages/exercises/view-exercise.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { NotFoundComponent } from './pages/special/not-found.component';
+import { WorkoutResolver } from './resolvers/workout.resolver';
 
 const routes: Routes = [
   { path: '', component: DashboardComponent },
@@ -19,7 +20,11 @@ const routes: Routes = [
   { path: 'exercises/:id', component: ViewExerciseComponent },
   { path: 'workouts', component: ListWorkoutsComponent },
   { path: 'workouts/new', component: NewWorkoutComponent },
-  { path: 'workouts/:id/edit', component: EditWorkoutComponent },
+  { 
+    path: 'workouts/:id/edit', 
+    component: EditWorkoutComponent,
+    resolve: { workout: WorkoutResolver }
+  },
   { path: 'profile', component: ProfileComponent },
   { path: '**', component: NotFoundComponent }
 ];

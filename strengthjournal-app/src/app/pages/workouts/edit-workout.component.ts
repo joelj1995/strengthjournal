@@ -20,22 +20,14 @@ import { v4 as uuidv4 } from 'uuid';
 })
 export class EditWorkoutComponent implements OnInit {
 
-  loadingSets: boolean = true;
+  loadingSets: boolean = false;
   loadingExercises: boolean = true;
 
   addingSet: boolean = false;
   setBeingUpdated: string | null = null;
 
   id: string = '';
-  workout: Workout = {
-    id: '',
-    title: '',
-    entryDateUTC: new Date(),
-    sets: [],
-    bodyweight: null,
-    bodyweightUnit: '',
-    notes: ''
-  };
+  workout: Workout;
   exerciseList: Exercise[] = [];
 
   dragId: string | null = null;
@@ -49,7 +41,9 @@ export class EditWorkoutComponent implements OnInit {
     private workouts: WorkoutService, 
     private exercises : ExerciseService, 
     private config: ConfigService,
-    private router: Router) { }
+    private router: Router) { 
+      this.workout = this.route.snapshot.data['workout'];
+  }
 
   static createSetForm(): FormGroup {
     return new FormGroup({
@@ -78,13 +72,6 @@ export class EditWorkoutComponent implements OnInit {
     this.exercises.getAllExercises().subscribe(page => {
       this.exerciseList = page.data;
       this.loadingExercises = false;
-    });
-    this.route.params.subscribe(params => {
-      this.id = params['id'];
-      this.workouts.getWorkout(this.id).subscribe(workout => {
-        this.workout = workout;
-        this.loadingSets = false;
-      })
     });
   }
 
