@@ -32,7 +32,7 @@ export class NewWorkoutComponent implements OnInit {
   }
 
   updateDone(workoutData: WorkoutCreateUpdateResult) {
-    this.router.navigate(['workouts', 'edit', workoutData.id]);
+    this.router.navigate(['workouts', workoutData.id, 'edit']);
   }
 
 }
