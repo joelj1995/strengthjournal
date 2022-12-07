@@ -4,8 +4,9 @@ import {
   RouterStateSnapshot,
   ActivatedRouteSnapshot
 } from '@angular/router';
-import { Observable, of } from 'rxjs';
+import { Observable, of, tap } from 'rxjs';
 import { Workout } from '../model/workout';
+import { SpinnerService } from '../services/spinner.service';
 import { WorkoutService } from '../services/workout.service';
 
 @Injectable({
@@ -13,12 +14,13 @@ import { WorkoutService } from '../services/workout.service';
 })
 export class WorkoutResolver implements Resolve<Workout> {
 
-  constructor(private workout: WorkoutService) { }
+  constructor(private workout: WorkoutService, private spinner: SpinnerService) { }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Workout> {
+    this.spinner.setSpinnerEnabled(true);
     const id = route.paramMap.get('id');
     if (id == null)
       throw 'Null workout id in route';
-    return this.workout.getWorkout(id);
+    return this.workout.getWorkout(id).pipe(tap(() => this.spinner.setSpinnerEnabled(false)));
   }
 }

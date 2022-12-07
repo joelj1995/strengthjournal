@@ -3,6 +3,7 @@ import { ActivatedRoute, Router, RouterEvent } from '@angular/router';
 import { AuthService } from '@auth0/auth0-angular';
 import { environment } from 'src/environments/environment';
 import { ConfigService } from './services/config.service';
+import { SpinnerService } from './services/spinner.service';
 
 @Component({
   selector: 'app-root',
@@ -16,6 +17,7 @@ export class AppComponent implements OnInit {
 
   navCollapsed: boolean = false;
   configUpdating: boolean = false;
+  showSpinner: boolean = false;
 
   title = 'strengthjournal-app';
   userFullName = '';
@@ -40,7 +42,11 @@ export class AppComponent implements OnInit {
     this.userFullName = localStorage.getItem('app_username') ?? '';
   }
 
-  constructor(public auth: AuthService, private router: Router, private config: ConfigService) {
+  constructor(
+    public auth: AuthService, 
+    private router: Router, 
+    private config: ConfigService,
+    private spinner: SpinnerService) {
     if (environment.useResourceOwnerFlow) {
       this.resourceOwnerLoginFlow();
     } else {
@@ -54,10 +60,15 @@ export class AppComponent implements OnInit {
   }
   
   ngOnInit(): void {
+    this.spinner.getSpinnerEnabled().subscribe(spinnerEnabled => {
+      this.showSpinner = spinnerEnabled;
+    });
     if (this.config.configTooOld) {
       this.configUpdating = true;
+      this.spinner.setSpinnerEnabled(true);
       this.config.pullUpdate().subscribe(() => {
         this.configUpdating = false;
+        this.spinner.setSpinnerEnabled(false);
       });
     }
   }
