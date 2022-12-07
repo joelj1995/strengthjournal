@@ -26,7 +26,6 @@ export class EditWorkoutComponent implements OnInit {
   addingSet: boolean = false;
   setBeingUpdated: string | null = null;
 
-  id: string = '';
   workout: Workout;
   exerciseList: Exercise[] = [];
 
@@ -73,6 +72,10 @@ export class EditWorkoutComponent implements OnInit {
       this.exerciseList = page.data;
       this.loadingExercises = false;
     });
+    this.route.paramMap.subscribe(p => {
+      this.showHistory = !!p.get('showHistory');
+      this.showDetailsEditor = !!p.get('showDetails');
+    });
   }
 
   logNewSet(doneLogging: boolean = false) {
@@ -89,7 +92,7 @@ export class EditWorkoutComponent implements OnInit {
       rpe: setData.rpe * 2
     };
     this.addingSet = true;
-    this.workouts.syncSet(this.id, newWorkoutSet).subscribe(() => {
+    this.workouts.syncSet(this.workout.id, newWorkoutSet).subscribe(() => {
       if (this.setBeingUpdated) {
         const indexOfSet = this.workout.sets.findIndex(s => s.id == this.setBeingUpdated);
         this.workout.sets[indexOfSet] = newWorkoutSet;
@@ -132,7 +135,7 @@ export class EditWorkoutComponent implements OnInit {
       throw 'Tried deleting set but none selected'
     }
     const toDelete = this.setBeingUpdated;
-    this.workouts.deleteSet(this.id, toDelete).subscribe(() => {
+    this.workouts.deleteSet(this.workout.id, toDelete).subscribe(() => {
       this.setBeingUpdated = null;
       this.workout.sets = this.workout.sets.filter(s => s.id != toDelete);
       this.addingSet = false;
@@ -241,6 +244,18 @@ export class EditWorkoutComponent implements OnInit {
       weight: null,
       rpe: null
     });
+  }
+
+  closePopover() {
+    this.router.navigate(['/workouts', this.workout.id, 'edit']);
+  }
+
+  showHistoryPopover() {
+    this.router.navigate(['/workouts', this.workout.id, 'edit', { showHistory: true }]);
+  }
+
+  showDetailsPopover() {
+    this.router.navigate(['/workouts', this.workout.id, 'edit', { showDetails: true }]);
   }
 
 } 
