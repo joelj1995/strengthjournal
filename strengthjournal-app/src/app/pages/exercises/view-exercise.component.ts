@@ -12,9 +12,11 @@ export class ViewExerciseComponent implements OnInit {
 
   id: string | null = null;
 
-  name: string = '';
+  name: string;
 
-  constructor(private route: ActivatedRoute, private exercise: ExerciseService, private config: ConfigService) { }
+  constructor(private route: ActivatedRoute, private exercise: ExerciseService, private config: ConfigService) { 
+    this.name = this.route.snapshot.data['exercise'].name;
+  }
 
   displayKg(): boolean {
     return this.config.getPreferredWeigthUnit() == 'kg';
