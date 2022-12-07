@@ -69,15 +69,16 @@ namespace StrengthJournal.Server.Controllers
         }
 
         [Route("signup")]
-        public IActionResult SignUp([FromQuery] string errorMessage)
+        public IActionResult SignUp([FromQuery] string errorMessage, [FromQuery] string email, [FromQuery] string country)
         {
-            return View(new SignUpModel() 
-            { 
-                Email = "", 
-                Password = "", 
-                Password2 = "", 
-                Error = errorMessage == string.Empty ? null : errorMessage, 
-                CountryList = profileService.GetCountries().Result 
+            return View(new SignUpModel()
+            {
+                Email = email,
+                Password = "",
+                Password2 = "",
+                Error = errorMessage == string.Empty ? null : errorMessage,
+                CountryList = profileService.GetCountries().Result,
+                SelectedCountryCode = String.IsNullOrEmpty(country) ? "CA" : country
             });
         }
 
@@ -93,9 +94,9 @@ namespace StrengthJournal.Server.Controllers
             switch (result.Result)
             {
                 case CreateAccountResponse.CreateResult.ValidationError:
-                    return RedirectToAction("signup", new { errorMessage = result.ErrorMessage });
+                    return RedirectToAction("signup", new { model.Email, country = model.CountryCode, errorMessage = result.ErrorMessage });
                 case CreateAccountResponse.CreateResult.ServiceFailure:
-                    return RedirectToAction("signup", new { errorMessage = result.ErrorMessage });
+                    return RedirectToAction("signup", new { model.Email, country = model.CountryCode, errorMessage = result.ErrorMessage });
                 case CreateAccountResponse.CreateResult.Success:
                     return View();
                 default:

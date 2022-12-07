@@ -16,6 +16,6 @@ namespace StrengthJournal.Server.Models
         [Required]
         public string CountryCode { get; set; }
         public IEnumerable<CountryDto> CountryList { get; set; } = new List<CountryDto>();
-        public string SelectedCountryCode { get => "CA"; }
+        public string SelectedCountryCode { get; set; } = "CA";
     }
 }
