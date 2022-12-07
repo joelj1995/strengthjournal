@@ -22,7 +22,17 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="m-sm-4">
-                                    @if (Model.Error != null)
+                                    @if (Model.Error == "Password is too weak")
+                                    {
+                                        <div class="alert alert-primary p-3" role="alert" style="display: block;">
+                                            <p>The password you entered is too weak. Please enter a password that conforms to the following policy:</p>
+                                            <ul>
+                                                <li>At least 8 characters</li>
+                                                <li>Lower case (a-z), upper case (A-Z) and numbers (0-9)</li>
+                                                <li>At least one special character</li>
+                                            </ul>
+                                        </div>
+                                    } else if (Model.Error != null)
                                     {
                                         <div class="alert alert-primary p-3" role="alert">
                                             @Model.Error
@@ -44,9 +54,9 @@
                                         <div class="mb-3">
                                             <label class="form-label">Country</label>
                                             <select class="form-select form-select-lg" name="countryCode">
-                                                @foreach(var country in Model.CountryList)
+                                                @foreach (var country in Model.CountryList)
                                                 {
-                                                    @if(country.Code == Model.SelectedCountryCode)
+                                                    @if (country.Code == Model.SelectedCountryCode)
                                                     {
                                                         <option value="@country.Code" selected>@country.Name</option>
                                                     }
@@ -54,7 +64,6 @@
                                                     {
                                                         <option value="@country.Code">@country.Name</option>
                                                     }
-                                                    
                                                 }
                                             </select>
                                         </div>
