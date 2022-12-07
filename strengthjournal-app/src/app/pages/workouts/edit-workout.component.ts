@@ -251,11 +251,11 @@ export class EditWorkoutComponent implements OnInit {
   }
 
   showHistoryPopover() {
-    this.router.navigate(['/workouts', this.workout.id, 'edit', { showHistory: true }]);
+    this.router.navigate(['/workouts', this.workout.id, 'edit', { showHistory: true, bypassResolver: true }]);
   }
 
   showDetailsPopover() {
-    this.router.navigate(['/workouts', this.workout.id, 'edit', { showDetails: true }]);
+    this.router.navigate(['/workouts', this.workout.id, 'edit', { showDetails: true, bypassResolver: true }]);
   }
 
 } 

@@ -12,11 +12,13 @@ import { WorkoutService } from '../services/workout.service';
 @Injectable({
   providedIn: 'root'
 })
-export class WorkoutResolver implements Resolve<Workout> {
+export class WorkoutResolver implements Resolve<Workout | null> {
 
   constructor(private workout: WorkoutService, private spinner: SpinnerService) { }
 
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Workout> {
+  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Workout | null> {
+    if (route.paramMap.get('bypassResolver'))
+      return of(null);
     this.spinner.setSpinnerEnabled(true);
     const id = route.paramMap.get('id');
     if (id == null)
