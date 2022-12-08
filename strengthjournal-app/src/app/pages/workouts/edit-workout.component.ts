@@ -73,8 +73,8 @@ export class EditWorkoutComponent implements OnInit {
       this.loadingExercises = false;
     });
     this.route.paramMap.subscribe(p => {
-      this.showHistory = !!p.get('showHistory');
-      this.showDetailsEditor = !!p.get('showDetails');
+      this.showHistory = p.get('showHistory') == 'true';
+      this.showDetailsEditor = p.get('showDetails') == 'true';
     });
   }
 
@@ -247,15 +247,15 @@ export class EditWorkoutComponent implements OnInit {
   }
 
   closePopover() {
-    this.router.navigate(['/workouts', this.workout.id, 'edit']);
+    this.router.navigate([{ showHistory: false, showDetails: false }], { relativeTo: this.route });
   }
 
   showHistoryPopover() {
-    this.router.navigate(['/workouts', this.workout.id, 'edit', { showHistory: true, bypassResolver: true }]);
+    this.router.navigate([{ showHistory: true, bypassResolver: true }], { relativeTo: this.route });
   }
 
   showDetailsPopover() {
-    this.router.navigate(['/workouts', this.workout.id, 'edit', { showDetails: true, bypassResolver: true }]);
+    this.router.navigate([{ showDetails: true, bypassResolver: true }], { relativeTo: this.route });
   }
 
 } 
