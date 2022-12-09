@@ -1,6 +1,7 @@
 import { Component, HostListener, OnInit } from '@angular/core';
-import { ActivatedRoute, Router, RouterEvent } from '@angular/router';
+import { ActivatedRoute, Event, NavigationStart, NavigationEnd, NavigationCancel, Router, RouterEvent } from '@angular/router';
 import { AuthService } from '@auth0/auth0-angular';
+import { filter } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { ConfigService } from './services/config.service';
 import { SpinnerService } from './services/spinner.service';
@@ -63,6 +64,13 @@ export class AppComponent implements OnInit {
     this.spinner.getSpinnerEnabled().subscribe(spinnerEnabled => {
       this.showSpinner = spinnerEnabled;
     });
+    this.router.events
+      .pipe(
+        filter((e: Event): e is RouterEvent => e instanceof RouterEvent)
+      )
+      .subscribe((routerEvent: RouterEvent) => {
+        this.checkRouterEvent(routerEvent);
+      });
     if (this.config.configTooOld) {
       this.configUpdating = true;
       this.spinner.setSpinnerEnabled(true);
@@ -71,6 +79,14 @@ export class AppComponent implements OnInit {
         this.spinner.setSpinnerEnabled(false);
       });
     }
+  }
+
+  checkRouterEvent(routerEvent: RouterEvent) {
+    if (routerEvent instanceof NavigationStart)
+      this.spinner.setSpinnerEnabled(true);
+    
+    if (routerEvent instanceof NavigationEnd || routerEvent instanceof NavigationCancel)
+      this.spinner.setSpinnerEnabled(false);
   }
 
   toggleNav() {
