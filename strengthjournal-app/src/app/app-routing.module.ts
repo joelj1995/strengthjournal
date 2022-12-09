@@ -15,20 +15,30 @@ import { ExerciseResolver } from './resolvers/exercise.resolver';
 
 const routes: Routes = [
   { path: '', component: DashboardComponent },
-  { path: 'exercises', component: ListExercisesComponent },
-  { path: 'exercises/new', component: NewExerciseComponent },
-  { path: 'exercises/:id/edit', component: EditExerciseComponent },
   { 
-    path: 'exercises/:id', 
-    component: ViewExerciseComponent,
-    resolve: { exercise: ExerciseResolver }
+    path: 'exercises', 
+    children: [
+      { path: '', component: ListExercisesComponent },
+      { path: 'new', component: NewExerciseComponent },
+      { path: ':id/edit', component: EditExerciseComponent },
+      {
+        path: ':id',
+        component: ViewExerciseComponent,
+        resolve: { exercise: ExerciseResolver }
+      }
+    ]
   },
-  { path: 'workouts', component: ListWorkoutsComponent },
-  { path: 'workouts/new', component: NewWorkoutComponent },
-  { 
-    path: 'workouts/:id/edit', 
-    component: EditWorkoutComponent,
-    resolve: { workout: WorkoutResolver }
+  {
+    path: 'workouts',
+    children: [
+      { path: '', component: ListWorkoutsComponent },
+      { path: 'new', component: NewWorkoutComponent },
+      {
+        path: ':id/edit',
+        component: EditWorkoutComponent,
+        resolve: { workout: WorkoutResolver }
+      }
+    ]
   },
   { path: 'profile', component: ProfileComponent },
   { path: '**', component: NotFoundComponent }
