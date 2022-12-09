@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +11,7 @@ export class SpinnerService {
   constructor() { }
 
   getSpinnerEnabled(): Observable<boolean> {
+    // return of(true);
     return this.enableSpinner$;
   }
 
