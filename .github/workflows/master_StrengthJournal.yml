@@ -92,6 +92,6 @@ jobs:
         uses: azure/webapps-deploy@v2
         with:
           app-name: 'StrengthJournal-Prod'
-          slot-name: 'production'
+          slot-name: 'strengthjournal-staging'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_PROD }}
           package: .
