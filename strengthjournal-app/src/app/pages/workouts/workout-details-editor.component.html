@@ -38,10 +38,10 @@
         <label>Notes</label>
         <textarea type="text" class="form-control" id="notes" formControlName="notes" style="height: 200px"></textarea>
       </div>
-      <div class="btn-group">
-        <button type="submit" class="btn btn-primary" [class.disabled]="!enableSubmit || !form.valid">{{workoutId ? 'Update':
+      <div>
+        <button type="submit" class="btn btn-sm btn-primary" [class.disabled]="!enableSubmit || !form.valid">{{workoutId ? 'Update':
           'Create'}}</button>
-        <button class="btn btn-warning" [class.disabled]="!this.enableSubmit" routerLink="/workouts"
+        <button class="btn btn-sm btn-secondary" [class.disabled]="!this.enableSubmit" routerLink="/workouts"
           *ngIf="!workoutId">Cancel</button>
       </div>
     </form>
