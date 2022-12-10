@@ -18,8 +18,7 @@
             <td><a [routerLink]="[workout.id, 'edit']">{{workout.entryDateUTC | date:'short'}}</a></td>
             <td>{{workout.title}}</td>
             <td class="table-action">
-              <app-table-actions (deleteClicked)="this.deleteWorkout(workout.id)"
-                (editClicked)="this.editWorkout(workout.id)"></app-table-actions>
+              <app-table-actions (deleteClicked)="this.deleteWorkout(workout.id)"></app-table-actions>
             </td>
           </tr>
         </tbody>

@@ -22,7 +22,7 @@
           <tr *ngFor="let exercise of exerciseList">
             <td><a [routerLink]="exercise.id">{{exercise.name}}</a><span *ngIf="exercise.systemDefined"> *</span></td>
             <td class="table-action">
-              <app-table-actions *ngIf="!exercise.systemDefined" (deleteClicked)="this.deleteExercise(exercise.id)" (editClicked)="this.editExercise(exercise.id)"></app-table-actions>
+              <app-table-actions *ngIf="!exercise.systemDefined" (deleteClicked)="this.deleteExercise(exercise.id)"></app-table-actions>
             </td>
           </tr>
         </tbody>
