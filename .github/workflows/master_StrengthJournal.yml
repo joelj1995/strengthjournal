@@ -78,7 +78,7 @@ jobs:
     runs-on: windows-latest
     needs: build
     environment:
-      name: 'strengthjournal-staging'
+      name: 'production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
 
     steps:
@@ -91,7 +91,7 @@ jobs:
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
         with:
-          app-name: 'strengthjournal-prod(strengthjournal-staging)'
-          slot-name: 'strengthjournal-staging'
+          app-name: 'StrengthJournal-Prod'
+          slot-name: 'production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_PROD }}
           package: .
