@@ -267,4 +267,8 @@ export class EditWorkoutComponent implements OnInit {
     this.router.navigate([{ showDetails: true, bypassResolver: true }], { relativeTo: this.route });
   }
 
+  anyErrors(control: string): boolean {
+    return this.setBeingUpdated ? !!this.updateSetForm.controls[control].errors : !!this.newSetForm.controls[control].errors
+  }
+
 } 

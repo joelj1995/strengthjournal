@@ -5,3 +5,9 @@
 .drag-border {
   border: 3px dotted #666;
 }
+
+.form-control.is-invalid, .was-validated .form-control:invalid {
+  border-color: #dc3545;
+  border-width: 3px;
+  padding-right: calc(1.5em + 0.75rem);
+}

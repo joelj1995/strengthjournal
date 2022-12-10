@@ -29,7 +29,7 @@
         <table class="table table-striped no-footer table-hover">
           <thead>
             <tr>
-              <th>Exercise</th>
+              <th>Exercise *</th>
               <th>Weight</th>
               <th>Reps</th>
               <th>Target Reps</th>
@@ -51,7 +51,7 @@
               </ng-container>
               <ng-template [formGroup]="updateSetForm" #updateSet>
                 <td>
-                  <select class="form-control" formControlName="exerciseId">
+                  <select class="form-control" formControlName="exerciseId" [class.is-invalid]="anyErrors('exerciseId')">
                     <option *ngFor="let exercise of exerciseList" [value]="exercise.id">{{exercise.name}}</option>
                   </select>
                 </td>
@@ -66,7 +66,7 @@
             </tr>
             <tr [formGroup]="newSetForm" *ngIf="!setBeingUpdated">
               <td>
-                <select class="form-control" formControlName="exerciseId"
+                <select class="form-control" [class.is-invalid]="anyErrors('exerciseId')" formControlName="exerciseId"
                   (change)="differentExerciseSelectedForNewSet()">
                   <option *ngFor="let exercise of exerciseList" [value]="exercise.id">{{exercise.name}}</option>
                 </select>
