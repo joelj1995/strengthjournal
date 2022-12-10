@@ -17,7 +17,7 @@ namespace StrengthJournal.Server.Services
         {
             var newUser = new StrengthJournal.DataAccess.Model.User()
             {
-                Email = email,
+                Email = email.ToLower(),
                 ExternalId = externalId,
                 ConsentCEM = consentCEM,
                 UserCountry = context.Countries.Single(c => c.Code.Equals(countryCode)),
