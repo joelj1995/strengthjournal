@@ -12,7 +12,7 @@ import { ToastService } from 'src/app/services/toast.service';
 })
 export class EditExerciseComponent implements OnInit {
 
-  loadingData: boolean = true;
+  loadingData: boolean = false;
   enableSubmit: boolean = true;
   id: string = '';
   exerciseList: Exercise[] | null = null;
@@ -22,23 +22,16 @@ export class EditExerciseComponent implements OnInit {
     parentExerciseId: new FormControl(null)
   });
 
-  constructor(private exercises: ExerciseService, private router: Router, private route: ActivatedRoute, private toast: ToastService) { }
+  constructor(private exercises: ExerciseService, private router: Router, private route: ActivatedRoute, private toast: ToastService) { 
+    const resolvedEditExercise = this.route.snapshot.data['resolvedEditExercise'];
+    const exercise = resolvedEditExercise.exercise;
+    this.form.setValue({ 'name': exercise?.name, 'parentExerciseId': exercise?.parentExerciseId });
+    this.exerciseList = resolvedEditExercise.exerciseList;
+    this.id = exercise.id;
+  }
 
   ngOnInit(): void {
-    this.enableSubmit = false;
-    this.loadingData = true;
-    this.exercises.getAllExercises().subscribe(page => {
-      this.exerciseList = page.data.filter(e => e.parentExerciseId == null);
-    });
-    this.route.params.subscribe(params => {
-      this.enableSubmit = true;
-      this.id = params['id'];
-      this.exercises.getAllExercises().subscribe(page => {
-        let exercise = page.data.find(e => e.id == this.id);
-        this.form.setValue({ 'name': exercise?.name, 'parentExerciseId': exercise?.parentExerciseId });
-        this.loadingData = false;
-      });
-    });
+
   }
 
   onSubmit() {

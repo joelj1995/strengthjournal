@@ -13,6 +13,7 @@ import { NotFoundComponent } from './pages/special/not-found.component';
 import { WorkoutResolver } from './resolvers/workout.resolver';
 import { ExerciseResolver } from './resolvers/exercise.resolver';
 import { EditWorkoutGuard } from './guards/edit-workout.guard';
+import { EditExerciseResolver } from './resolvers/edit-exercise.resolver';
 
 const routes: Routes = [
   { path: '', component: DashboardComponent },
@@ -20,8 +21,15 @@ const routes: Routes = [
     path: 'exercises', 
     children: [
       { path: '', component: ListExercisesComponent },
-      { path: 'new', component: NewExerciseComponent },
-      { path: ':id/edit', component: EditExerciseComponent },
+      { 
+        path: 'new', 
+        component: NewExerciseComponent ,
+      },
+      { 
+        path: ':id/edit', 
+        component: EditExerciseComponent,
+        resolve: { resolvedEditExercise: EditExerciseResolver }
+      },
       {
         path: ':id',
         component: ViewExerciseComponent,
