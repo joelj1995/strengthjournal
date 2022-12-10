@@ -14,17 +14,7 @@ export class HeaderComponent implements OnInit {
 
   @Input() userFullName: string = '';
 
-  logout() {
-    if (environment.useResourceOwnerFlow) {
-      localStorage.clear();
-      window.location.replace('/');
-    }
-    else {
-      this.auth.logout({ returnTo: document.location.origin });
-    }
-  }
-
-  constructor(@Inject(DOCUMENT) public document: Document, public auth: AuthService) { }
+  constructor(@Inject(DOCUMENT) public document: Document) { }
 
   ngOnInit(): void {
   }
