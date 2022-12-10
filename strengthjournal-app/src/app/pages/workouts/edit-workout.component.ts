@@ -78,6 +78,15 @@ export class EditWorkoutComponent implements OnInit {
     });
   }
 
+  anyUnsavedChanges(): boolean {
+    if (this.addingSet)
+      return false;
+    if (this.setBeingUpdated != null)
+      return true;
+    const newSet = this.newSetForm.value;
+    return newSet.reps != null || newSet.targetReps != null || newSet.weight != null || newSet.rpe != null;
+  }
+
   logNewSet(doneLogging: boolean = false) {
     const targetForm = this.setBeingUpdated ? this.updateSetForm : this.newSetForm
     const setData = targetForm.value;

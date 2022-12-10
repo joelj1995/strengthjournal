@@ -12,6 +12,7 @@ import { ProfileComponent } from './pages/profile/profile.component';
 import { NotFoundComponent } from './pages/special/not-found.component';
 import { WorkoutResolver } from './resolvers/workout.resolver';
 import { ExerciseResolver } from './resolvers/exercise.resolver';
+import { EditWorkoutGuard } from './guards/edit-workout.guard';
 
 const routes: Routes = [
   { path: '', component: DashboardComponent },
@@ -36,6 +37,7 @@ const routes: Routes = [
       {
         path: ':id/edit',
         component: EditWorkoutComponent,
+        canDeactivate: [ EditWorkoutGuard ],
         resolve: { workout: WorkoutResolver }
       }
     ]
