@@ -51,7 +51,7 @@ jobs:
           name: 'server-and-spa'
           path: ${{env.DOTNET_ROOT}}/server-and-spa
 
-  deploy:
+  deploy-test:
     runs-on: windows-latest
     needs: build
     environment:
@@ -71,4 +71,27 @@ jobs:
           app-name: 'StrengthJournal-Test'
           slot-name: 'production'
           publish-profile: ${{ secrets.AzureAppService_PublishProfile_e64a5527a63e4237a884044ddfdba221 }}
+          package: .
+
+
+  deploy-prod:
+    runs-on: windows-latest
+    needs: build
+    environment:
+      name: 'production'
+      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+
+    steps:
+      - name: Download artifact from build job
+        uses: actions/download-artifact@v2
+        with:
+          name: 'server-and-spa'
+
+      - name: Deploy to Azure Web App
+        id: deploy-to-webapp
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: 'strengthjournal-prod(strengthjournal-staging)'
+          slot-name: 'strengthjournal-staging'
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_PROD }}
           package: .
