@@ -11,11 +11,15 @@ import { ExerciseService } from 'src/app/services/exercise.service';
 export class ViewExerciseComponent implements OnInit {
 
   id: string | null = null;
+  systemDefined: boolean = false;
 
   name: string;
 
-  constructor(private route: ActivatedRoute, private exercise: ExerciseService, private config: ConfigService) { 
-    this.name = this.route.snapshot.data['exercise'].name;
+  constructor(private route: ActivatedRoute, private exercise: ExerciseService, private config: ConfigService) {
+    const exerciseData = this.route.snapshot.data['exercise'];
+    this.name = exerciseData.name;
+    this.systemDefined = exerciseData.systemDefined;
+    this.id = exerciseData.id;
   }
 
   displayKg(): boolean {
@@ -23,12 +27,7 @@ export class ViewExerciseComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.route.params.subscribe(params => {
-      this.id = params['id'];
-      this.exercise.getExercise(params['id']).subscribe(e => {
-        this.name = e.name;
-      });
-    });
+
   }
 
 }
