@@ -12,13 +12,14 @@ namespace StrengthJournal.Server.Integrations.Implementation
         private readonly StrengthJournalContext context;
         private readonly UserService userService;
         private readonly RestClient client;
+        private readonly ILogger<Auth0AuthenticationService> logger;
 
         private readonly string clientSecret;
         private readonly string clientId;
         private readonly string audience;
         private readonly string connection;
 
-        public Auth0AuthenticationService(StrengthJournalContext context, UserService userService)
+        public Auth0AuthenticationService(StrengthJournalContext context, UserService userService, ILogger<Auth0AuthenticationService> logger)
         {
             clientSecret = StrengthJournalConfiguration.Instance.Auth0_ClientSecret;
             clientId = StrengthJournalConfiguration.Instance.Auth0_ClientId;
@@ -27,6 +28,7 @@ namespace StrengthJournal.Server.Integrations.Implementation
             connection = "Username-Password-Authentication";
             this.context = context;
             this.userService = userService;
+            this.logger = logger;
         }
 
         public AuthenticationResponse Authenticate(string username, string password)
@@ -78,14 +80,16 @@ namespace StrengthJournal.Server.Integrations.Implementation
                 }
                 else
                 {
+                    logger.Log(LogLevel.Error, $"Auth0 authorization failure ${response.StatusCode} ${response.Content}");
                     return new AuthenticationResponse()
                     {
                         Result = AuthenticationResponse.AuthResult.ServiceFailure
                     };
                 }
             }
-            catch
+            catch (Exception ex)
             {
+                logger.LogError(ex, "Authentication failure");
                 return new AuthenticationResponse()
                 {
                     Result = AuthenticationResponse.AuthResult.ServiceFailure
@@ -131,7 +135,7 @@ namespace StrengthJournal.Server.Integrations.Implementation
             }
             catch (Exception ex)
             {
-                // TODO: Add some logging
+                logger.LogError(ex, "Create account failure");
                 return new CreateAccountResponse()
                 {
                     Result = CreateAccountResponse.CreateResult.ServiceFailure,
@@ -178,8 +182,9 @@ namespace StrengthJournal.Server.Integrations.Implementation
                 var response = client.Execute(request);
                 return response.IsSuccessStatusCode;
             }
-            catch
+            catch (Exception ex)
             {
+                logger.LogError(ex, "Resend verification failure");
                 return false;
             }
         }
@@ -205,8 +210,9 @@ namespace StrengthJournal.Server.Integrations.Implementation
                 }
                 return false;
             }
-            catch
+            catch (Exception ex)
             {
+                logger.LogError(ex, "Update email failure");
                 return false;
             }
         }
