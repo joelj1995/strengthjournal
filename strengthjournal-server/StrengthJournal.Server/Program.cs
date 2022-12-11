@@ -17,8 +17,8 @@ builder.Services
     .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
-        options.Authority = "https://dev-bs65rtlog25jigd0.us.auth0.com";
-        options.Audience = "https://localhost:7080/api";
+        options.Authority = StrengthJournalConfiguration.Instance.Auth0_BaseURL;
+        options.Audience = StrengthJournalConfiguration.Instance.Auth0_Audience;
         options.TokenValidationParameters = new TokenValidationParameters
         {
             NameClaimType = ClaimTypes.NameIdentifier
