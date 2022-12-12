@@ -256,15 +256,15 @@ export class EditWorkoutComponent implements OnInit {
   }
 
   closePopover() {
-    this.router.navigate([{ showHistory: false, showDetails: false }], { relativeTo: this.route });
+    this.router.navigate([{ }], { relativeTo: this.route });
   }
 
   showHistoryPopover() {
-    this.router.navigate([{ showHistory: true, bypassResolver: true }], { relativeTo: this.route });
+    this.router.navigate([{ showHistory: true }], { relativeTo: this.route });
   }
 
   showDetailsPopover() {
-    this.router.navigate([{ showDetails: true, bypassResolver: true }], { relativeTo: this.route });
+    this.router.navigate([{ showDetails: true }], { relativeTo: this.route });
   }
 
   anyErrors(control: string): boolean {
