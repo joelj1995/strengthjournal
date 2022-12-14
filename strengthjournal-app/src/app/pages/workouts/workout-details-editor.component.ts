@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { WorkoutService } from 'src/app/services/workout.service';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
@@ -28,28 +28,21 @@ export class WorkoutDetailsEditorComponent implements OnInit {
   pickerTime = {hour: 0, minute: 0};
 
   enableSubmit: boolean = true;
-  form = new FormGroup({
-    title: new FormControl('', [
-      Validators.maxLength(255)
-    ]),
-    date: new FormControl('', [
-      Validators.required
-    ]),
-    time: new FormControl(''),
-    bodyweight: new FormControl('', [
-      Validators.min(0),
-      Validators.max(1000)
-    ]),
-    bodyweightUnit: new FormControl(''),
-    notes: new FormControl('', [
-      Validators.maxLength(2048)
-    ])
-  });
+  form!: FormGroup;
 
   constructor(
     private workouts: WorkoutService, 
     private toast: ToastService,
-    private config: ConfigService) { }
+    private fb: FormBuilder) { 
+      this.form = fb.group({
+        title: ['', [Validators.maxLength(255)]],
+        date: ['', [Validators.required]],
+        time: [''],
+        bodyweight: ['', [Validators.min(0), Validators.max(1000)]],
+        bodyweightUnit: [''],
+        notes: ['', [Validators.maxLength(2048)]]
+      });
+  }
 
   bindInputDateToPicker() {
     if (this.workoutData == null)
