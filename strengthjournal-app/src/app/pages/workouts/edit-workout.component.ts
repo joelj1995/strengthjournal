@@ -241,7 +241,7 @@ export class EditWorkoutComponent implements OnInit {
   }
 
   onWorkoutUpdateComplete(workoutData: WorkoutCreateUpdateResult) {
-    this.showDetailsEditor = false;
+    this.closePopover();
     this.workout.entryDateUTC = workoutData.entryDateUTC;
   }
 
