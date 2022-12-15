@@ -8,6 +8,7 @@
           formControlName="date" [(ngModel)]="pickerDate" />
         <button class="btn btn-outline-secondary bi bi-calendar3 mt-2" (click)="d.toggle()" type="button">Pick
           Date</button>
+          <label *ngIf="getErrors('date')" id="validation-file-error" class="error jquery-validation-error small form-text invalid-feedback" for="validation-file" style="display: inline-block;">{{ getErrors('date') }}</label>
       </div>
       <div class="mb-3 error-placeholder">
         <label>Time</label>
@@ -16,10 +17,12 @@
       <div class="mb-3 error-placeholder">
         <label>Title</label>
         <input type="text" class="form-control" id="title" formControlName="title">
+        <label *ngIf="getErrors('title')" id="validation-file-error" class="error jquery-validation-error small form-text invalid-feedback" for="validation-file" style="display: inline-block;">{{ getErrors('title') }}</label>
       </div>
       <div class="mb-3 error-placeholder">
         <label>Bodyweight</label>
         <input type="number" min="0" max="1000" class="form-control" id="bodyweight" formControlName="bodyweight">
+        <label *ngIf="getErrors('bodyweight')" id="validation-file-error" class="error jquery-validation-error small form-text invalid-feedback" for="validation-file" style="display: inline-block;">{{ getErrors('bodyweight') }}</label>
         <br>
         <label class="form-check form-check-inline">
           <input class="form-check-input" type="radio" name="bodyweightUnit" value="lbs" formControlName="bodyweightUnit">
@@ -37,6 +40,7 @@
       <div class="mb-3 error-placeholder" *ngIf="workoutId">
         <label>Notes</label>
         <textarea type="text" class="form-control" id="notes" formControlName="notes" style="height: 200px"></textarea>
+        <label *ngIf="getErrors('notes')" id="validation-file-error" class="error jquery-validation-error small form-text invalid-feedback" for="validation-file" style="display: inline-block;">{{ getErrors('notes') }}</label>
       </div>
       <div>
         <button type="submit" class="btn btn-sm btn-primary" [class.disabled]="!enableSubmit || !form.valid">{{workoutId ? 'Update':

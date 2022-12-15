@@ -27,6 +27,18 @@ export class WorkoutDetailsEditorComponent implements OnInit {
   pickerDate: NgbDateStruct = { year: 1789, month: 7, day: 14 };
   pickerTime = {hour: 0, minute: 0};
 
+  validationErrors: {[key: string]: {[key: string]: string}} = {
+    'title': { 'maxlength': 'Title cannot exceed 255 characters' },
+    'date': { 'required': 'Please enter a valid date with format yyyy-mm-dd' },
+    'bodyweight': {
+      'min': 'Bodyweight cannot be negative',
+      'max': 'Bodyweight cannot be more than 1000'
+    },
+    'notes': {
+      'maxlength': 'Your notes are too long'
+    }
+  };
+
   enableSubmit: boolean = true;
   form!: FormGroup;
 
@@ -42,6 +54,20 @@ export class WorkoutDetailsEditorComponent implements OnInit {
         bodyweightUnit: [''],
         notes: ['', [Validators.maxLength(2048)]]
       });
+  }
+
+  getErrors(fc: string): string | null {
+    if (this.form.get(fc)?.errors ?? 0 > 0) {
+      const firstError = Object.keys(this.form.get(fc)?.errors as Object)[0] as string;
+      try {
+        return this.validationErrors[fc][firstError] as string;
+      }
+      catch (e) {
+        console.error('Error getting validation string: ' + e);
+        return 'Error validating this field';
+      }
+    }
+    return null;
   }
 
   bindInputDateToPicker() {
