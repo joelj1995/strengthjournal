@@ -23,8 +23,8 @@
       </tr>
     </tbody>
   </table>
-  <div style=" display: flex; justify-content: center;">
-    <button class="btn btn-primary btn-sm" (click)="loadMore()" [class.disabled]="loadingMore || noMoreRecords">Load More</button>
+  <div style="display: flex; justify-content: center;">
+    <button class="btn btn-primary btn-sm mb-3" (click)="loadMore()" [class.disabled]="loadingMore || noMoreRecords">Load More</button>
   </div>
   <ng-template #loadingHistory>
     <div class="mb-2 text-center">
