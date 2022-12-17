@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { Country } from 'src/app/model/country';
 import { ProfileSettings } from 'src/app/model/profile-settings';
 import { ProfileService } from 'src/app/services/profile.service';
@@ -12,8 +13,8 @@ import { ToastService } from 'src/app/services/toast.service';
 })
 export class ProfileComponent implements OnInit {
 
-  settings: ProfileSettings | null = null;
-  countryList: Country[] | null = null;
+  settings!: ProfileSettings;
+  countryList!: Country[];
 
   settingsForm = new FormGroup({
     preferredWeightUnit: new FormControl(''),
@@ -23,19 +24,18 @@ export class ProfileComponent implements OnInit {
 
   emailFormControl = new FormControl(localStorage.getItem('app_username'));
 
-  constructor(private profile: ProfileService, private toast: ToastService) { }
+  constructor(
+    private profile: ProfileService, 
+    private toast: ToastService, 
+    private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.profile.getCountries().subscribe(countries => {
-      this.countryList = countries;
-    });
-    this.profile.getSettings().subscribe(settings => {
-      this.settings = settings;
-      this.settingsForm.setValue({
-        'preferredWeightUnit': settings.preferredWeightUnit,
-        'consentCEM': settings.consentCEM,
-        'countryCode': settings.countryCode
-      });
+    this.settings = this.route.snapshot.data['profile'].settings;
+    this.countryList = this.route.snapshot.data['profile'].countryList;
+    this.settingsForm.setValue({
+      'preferredWeightUnit': this.settings.preferredWeightUnit,
+      'consentCEM': this.settings.consentCEM,
+      'countryCode': this.settings.countryCode
     });
   }
 

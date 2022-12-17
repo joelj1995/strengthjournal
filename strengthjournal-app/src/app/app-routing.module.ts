@@ -14,6 +14,7 @@ import { WorkoutResolver } from './resolvers/workout.resolver';
 import { ExerciseResolver } from './resolvers/exercise.resolver';
 import { EditWorkoutGuard } from './guards/edit-workout.guard';
 import { EditExerciseResolver } from './resolvers/edit-exercise.resolver';
+import { ProfileResolver } from './resolvers/profile.resolver';
 
 const routes: Routes = [
   { path: '', component: DashboardComponent },
@@ -50,7 +51,11 @@ const routes: Routes = [
       }
     ]
   },
-  { path: 'profile', component: ProfileComponent },
+  { 
+    path: 'profile', 
+    component: ProfileComponent ,
+    resolve: { profile: ProfileResolver }
+  },
   { path: '**', component: NotFoundComponent }
 ];
 
