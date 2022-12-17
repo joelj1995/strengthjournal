@@ -6,7 +6,7 @@ import {
 } from '@angular/router';
 import { map, Observable, of } from 'rxjs';
 import { Exercise } from '../model/exercise';
-import { ResolvedEditExercise } from '../model/resolved-edit-exercise';
+import { ResolvedEditExercise } from '../model/vm/resolved-edit-exercise';
 import { ExerciseService } from '../services/exercise.service';
 
 @Injectable({

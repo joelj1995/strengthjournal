@@ -1,4 +1,4 @@
-import { Exercise } from "./exercise";
+import { Exercise } from "../exercise";
 
 export interface ResolvedEditExercise {
   exercise: Exercise;
