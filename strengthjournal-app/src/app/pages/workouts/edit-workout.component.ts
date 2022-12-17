@@ -35,6 +35,8 @@ export class EditWorkoutComponent implements OnInit {
   showHistory: boolean = false;
   showDetailsEditor: boolean = false;
 
+  lastSetLogged: Date = new Date(Date());
+
   constructor(
     private route: ActivatedRoute, 
     private workouts: WorkoutService, 
@@ -101,6 +103,7 @@ export class EditWorkoutComponent implements OnInit {
       rpe: setData.rpe * 2
     };
     this.addingSet = true;
+    this.lastSetLogged = new Date(Date());
     this.workouts.syncSet(this.workout.id, newWorkoutSet).subscribe(() => {
       if (this.setBeingUpdated) {
         const indexOfSet = this.workout.sets.findIndex(s => s.id == this.setBeingUpdated);
@@ -110,6 +113,7 @@ export class EditWorkoutComponent implements OnInit {
       else {
         this.workout.sets.push(newWorkoutSet);
       }
+      
       if (doneLogging) {
         this.router.navigate(['/workouts']);
       } else {

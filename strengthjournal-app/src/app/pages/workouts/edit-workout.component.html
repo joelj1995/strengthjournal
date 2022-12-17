@@ -89,6 +89,9 @@
         </table>
         <div class="card-footer">
           <div>
+            <app-rest-time [lastSetLogged]="lastSetLogged"></app-rest-time>
+          </div>
+          <div>
             <button class="btn btn-primary btn-sm" (click)="logNewSet()"
               [class.disabled]="this.addingSet || !(setBeingUpdated ? updateSetForm.valid : newSetForm.valid)">
               {{setBeingUpdated ? 'Update' : 'Add'}}

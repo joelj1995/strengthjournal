@@ -38,6 +38,7 @@ import { ProfileComponent } from './pages/profile/profile.component';
 import { OffCanvasComponent } from './components/off-canvas/off-canvas.component';
 import { BlockingSpinnerComponent } from './components/blocking-spinner/blocking-spinner.component';
 import { NotFoundComponent } from './pages/special/not-found.component';
+import { RestTimeComponent } from './pages/workouts/rest-time.component';
 
 @NgModule({
   declarations: [
@@ -63,7 +64,8 @@ import { NotFoundComponent } from './pages/special/not-found.component';
     ProfileComponent,
     OffCanvasComponent,
     BlockingSpinnerComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    RestTimeComponent
   ],
   imports: [
     BrowserModule,
