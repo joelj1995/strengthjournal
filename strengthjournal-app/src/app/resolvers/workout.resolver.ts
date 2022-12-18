@@ -7,6 +7,7 @@ import {
 } from '@angular/router';
 import { Observable, of, tap } from 'rxjs';
 import { Workout } from '../model/workout';
+import { PathsHelperService } from '../services/paths-helper.service';
 import { WorkoutService } from '../services/workout.service';
 
 @Injectable({
@@ -14,23 +15,18 @@ import { WorkoutService } from '../services/workout.service';
 })
 export class WorkoutResolver implements Resolve<Workout | null> {
 
-  constructor(private workout: WorkoutService, private router: Router) { }
+  constructor(
+    private workout: WorkoutService, 
+    private router: Router,
+    private pathsHelper: PathsHelperService) { }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Workout | null> {
-    const sourcePage = this.getBasePath(this.router.url);
-    const targetPage = this.getBasePath(state.url);
-    if (sourcePage == targetPage)
+    if (!this.pathsHelper.baseUrlChanged(this.router.url, state.url))
       return of(null);
     const id = route.paramMap.get('id');
     if (id == null)
       throw 'Null workout id in route';
     return this.workout.getWorkout(id);
-  }
-
-  getBasePath(url: string): string {
-    const optionalSeparatorIdx = url.indexOf(';');
-    const substringEnd = optionalSeparatorIdx == -1 ? url.length : optionalSeparatorIdx;
-    return url.substring(0, substringEnd);
   }
 
 }
