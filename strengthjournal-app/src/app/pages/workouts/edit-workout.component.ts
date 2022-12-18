@@ -7,11 +7,8 @@ import { Workout } from 'src/app/model/workout';
 import { WorkoutCreateUpdateResult } from 'src/app/model/workout-create-update-result';
 import { WorkoutSet } from 'src/app/model/workout-set';
 import { ConfigService } from 'src/app/services/config.service';
-import { ExerciseService } from 'src/app/services/exercise.service';
-import { ToastService } from 'src/app/services/toast.service';
 import { WorkoutService } from 'src/app/services/workout.service';
 import { v4 as uuidv4 } from 'uuid';
-// import { RPEPipe } from 'src/app/pipes/rpe-format-pipe';
 
 @Component({
   selector: 'app-edit-workout',
@@ -26,7 +23,7 @@ export class EditWorkoutComponent implements OnInit {
   addingSet: boolean = false;
   setBeingUpdated: string | null = null;
 
-  workout: Workout;
+  workout!: Workout;
   exerciseList: Exercise[] = [];
 
   dragId: string | null = null;
@@ -40,11 +37,8 @@ export class EditWorkoutComponent implements OnInit {
   constructor(
     private route: ActivatedRoute, 
     private workouts: WorkoutService, 
-    private exercises : ExerciseService, 
     private config: ConfigService,
-    private router: Router) { 
-      this.workout = this.route.snapshot.data['workout'];
-  }
+    private router: Router) { }
 
   static createSetForm(): FormGroup {
     return new FormGroup({
@@ -70,10 +64,9 @@ export class EditWorkoutComponent implements OnInit {
   newSetForm = EditWorkoutComponent.createSetForm();
 
   ngOnInit(): void {
-    this.exercises.getAllExercises().subscribe(page => {
-      this.exerciseList = page.data;
-      this.loadingExercises = false;
-    });
+    this.loadingExercises = false
+    this.workout = this.route.snapshot.data['workout'].workout;
+    this.exerciseList = this.route.snapshot.data['workout'].exerciseList;
     this.route.paramMap.subscribe(p => {
       this.showHistory = p.get('showHistory') == 'true';
       this.showDetailsEditor = p.get('showDetails') == 'true';
