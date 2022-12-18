@@ -103,7 +103,6 @@ export class EditWorkoutComponent implements OnInit {
       rpe: setData.rpe * 2
     };
     this.addingSet = true;
-    this.lastSetLogged = new Date(Date());
     this.workouts.syncSet(this.workout.id, newWorkoutSet).subscribe(() => {
       if (this.setBeingUpdated) {
         const indexOfSet = this.workout.sets.findIndex(s => s.id == this.setBeingUpdated);
@@ -111,9 +110,9 @@ export class EditWorkoutComponent implements OnInit {
         this.setBeingUpdated = null;
       }
       else {
+        this.lastSetLogged = new Date(Date());
         this.workout.sets.push(newWorkoutSet);
       }
-      
       if (doneLogging) {
         this.router.navigate(['/workouts']);
       } else {
