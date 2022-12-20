@@ -21,6 +21,7 @@ export class ListExercisesComponent implements OnInit {
   exerciseSearchInput = new BehaviorSubject('');
   exerciseSearch: string = '';
 
+  // TODO: subscribe to page event
   exerciseList$ = this.exerciseSearchInput.pipe(
     tap(() => this.loading = true),
     debounceTime(1000),
@@ -55,6 +56,10 @@ export class ListExercisesComponent implements OnInit {
 
   editExercise(exerciseId: string) {
     this.router.navigate(['exercises', exerciseId, 'edit']);
+  }
+
+  nextPage() {
+    this.exerciseSearchInput.next(this.exerciseSearch);
   }
 
   getExercisePage() {
