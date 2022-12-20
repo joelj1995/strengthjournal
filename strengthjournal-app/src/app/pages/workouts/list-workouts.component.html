@@ -4,7 +4,7 @@
   <div class="col-12">
     <app-card cardTitle="My Workout List">
       <button class="btn btn-primary buttons-copy buttons-html5" routerLink="new">Log New Workout</button>
-      <table *ngIf="workoutList; else workoutListLoading"
+      <table *ngIf="workoutList$ | async as workoutList"
         class="table table-striped dataTable no-footer dtr-inline collapsed">
         <thead>
           <tr>
