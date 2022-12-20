@@ -11,7 +11,7 @@
       <p>
         * indicates a system exercise that cannot be deleted or modified.
       </p>
-      <table *ngIf="exerciseList; else exerciseListLoading" class="table table-striped dataTable no-footer dtr-inline collapsed">
+      <table *ngIf="exerciseList$ | async as exerciseList" class="table table-striped dataTable no-footer dtr-inline collapsed">
         <thead>
           <tr>
             <th>Name</th>
@@ -27,13 +27,11 @@
           </tr>
         </tbody>
       </table>
-      <ng-template #exerciseListLoading>
-        <div class="mb-2 text-center">
-          <div class="spinner-grow me-2" role="status">
-            <span class="sr-only">Loading...</span>
-          </div>
+      <div class="mb-2 text-center" *ngIf="loading">
+        <div class="spinner-grow me-2" role="status">
+          <span class="sr-only">Loading...</span>
         </div>
-      </ng-template>
+      </div>
       <ngb-pagination [(page)]="page" [pageSize]="pageSize" [collectionSize]="collectionSize" (pageChange)="getExercisePage()"></ngb-pagination>
     </app-card>
   </div>

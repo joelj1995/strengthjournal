@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { debounceTime, Subject } from 'rxjs';
+import { BehaviorSubject, debounceTime, map, Subject, switchMap, tap } from 'rxjs';
 import { Exercise } from 'src/app/model/exercise';
 import { ExerciseService } from 'src/app/services/exercise.service';
 
@@ -15,25 +15,26 @@ export class ListExercisesComponent implements OnInit {
   pageSize: number = 10;
   collectionSize: number = 0;
 
-  exerciseList: Exercise[] | null = null;
-
   stagedDelete: string | null = null;
+  loading: boolean = false;
 
-  exerciseSearchInput = new Subject();
+  exerciseSearchInput = new BehaviorSubject('');
   exerciseSearch: string = '';
+
+  exerciseList$ = this.exerciseSearchInput.pipe(
+    tap(() => this.loading = true),
+    debounceTime(1000),
+    tap(search => this.exerciseSearch = search as string),
+    switchMap(search => this.getExercisePage()),
+    tap(() => this.loading = false),
+    tap(exercisePage => this.collectionSize = exercisePage.totalRecords),
+    map(exercisePage => exercisePage.data)
+  );
 
   constructor(private exercises : ExerciseService, private router: Router) { }
 
   ngOnInit(): void {
     this.getExercisePage();
-    this.exerciseSearchInput
-      .pipe(
-        debounceTime(1000)
-      )
-      .subscribe(search => {
-        this.exerciseSearch = search as string;
-        this.getExercisePage();
-      });
   }
 
   deleteExercise(exerciseId: string) {
@@ -47,9 +48,8 @@ export class ListExercisesComponent implements OnInit {
   confirmDeleteExercise() {
     if (this.stagedDelete == null) throw 'Tried to finalize delete but no record it staged';
     this.exercises.deleteExercise(this.stagedDelete).subscribe(() => {
-      this.exerciseList = this.exerciseList?.filter(e => e.id !== this.stagedDelete) ?? null;
       this.stagedDelete = null;
-      this.getExercisePage();
+      this.exerciseSearchInput.next(this.exerciseSearch);
     })
   }
 
@@ -58,11 +58,7 @@ export class ListExercisesComponent implements OnInit {
   }
 
   getExercisePage() {
-    this.exerciseList = null;
-    this.exercises.getExercises(this.page, this.pageSize, this.exerciseSearch).subscribe(page => {
-      this.exerciseList = page.data;
-      this.collectionSize = page.totalRecords;
-    });
+    return this.exercises.getExercises(this.page, this.pageSize, this.exerciseSearch);
   }
 
   searchInputChange(e: any) {
