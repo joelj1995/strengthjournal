@@ -21,14 +21,14 @@ export class ListExercisesComponent implements OnInit {
   exerciseSearchInput$ = new Subject<string>();
   activeExerciseSearchInput$ = merge(
     of(''),
-    this.exerciseSearchInput$.pipe(tap(() => this.loading = true) , debounceTime<string>(1000))
+    this.exerciseSearchInput$.pipe(tap(() => this.loading = true), debounceTime<string>(1000))
   );
 
   pageNumber$ = new BehaviorSubject(this.page);
 
   exerciseList$ = this.pageNumber$.pipe(
     combineLatestWith(this.activeExerciseSearchInput$),
-    switchMap(([pageNumber, search]) => this.getExercisePage(search)),
+    switchMap(([pageNumber, search]) => this.getExercisePage(pageNumber, search)),
     tap(() => this.loading = false),
     tap(exercisePage => this.collectionSize = exercisePage.totalRecords),
     map(exercisePage => exercisePage.data)
@@ -63,8 +63,8 @@ export class ListExercisesComponent implements OnInit {
     this.pageNumber$.next(this.page);
   }
 
-  getExercisePage(exerciseSearch: string) {
-    return this.exercises.getExercises(this.page, this.pageSize, exerciseSearch);
+  getExercisePage(page: number, exerciseSearch: string) {
+    return this.exercises.getExercises(page, this.pageSize, exerciseSearch);
   }
 
   searchInputChange(e: any) {
