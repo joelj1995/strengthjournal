@@ -16,7 +16,7 @@ export class ListExercisesComponent implements OnInit {
   collectionSize: number = 0;
 
   stagedDelete: string | null = null;
-  loading: boolean = false;
+  loading: boolean = true;
 
   exerciseSearchInput$ = new BehaviorSubject('');
 

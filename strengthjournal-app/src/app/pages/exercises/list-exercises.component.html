@@ -18,7 +18,7 @@
             <th style="width: 10%">Actions</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody *ngIf="!loading">
           <tr *ngFor="let exercise of exerciseList">
             <td><a [routerLink]="exercise.id">{{exercise.name}}</a><span *ngIf="exercise.systemDefined"> *</span></td>
             <td class="table-action">
