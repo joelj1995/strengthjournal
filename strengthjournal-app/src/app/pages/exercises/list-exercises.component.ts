@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject, combineLatestWith, debounceTime, map, merge, of, Subject, switchMap, tap } from 'rxjs';
+import { BehaviorSubject, combineLatestWith, debounceTime, map, merge, of, startWith, Subject, switchMap, tap } from 'rxjs';
 import { Exercise } from 'src/app/model/exercise';
 import { ExerciseService } from 'src/app/services/exercise.service';
 
@@ -19,9 +19,10 @@ export class ListExercisesComponent implements OnInit {
   loading: boolean = true;
 
   exerciseSearchInput$ = new Subject<string>();
-  activeExerciseSearchInput$ = merge(
-    of(''),
-    this.exerciseSearchInput$.pipe(tap(() => this.loading = true), debounceTime<string>(1000))
+  activeExerciseSearchInput$ = this.exerciseSearchInput$.pipe(
+    tap(() => this.loading = true), 
+    debounceTime<string>(1000),
+    startWith('')
   );
 
   pageNumber$ = new BehaviorSubject(this.page);
