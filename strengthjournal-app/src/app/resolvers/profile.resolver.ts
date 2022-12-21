@@ -21,12 +21,11 @@ export class ProfileResolver implements Resolve<ResolvedProfile> {
     const settings = this.profile.getSettings();
     const countries = this.profile.getCountries();
     return forkJoin([settings, countries]).pipe(
-      map(results => {
-        return {
-          settings: results[0] as Settings,
-          countryList: results[1] as Country[]
-        } as ResolvedProfile
-      })
+      map(([settings, countryList]) => ({
+          settings,
+          countryList
+        } as ResolvedProfile)
+      )
     );
   }
 }
