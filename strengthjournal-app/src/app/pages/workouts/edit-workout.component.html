@@ -28,10 +28,10 @@
       <table class="table table-striped no-footer table-hover" style="width: 100%">
         <thead>
           <tr>
-            <th style="width: 50%">Exercise *</th>
-            <th>Weight</th>
-            <th>Reps</th>
-            <th>RPE</th>
+            <th style="width: 55%">Exercise *</th>
+            <th style="width: 15%">Weight</th>
+            <th style="width: 15%">Reps</th>
+            <th style="width: 15%">RPE</th>
           </tr>
         </thead>
         <tbody>
@@ -68,7 +68,7 @@
             </td>
             <td class="editRow"><input type="number" class="form-control" id="weight" formControlName="weight" min="0" step="1"></td>
             <td class="editRow"><input type="number" class="form-control" id="reps" formControlName="reps" min="0" step="1"></td>
-            <td class="editRow" style="padding: 6px"><input type="number" class="form-control" id="rpe" formControlName="rpe" min="0"
+            <td class="editRow"><input type="number" class="form-control" id="rpe" formControlName="rpe" min="0"
                 max="10" step="0.5"></td>
           </tr>
           <tr *ngIf="setBeingUpdated">
