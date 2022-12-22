@@ -11,3 +11,17 @@
   bottom: 0;
   left: 0;
 }
+
+h1 {
+  margin-left: 1em;
+}
+
+.content {
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
+.row {
+  margin-left: 0px;
+  margin-right: 0px;
+}

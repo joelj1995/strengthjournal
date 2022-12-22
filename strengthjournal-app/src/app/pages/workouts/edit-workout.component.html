@@ -1,128 +1,126 @@
 <h1 class="h3 mb-3">Editing workout {{workout.entryDateUTC | date:'short'}} <button class="btn btn-primary"
     (click)="showDetailsPopover()">Edit Details</button></h1>
-<div class="row">
-  <div class="col-12">
-    <app-card cardTitle="Workout Sets" [collapseBody]="true">
-      <div [formGroup]="sharedSetForm">
-        <div style="padding-left: 20px">
-          <label>Editor help: </label>
-          <ul>
-            <li>Click on a row to edit</li>
-            <li>Drag and drop a row to change the sequence</li>
-          </ul>
-        </div>
-        <label class="form-check form-check-inline">Weight unit:</label>
-        <label class="form-check form-check-inline">
-          <input class="form-check-input" type="radio" name="weightUnit" value="lbs" formControlName="weightUnit">
-          <span class="form-check-label">
-            lbs
-          </span>
-        </label>
-        <label class="form-check form-check-inline">
-          <input class="form-check-input" type="radio" name="weightUnit" value="kg" formControlName="weightUnit">
-          <span class="form-check-label">
-            kg
-          </span>
-        </label>
+<div>
+  <app-card cardTitle="Workout Sets" [collapseBody]="true">
+    <div [formGroup]="sharedSetForm">
+      <div style="padding-left: 20px">
+        <label>Editor help: </label>
+        <ul>
+          <li>Click on a row to edit</li>
+          <li>Drag and drop a row to change the sequence</li>
+        </ul>
       </div>
-      <div *ngIf="!loadingSets && !loadingExercises && workout; else loading">
-        <table class="table table-striped no-footer table-hover">
-          <thead>
-            <tr>
-              <th>Exercise *</th>
-              <th>Weight</th>
-              <th>Reps</th>
-              <th>Target Reps</th>
-              <th>RPE</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let set of workout.sets" (click)="this.startUpdatingSet(set.id)"
-              [draggable]="!setBeingUpdated && !addingSet" class="cursor-grab" (dragstart)="rowDragStart($event,set.id)"
-              (dragend)="rowDragEnd($event,set.id)" (dragover)="rowDragOver($event,set.id)"
-              (drop)="rowDrop($event,set.id)" [class.drag-transparent]="set.id == dragId"
-              [class.drag-border]="set.id == dropId">
-              <ng-container #viewSet *ngIf="set.id != setBeingUpdated; else updateSet">
-                <td>{{set.exerciseName}}</td>
-                <td>{{set.weight}} {{set.weight ? set.weightUnit : ''}}</td>
-                <td>{{set.reps}}</td>
-                <td>{{set.targetReps}}</td>
-                <td>{{set.rpe | rpe}}</td>
-              </ng-container>
-              <ng-template [formGroup]="updateSetForm" #updateSet>
-                <td>
-                  <select class="form-control" formControlName="exerciseId" [class.is-invalid]="anyErrors('exerciseId')">
-                    <option *ngFor="let exercise of exerciseList" [value]="exercise.id">{{exercise.name}}</option>
-                  </select>
-                </td>
-                <td><input type="number" class="form-control" id="weight" formControlName="weight" min="0" step="1">
-                </td>
-                <td><input type="number" class="form-control" id="reps" formControlName="reps" min="0" step="1"></td>
-                <td><input type="number" class="form-control" id="targetReps" formControlName="targetReps" min="0"
-                    step="1"></td>
-                <td style="padding: 6px"><input type="number" class="form-control" id="rpe" formControlName="rpe"
-                    min="0" max="10" step="0.5"></td>
-              </ng-template>
-            </tr>
-            <tr [formGroup]="newSetForm" *ngIf="!setBeingUpdated">
+      <label class="form-check form-check-inline">Weight unit:</label>
+      <label class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="weightUnit" value="lbs" formControlName="weightUnit">
+        <span class="form-check-label">
+          lbs
+        </span>
+      </label>
+      <label class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="weightUnit" value="kg" formControlName="weightUnit">
+        <span class="form-check-label">
+          kg
+        </span>
+      </label>
+    </div>
+    <div *ngIf="!loadingSets && !loadingExercises && workout; else loading">
+      <table class="table table-striped no-footer table-hover">
+        <thead>
+          <tr>
+            <th>Exercise *</th>
+            <th>Weight</th>
+            <th>Reps</th>
+            <th>Target Reps</th>
+            <th>RPE</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let set of workout.sets" (click)="this.startUpdatingSet(set.id)"
+            [draggable]="!setBeingUpdated && !addingSet" class="cursor-grab" (dragstart)="rowDragStart($event,set.id)"
+            (dragend)="rowDragEnd($event,set.id)" (dragover)="rowDragOver($event,set.id)"
+            (drop)="rowDrop($event,set.id)" [class.drag-transparent]="set.id == dragId"
+            [class.drag-border]="set.id == dropId">
+            <ng-container #viewSet *ngIf="set.id != setBeingUpdated; else updateSet">
+              <td>{{set.exerciseName}}</td>
+              <td>{{set.weight}} {{set.weight ? set.weightUnit : ''}}</td>
+              <td>{{set.reps}}</td>
+              <td>{{set.targetReps}}</td>
+              <td>{{set.rpe | rpe}}</td>
+            </ng-container>
+            <ng-template [formGroup]="updateSetForm" #updateSet>
               <td>
-                <select class="form-control" [class.is-invalid]="anyErrors('exerciseId')" formControlName="exerciseId"
-                  (change)="differentExerciseSelectedForNewSet()">
+                <select class="form-control" formControlName="exerciseId" [class.is-invalid]="anyErrors('exerciseId')">
                   <option *ngFor="let exercise of exerciseList" [value]="exercise.id">{{exercise.name}}</option>
                 </select>
               </td>
-              <td><input type="number" class="form-control" id="weight" formControlName="weight" min="0" step="1"></td>
+              <td><input type="number" class="form-control" id="weight" formControlName="weight" min="0" step="1">
+              </td>
               <td><input type="number" class="form-control" id="reps" formControlName="reps" min="0" step="1"></td>
               <td><input type="number" class="form-control" id="targetReps" formControlName="targetReps" min="0"
                   step="1"></td>
-              <td style="padding: 6px"><input type="number" class="form-control" id="rpe" formControlName="rpe" min="0"
-                  max="10" step="0.5"></td>
-            </tr>
-            <tr *ngIf="setBeingUpdated">
-              <td>&nbsp;</td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-          </tbody>
-        </table>
-        <div class="card-footer">
-          <div>
-            <app-rest-time [lastSetLogged]="lastSetLogged"></app-rest-time>
-          </div>
-          <div>
-            <button class="btn btn-primary btn-sm" (click)="logNewSet()"
-              [class.disabled]="this.addingSet || !(setBeingUpdated ? updateSetForm.valid : newSetForm.valid)">
-              {{setBeingUpdated ? 'Update' : 'Add'}}
-            </button>
-            <button class="btn btn-primary btn-sm" (click)="logNewSet(true)"
-              [class.disabled]="addingSet || !newSetForm.valid" *ngIf="!setBeingUpdated">
-              Add and Complete
-            </button>
-            <button class="btn btn-secondary btn-sm" [class.disabled]="this.addingSet" (click)="deleteSet()"
-              *ngIf="setBeingUpdated">Delete</button>
-            <button class="btn btn-secondary btn-sm" [class.disabled]="this.addingSet" (click)="stopUpdatingSet()"
-              *ngIf="setBeingUpdated">Cancel</button>
-            <button class="btn btn-secondary btn-sm" (click)="showHistoryPopover()">History</button>
-          </div>
-          <div class="pt-3" *ngIf="setBeingUpdated">
-            <button class="btn btn-secondary btn-sm" (click)="moveDown()"
-              [class.disabled]="addingSet || indexOfSetBeingUpdate() == numberOfSets() - 1">Move Down</button>
-            <button class="btn btn-secondary btn-sm" (click)="moveUp()"
-              [class.disabled]="addingSet || indexOfSetBeingUpdate() == 0">Move Up</button>
-          </div>
+              <td style="padding: 6px"><input type="number" class="form-control" id="rpe" formControlName="rpe"
+                  min="0" max="10" step="0.5"></td>
+            </ng-template>
+          </tr>
+          <tr [formGroup]="newSetForm" *ngIf="!setBeingUpdated">
+            <td>
+              <select class="form-control" [class.is-invalid]="anyErrors('exerciseId')" formControlName="exerciseId"
+                (change)="differentExerciseSelectedForNewSet()">
+                <option *ngFor="let exercise of exerciseList" [value]="exercise.id">{{exercise.name}}</option>
+              </select>
+            </td>
+            <td><input type="number" class="form-control" id="weight" formControlName="weight" min="0" step="1"></td>
+            <td><input type="number" class="form-control" id="reps" formControlName="reps" min="0" step="1"></td>
+            <td><input type="number" class="form-control" id="targetReps" formControlName="targetReps" min="0"
+                step="1"></td>
+            <td style="padding: 6px"><input type="number" class="form-control" id="rpe" formControlName="rpe" min="0"
+                max="10" step="0.5"></td>
+          </tr>
+          <tr *ngIf="setBeingUpdated">
+            <td>&nbsp;</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="card-footer">
+        <div>
+          <app-rest-time [lastSetLogged]="lastSetLogged"></app-rest-time>
+        </div>
+        <div>
+          <button class="btn btn-primary btn-sm" (click)="logNewSet()"
+            [class.disabled]="this.addingSet || !(setBeingUpdated ? updateSetForm.valid : newSetForm.valid)">
+            {{setBeingUpdated ? 'Update' : 'Add'}}
+          </button>
+          <button class="btn btn-primary btn-sm" (click)="logNewSet(true)"
+            [class.disabled]="addingSet || !newSetForm.valid" *ngIf="!setBeingUpdated">
+            Add and Complete
+          </button>
+          <button class="btn btn-secondary btn-sm" [class.disabled]="this.addingSet" (click)="deleteSet()"
+            *ngIf="setBeingUpdated">Delete</button>
+          <button class="btn btn-secondary btn-sm" [class.disabled]="this.addingSet" (click)="stopUpdatingSet()"
+            *ngIf="setBeingUpdated">Cancel</button>
+          <button class="btn btn-secondary btn-sm" (click)="showHistoryPopover()">History</button>
+        </div>
+        <div class="pt-3" *ngIf="setBeingUpdated">
+          <button class="btn btn-secondary btn-sm" (click)="moveDown()"
+            [class.disabled]="addingSet || indexOfSetBeingUpdate() == numberOfSets() - 1">Move Down</button>
+          <button class="btn btn-secondary btn-sm" (click)="moveUp()"
+            [class.disabled]="addingSet || indexOfSetBeingUpdate() == 0">Move Up</button>
         </div>
       </div>
-      <ng-template #loading>
-        <div class="mb-2 text-center">
-          <div class="spinner-grow me-2" role="status">
-            <span class="sr-only">Loading...</span>
-          </div>
+    </div>
+    <ng-template #loading>
+      <div class="mb-2 text-center">
+        <div class="spinner-grow me-2" role="status">
+          <span class="sr-only">Loading...</span>
         </div>
-      </ng-template>
-    </app-card>
-  </div>
+      </div>
+    </ng-template>
+  </app-card>
 </div>
 
 <app-off-canvas (closeEvent)="closePopover()" [show]="showDetailsEditor" title="Workout Details">
