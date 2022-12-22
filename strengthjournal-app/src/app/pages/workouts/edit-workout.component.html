@@ -31,7 +31,6 @@
             <th>Exercise *</th>
             <th>Weight</th>
             <th>Reps</th>
-            <th>Target Reps</th>
             <th>RPE</th>
           </tr>
         </thead>
@@ -45,7 +44,6 @@
               <td>{{set.exerciseName}}</td>
               <td>{{set.weight}} {{set.weight ? set.weightUnit : ''}}</td>
               <td>{{set.reps}}</td>
-              <td>{{set.targetReps}}</td>
               <td>{{set.rpe | rpe}}</td>
             </ng-container>
             <ng-template [formGroup]="updateSetForm" #updateSet>
@@ -57,8 +55,6 @@
               <td><input type="number" class="form-control" id="weight" formControlName="weight" min="0" step="1">
               </td>
               <td><input type="number" class="form-control" id="reps" formControlName="reps" min="0" step="1"></td>
-              <td><input type="number" class="form-control" id="targetReps" formControlName="targetReps" min="0"
-                  step="1"></td>
               <td style="padding: 6px"><input type="number" class="form-control" id="rpe" formControlName="rpe"
                   min="0" max="10" step="0.5"></td>
             </ng-template>
@@ -72,14 +68,11 @@
             </td>
             <td><input type="number" class="form-control" id="weight" formControlName="weight" min="0" step="1"></td>
             <td><input type="number" class="form-control" id="reps" formControlName="reps" min="0" step="1"></td>
-            <td><input type="number" class="form-control" id="targetReps" formControlName="targetReps" min="0"
-                step="1"></td>
             <td style="padding: 6px"><input type="number" class="form-control" id="rpe" formControlName="rpe" min="0"
                 max="10" step="0.5"></td>
           </tr>
           <tr *ngIf="setBeingUpdated">
             <td>&nbsp;</td>
-            <td></td>
             <td></td>
             <td></td>
             <td></td>
