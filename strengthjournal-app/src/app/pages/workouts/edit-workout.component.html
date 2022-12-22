@@ -25,10 +25,10 @@
       </label>
     </div>
     <div *ngIf="!loadingSets && !loadingExercises && workout; else loading">
-      <table class="table table-striped no-footer table-hover">
+      <table class="table table-striped no-footer table-hover" style="width: 100%">
         <thead>
           <tr>
-            <th>Exercise *</th>
+            <th style="width: 50%">Exercise *</th>
             <th>Weight</th>
             <th>Reps</th>
             <th>RPE</th>
@@ -60,15 +60,15 @@
             </ng-template>
           </tr>
           <tr [formGroup]="newSetForm" *ngIf="!setBeingUpdated">
-            <td>
+            <td class="editRow">
               <select class="form-control" [class.is-invalid]="anyErrors('exerciseId')" formControlName="exerciseId"
                 (change)="differentExerciseSelectedForNewSet()">
                 <option *ngFor="let exercise of exerciseList" [value]="exercise.id">{{exercise.name}}</option>
               </select>
             </td>
-            <td><input type="number" class="form-control" id="weight" formControlName="weight" min="0" step="1"></td>
-            <td><input type="number" class="form-control" id="reps" formControlName="reps" min="0" step="1"></td>
-            <td style="padding: 6px"><input type="number" class="form-control" id="rpe" formControlName="rpe" min="0"
+            <td class="editRow"><input type="number" class="form-control" id="weight" formControlName="weight" min="0" step="1"></td>
+            <td class="editRow"><input type="number" class="form-control" id="reps" formControlName="reps" min="0" step="1"></td>
+            <td class="editRow" style="padding: 6px"><input type="number" class="form-control" id="rpe" formControlName="rpe" min="0"
                 max="10" step="0.5"></td>
           </tr>
           <tr *ngIf="setBeingUpdated">
