@@ -6,10 +6,10 @@ import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { ToastComponent } from './toast/toast.component';
 import { NotFoundComponent } from './special/not-found.component';
-import { CardComponent } from './card/card.component';
 import { BlockingSpinnerComponent } from './blocking-spinner/blocking-spinner.component';
 import { RouterModule } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { SharedModule } from '../shared/shared.module';
 
 
 @NgModule({
@@ -20,13 +20,13 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     FooterComponent,
     ToastComponent,
     NotFoundComponent,
-    CardComponent,
     BlockingSpinnerComponent
   ],
   imports: [
     RouterModule,
     NgbModule,
-    CommonModule
+    CommonModule,
+    SharedModule
   ],
   exports: [
     NavComponent,
@@ -35,7 +35,6 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     FooterComponent,
     ToastComponent,
     NotFoundComponent,
-    CardComponent,
     BlockingSpinnerComponent,
     NgbModule
   ]

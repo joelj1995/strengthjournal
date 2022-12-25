@@ -8,7 +8,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { AuthModule } from '@auth0/auth0-angular';
 import { environment } from 'src/environments/environment';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { ReactiveFormsModule } from '@angular/forms';
 import { AuthHttpInterceptor } from '@auth0/auth0-angular';
 import { ListExercisesComponent } from './exercise/exercises/list-exercises.component';
 import { NewExerciseComponent } from './exercise/exercises/new-exercise.component';
@@ -16,16 +15,16 @@ import { NewWorkoutComponent } from './workout/workouts/new-workout.component';
 import { EditWorkoutComponent } from './workout/workouts/edit-workout.component';
 import { ListWorkoutsComponent } from './workout/workouts/list-workouts.component';
 import { EditExerciseComponent } from './exercise/exercises/edit-exercise.component';
-import { RPEPipe } from './pipes/rpe-format-pipe';
+import { RPEPipe } from './shared/rpe-format-pipe';
 import { AppErrorHandler } from './app-error-handler';
 import { TokenInterceptor } from './token-interceptor';
 import { WorkoutDetailsEditorComponent } from './workout/workouts/workout-details-editor.component';
 import { ExerciseHistoryComponent } from './exercise/exercise-history/exercise-history.component';
 import { ViewExerciseComponent } from './exercise/exercises/view-exercise.component';
-import { ProfileComponent } from './profile/profile/profile.component';
 import { RestTimeComponent } from './workout/workouts/rest-time.component';
 import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
+import { ProfileModule } from './profile/profile.module';
 
 @NgModule({
   declarations: [
@@ -40,14 +39,12 @@ import { SharedModule } from './shared/shared.module';
     WorkoutDetailsEditorComponent,
     ExerciseHistoryComponent,
     ViewExerciseComponent,
-    ProfileComponent,
     RestTimeComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    ReactiveFormsModule,
     AuthModule.forRoot({
       domain: 'dev-bs65rtlog25jigd0.us.auth0.com',
       clientId: 'LdMw0S4EL13LvL4SZJOPRCSZo5cZJ3zD',
@@ -58,7 +55,8 @@ import { SharedModule } from './shared/shared.module';
       redirectUri: `${window.location.origin}/app`
     }),
     CoreModule,
-    SharedModule
+    SharedModule,
+    ProfileModule
   ],
   providers: [
     { 

@@ -3,20 +3,26 @@ import { CommonModule } from '@angular/common';
 import { TableActionsComponent } from './table-actions/table-actions.component';
 import { ConfirmDeleteComponent } from './confirm-delete/confirm-delete.component';
 import { OffCanvasComponent } from './off-canvas/off-canvas.component';
+import { CardComponent } from './card/card.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     TableActionsComponent,
     ConfirmDeleteComponent,
-    OffCanvasComponent
+    OffCanvasComponent,
+    CardComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    ReactiveFormsModule
   ],
   exports: [
     TableActionsComponent,
     ConfirmDeleteComponent,
-    OffCanvasComponent
+    OffCanvasComponent,
+    CardComponent,
+    ReactiveFormsModule
   ]
 })
 export class SharedModule { }

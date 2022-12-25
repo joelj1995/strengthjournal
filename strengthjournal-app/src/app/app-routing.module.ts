@@ -10,11 +10,11 @@ import { EditExerciseComponent } from './exercise/exercises/edit-exercise.compon
 import { ViewExerciseComponent } from './exercise/exercises/view-exercise.component';
 import { ProfileComponent } from './profile/profile/profile.component';
 import { NotFoundComponent } from './core/special/not-found.component';
-import { WorkoutResolver } from './resolvers/workout.resolver';
-import { ExerciseResolver } from './resolvers/exercise.resolver';
+import { WorkoutResolver } from './workout/workout.resolver';
+import { ExerciseResolver } from './exercise/exercise.resolver';
 import { EditWorkoutGuard } from './guards/edit-workout.guard';
-import { EditExerciseResolver } from './resolvers/edit-exercise.resolver';
-import { ProfileResolver } from './resolvers/profile.resolver';
+import { EditExerciseResolver } from './exercise/edit-exercise.resolver';
+import { ProfileResolver } from './profile/profile.resolver';
 
 const routes: Routes = [
   { path: '', component: DashboardComponent },
