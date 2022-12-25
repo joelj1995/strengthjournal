@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { NewExerciseComponent } from './exercise/exercises/new-exercise.component';
-import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { DashboardComponent } from './core/dashboard/dashboard.component';
 import { ListExercisesComponent } from './exercise/exercises/list-exercises.component';
 import { NewWorkoutComponent } from './workout/workouts/new-workout.component';
 import { EditWorkoutComponent } from './workout/workouts/edit-workout.component';
@@ -9,7 +9,7 @@ import { ListWorkoutsComponent } from './workout/workouts/list-workouts.componen
 import { EditExerciseComponent } from './exercise/exercises/edit-exercise.component';
 import { ViewExerciseComponent } from './exercise/exercises/view-exercise.component';
 import { ProfileComponent } from './profile/profile/profile.component';
-import { NotFoundComponent } from './components/special/not-found.component';
+import { NotFoundComponent } from './core/special/not-found.component';
 import { WorkoutResolver } from './resolvers/workout.resolver';
 import { ExerciseResolver } from './resolvers/exercise.resolver';
 import { EditWorkoutGuard } from './guards/edit-workout.guard';

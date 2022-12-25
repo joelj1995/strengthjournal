@@ -1,0 +1,43 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { NavComponent } from './nav/nav.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { HeaderComponent } from './header/header.component';
+import { FooterComponent } from './footer/footer.component';
+import { ToastComponent } from './toast/toast.component';
+import { NotFoundComponent } from './special/not-found.component';
+import { CardComponent } from './card/card.component';
+import { BlockingSpinnerComponent } from './blocking-spinner/blocking-spinner.component';
+import { RouterModule } from '@angular/router';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
+
+@NgModule({
+  declarations: [
+    NavComponent,
+    DashboardComponent,
+    HeaderComponent,
+    FooterComponent,
+    ToastComponent,
+    NotFoundComponent,
+    CardComponent,
+    BlockingSpinnerComponent
+  ],
+  imports: [
+    RouterModule,
+    NgbModule,
+    CommonModule
+  ],
+  exports: [
+    NavComponent,
+    DashboardComponent,
+    HeaderComponent,
+    FooterComponent,
+    ToastComponent,
+    NotFoundComponent,
+    CardComponent,
+    BlockingSpinnerComponent,
+    NgbModule
+  ]
+})
+export class CoreModule { }
