@@ -9,40 +9,31 @@ import { AuthModule } from '@auth0/auth0-angular';
 import { environment } from 'src/environments/environment';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthHttpInterceptor } from '@auth0/auth0-angular';
-import { ListExercisesComponent } from './exercise/exercises/list-exercises.component';
-import { NewExerciseComponent } from './exercise/exercises/new-exercise.component';
 import { NewWorkoutComponent } from './workout/workouts/new-workout.component';
 import { EditWorkoutComponent } from './workout/workouts/edit-workout.component';
 import { ListWorkoutsComponent } from './workout/workouts/list-workouts.component';
-import { EditExerciseComponent } from './exercise/exercises/edit-exercise.component';
-import { RPEPipe } from './shared/rpe-format-pipe';
 import { AppErrorHandler } from './app-error-handler';
 import { TokenInterceptor } from './token-interceptor';
 import { WorkoutDetailsEditorComponent } from './workout/workouts/workout-details-editor.component';
-import { ExerciseHistoryComponent } from './exercise/exercise-history/exercise-history.component';
-import { ViewExerciseComponent } from './exercise/exercises/view-exercise.component';
 import { RestTimeComponent } from './workout/workouts/rest-time.component';
 import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
 import { ProfileModule } from './profile/profile.module';
+import { ExerciseModule } from './exercise/exercise.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ListExercisesComponent,
-    NewExerciseComponent,
     NewWorkoutComponent,
     EditWorkoutComponent,
     ListWorkoutsComponent,
-    EditExerciseComponent,
-    RPEPipe,
     WorkoutDetailsEditorComponent,
-    ExerciseHistoryComponent,
-    ViewExerciseComponent,
     RestTimeComponent
   ],
   imports: [
     BrowserModule,
+    ExerciseModule,
+    ProfileModule,
     AppRoutingModule,
     HttpClientModule,
     AuthModule.forRoot({
@@ -56,7 +47,6 @@ import { ProfileModule } from './profile/profile.module';
     }),
     CoreModule,
     SharedModule,
-    ProfileModule
   ],
   providers: [
     { 

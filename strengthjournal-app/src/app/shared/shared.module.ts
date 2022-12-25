@@ -5,24 +5,33 @@ import { ConfirmDeleteComponent } from './confirm-delete/confirm-delete.componen
 import { OffCanvasComponent } from './off-canvas/off-canvas.component';
 import { CardComponent } from './card/card.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ExerciseHistoryComponent } from './exercise-history/exercise-history.component';
+import { RPEPipe } from './rpe-format-pipe';
 
 @NgModule({
   declarations: [
     TableActionsComponent,
     ConfirmDeleteComponent,
     OffCanvasComponent,
-    CardComponent
+    CardComponent,
+    ExerciseHistoryComponent,
+    RPEPipe
   ],
   imports: [
     CommonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgbModule
   ],
   exports: [
     TableActionsComponent,
     ConfirmDeleteComponent,
     OffCanvasComponent,
     CardComponent,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgbModule,
+    ExerciseHistoryComponent,
+    RPEPipe
   ]
 })
 export class SharedModule { }

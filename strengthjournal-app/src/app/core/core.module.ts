@@ -8,7 +8,6 @@ import { ToastComponent } from './toast/toast.component';
 import { NotFoundComponent } from './special/not-found.component';
 import { BlockingSpinnerComponent } from './blocking-spinner/blocking-spinner.component';
 import { RouterModule } from '@angular/router';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SharedModule } from '../shared/shared.module';
 
 
@@ -24,7 +23,6 @@ import { SharedModule } from '../shared/shared.module';
   ],
   imports: [
     RouterModule,
-    NgbModule,
     CommonModule,
     SharedModule
   ],
@@ -36,7 +34,6 @@ import { SharedModule } from '../shared/shared.module';
     ToastComponent,
     NotFoundComponent,
     BlockingSpinnerComponent,
-    NgbModule
   ]
 })
 export class CoreModule { }
