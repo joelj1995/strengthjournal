@@ -15,7 +15,6 @@ import { NewExerciseComponent } from './exercise/exercises/new-exercise.componen
 import { NewWorkoutComponent } from './workout/workouts/new-workout.component';
 import { EditWorkoutComponent } from './workout/workouts/edit-workout.component';
 import { ListWorkoutsComponent } from './workout/workouts/list-workouts.component';
-import { TableActionsComponent } from './components/table-actions/table-actions.component';
 import { EditExerciseComponent } from './exercise/exercises/edit-exercise.component';
 import { RPEPipe } from './pipes/rpe-format-pipe';
 import { AppErrorHandler } from './app-error-handler';
@@ -23,11 +22,10 @@ import { TokenInterceptor } from './token-interceptor';
 import { WorkoutDetailsEditorComponent } from './workout/workouts/workout-details-editor.component';
 import { ExerciseHistoryComponent } from './exercise/exercise-history/exercise-history.component';
 import { ViewExerciseComponent } from './exercise/exercises/view-exercise.component';
-import { ConfirmDeleteComponent } from './components/confirm-delete/confirm-delete.component';
 import { ProfileComponent } from './profile/profile/profile.component';
-import { OffCanvasComponent } from './components/off-canvas/off-canvas.component';
 import { RestTimeComponent } from './workout/workouts/rest-time.component';
 import { CoreModule } from './core/core.module';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -37,15 +35,12 @@ import { CoreModule } from './core/core.module';
     NewWorkoutComponent,
     EditWorkoutComponent,
     ListWorkoutsComponent,
-    TableActionsComponent,
     EditExerciseComponent,
     RPEPipe,
     WorkoutDetailsEditorComponent,
     ExerciseHistoryComponent,
     ViewExerciseComponent,
-    ConfirmDeleteComponent,
     ProfileComponent,
-    OffCanvasComponent,
     RestTimeComponent
   ],
   imports: [
@@ -62,7 +57,8 @@ import { CoreModule } from './core/core.module';
       },
       redirectUri: `${window.location.origin}/app`
     }),
-    CoreModule
+    CoreModule,
+    SharedModule
   ],
   providers: [
     { 
