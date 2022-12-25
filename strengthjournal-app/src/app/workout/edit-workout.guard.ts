@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, CanDeactivate, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
-import { EditWorkoutComponent } from './workouts/edit-workout.component';
+import { EditWorkoutComponent } from './edit-workout/edit-workout.component';
 import { PathsHelperService } from '../services/paths-helper.service';
 
 @Injectable({
