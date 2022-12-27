@@ -24,14 +24,18 @@ namespace StrengthJournal.Server.Controllers
         }
 
         [Route("app/assets/{*more}")]
-        public ActionResult Index(string more)
+        public ActionResult Assets(string more)
         {
             return Redirect($"/dist/assets/{more}");
         }
 
         [Route("app/{*more}")]
-        public IActionResult Index()
+        public IActionResult Index(string more)
         {
+            if (!String.IsNullOrEmpty(more) && more.EndsWith(".js"))
+            {
+                return Redirect($"/dist/{more}");
+            }
             return View(GetAppViewModel());
         }
 
