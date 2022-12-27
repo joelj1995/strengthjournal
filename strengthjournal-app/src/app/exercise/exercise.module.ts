@@ -10,25 +10,20 @@ import { ExerciseResolver } from './exercise.resolver';
 import { SharedModule } from '../shared/shared.module';
 
 const routes: Routes = [
+  { path: '', component: ListExercisesComponent },
   { 
-    path: 'exercises', 
-    children: [
-      { path: '', component: ListExercisesComponent },
-      { 
-        path: 'new', 
-        component: NewExerciseComponent ,
-      },
-      { 
-        path: ':id/edit', 
-        component: EditExerciseComponent,
-        resolve: { resolvedEditExercise: EditExerciseResolver }
-      },
-      {
-        path: ':id',
-        component: ViewExerciseComponent,
-        resolve: { exercise: ExerciseResolver }
-      }
-    ]
+    path: 'new', 
+    component: NewExerciseComponent ,
+  },
+  { 
+    path: ':id/edit', 
+    component: EditExerciseComponent,
+    resolve: { resolvedEditExercise: EditExerciseResolver }
+  },
+  {
+    path: ':id',
+    component: ViewExerciseComponent,
+    resolve: { exercise: ExerciseResolver }
   }
 ];
 

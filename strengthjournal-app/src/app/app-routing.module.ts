@@ -5,6 +5,18 @@ import { NotFoundComponent } from './core/special/not-found.component';
 
 const routes: Routes = [
   { path: '', component: DashboardComponent },
+  { 
+    path: 'profile', 
+    loadChildren: () => import('./profile/profile.module').then(m => m.ProfileModule)
+  },
+  { 
+    path: 'exercises', 
+    loadChildren: () => import('./exercise/exercise.module').then(m => m.ExerciseModule)
+  },
+  { 
+    path: 'workouts', 
+    loadChildren: () => import('./workout/workout.module').then(m => m.WorkoutModule)
+  },
   { path: '**', component: NotFoundComponent }
 ];
 

@@ -13,9 +13,6 @@ import { AppErrorHandler } from './app-error-handler';
 import { TokenInterceptor } from './token-interceptor';
 import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
-import { ProfileModule } from './profile/profile.module';
-import { ExerciseModule } from './exercise/exercise.module';
-import { WorkoutModule } from './workout/workout.module';
 
 @NgModule({
   declarations: [
@@ -23,9 +20,6 @@ import { WorkoutModule } from './workout/workout.module';
   ],
   imports: [
     BrowserModule,
-    ExerciseModule,
-    ProfileModule,
-    WorkoutModule,
     AppRoutingModule,
     HttpClientModule,
     AuthModule.forRoot({

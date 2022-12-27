@@ -7,7 +7,7 @@ import { ProfileResolver } from './profile.resolver';
 
 const routes: Routes = [
   { 
-    path: 'profile', 
+    path: '', 
     component: ProfileComponent ,
     resolve: { profile: ProfileResolver }
   },
