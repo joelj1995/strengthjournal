@@ -33,7 +33,7 @@ import { SharedModule } from '../shared/shared.module';
     FooterComponent,
     ToastComponent,
     NotFoundComponent,
-    BlockingSpinnerComponent,
+    BlockingSpinnerComponent
   ]
 })
 export class CoreModule { }

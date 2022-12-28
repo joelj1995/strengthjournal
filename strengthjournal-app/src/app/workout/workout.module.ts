@@ -11,19 +11,14 @@ import { WorkoutResolver } from './workout.resolver';
 import { SharedModule } from '../shared/shared.module';
 
 const routes: Routes = [
+  { path: '', component: ListWorkoutsComponent },
+  { path: 'new', component: NewWorkoutComponent },
   {
-    path: 'workouts',
-    children: [
-      { path: '', component: ListWorkoutsComponent },
-      { path: 'new', component: NewWorkoutComponent },
-      {
-        path: ':id/edit',
-        component: EditWorkoutComponent,
-        canDeactivate: [ EditWorkoutGuard ],
-        resolve: { workout: WorkoutResolver }
-      }
-    ]
-  },
+    path: ':id/edit',
+    component: EditWorkoutComponent,
+    canDeactivate: [ EditWorkoutGuard ],
+    resolve: { workout: WorkoutResolver }
+  }
 ]
 
 @NgModule({
@@ -35,7 +30,6 @@ const routes: Routes = [
     RestTimeComponent
   ],
   imports: [
-    CommonModule,
     RouterModule.forChild(routes),
     SharedModule
   ]
