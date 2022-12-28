@@ -24,6 +24,7 @@ import { RPEPipe } from './rpe-format-pipe';
     NgbModule
   ],
   exports: [
+    CommonModule,
     TableActionsComponent,
     ConfirmDeleteComponent,
     OffCanvasComponent,

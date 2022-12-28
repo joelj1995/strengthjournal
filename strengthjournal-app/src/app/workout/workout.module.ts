@@ -30,7 +30,6 @@ const routes: Routes = [
     RestTimeComponent
   ],
   imports: [
-    CommonModule,
     RouterModule.forChild(routes),
     SharedModule
   ]

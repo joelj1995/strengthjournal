@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { NewExerciseComponent } from './new-exercise/new-exercise.component';
 import { ListExercisesComponent } from './list-exercises/list-exercises.component';
 import { EditExerciseComponent } from './edit-exercise/edit-exercise.component';
@@ -35,9 +34,8 @@ const routes: Routes = [
     ViewExerciseComponent
   ],
   imports: [
-    CommonModule,
-    RouterModule.forChild(routes),
-    SharedModule
+    SharedModule,
+    RouterModule.forChild(routes)
   ]
 })
 export class ExerciseModule { }
