@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { RestTimeComponent } from './rest-time/rest-time.component';
 import { WorkoutDetailsEditorComponent } from './workout-details-editor/workout-details-editor.component';
 import { ListWorkoutsComponent } from './list-workouts/list-workouts.component';
