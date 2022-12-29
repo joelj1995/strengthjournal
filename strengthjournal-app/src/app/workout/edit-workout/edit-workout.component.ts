@@ -1,5 +1,5 @@
+import { trigger, transition, animate, style, state } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
-import { TestBed } from '@angular/core/testing';
 import { FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Exercise } from 'src/app/model/exercise';
@@ -12,6 +12,15 @@ import { v4 as uuidv4 } from 'uuid';
 
 @Component({
   selector: 'app-edit-workout',
+  animations: [
+    trigger('flyIn', [
+      state('in', style({ transform: 'translateY(0)' })),
+      transition('void => in', [
+        style({ transform: 'translateY(-100%)' }),
+        animate(100)
+      ]),
+    ])
+  ],
   templateUrl: './edit-workout.component.html',
   styleUrls: ['./edit-workout.component.css']
 })
@@ -33,6 +42,7 @@ export class EditWorkoutComponent implements OnInit {
   showDetailsEditor: boolean = false;
 
   lastSetLogged: Date = new Date(Date());
+  lastSetAddedId: string | undefined;
 
   constructor(
     private route: ActivatedRoute, 
@@ -103,6 +113,7 @@ export class EditWorkoutComponent implements OnInit {
         this.setBeingUpdated = null;
       }
       else {
+        this.lastSetAddedId = newWorkoutSet.id;
         this.lastSetLogged = new Date(Date());
         this.workout.sets.push(newWorkoutSet);
       }

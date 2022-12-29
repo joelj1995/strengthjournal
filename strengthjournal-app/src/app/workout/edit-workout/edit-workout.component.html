@@ -46,6 +46,7 @@
               [draggable]="!setBeingUpdated && !addingSet" class="cursor-grab" 
               [class.drag-transparent]="set.id == dragId"
               [class.drag-border]="set.id == dropId"
+              [@flyIn]="lastSetAddedId == set.id ? 'in' : ''"
             >
               <td>{{set.exerciseName}}</td>
               <td>{{set.weight}} {{set.weight ? set.weightUnit : ''}}</td>

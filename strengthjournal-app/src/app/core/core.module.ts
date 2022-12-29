@@ -9,6 +9,7 @@ import { NotFoundComponent } from './special/not-found.component';
 import { BlockingSpinnerComponent } from './blocking-spinner/blocking-spinner.component';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from '../shared/shared.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import { SharedModule } from '../shared/shared.module';
   imports: [
     RouterModule,
     CommonModule,
-    SharedModule
+    SharedModule,
+    BrowserAnimationsModule
   ],
   exports: [
     NavComponent,
@@ -33,7 +35,8 @@ import { SharedModule } from '../shared/shared.module';
     FooterComponent,
     ToastComponent,
     NotFoundComponent,
-    BlockingSpinnerComponent
+    BlockingSpinnerComponent,
+    BrowserAnimationsModule
   ]
 })
 export class CoreModule { }
