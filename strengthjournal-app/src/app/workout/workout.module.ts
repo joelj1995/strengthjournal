@@ -9,6 +9,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { EditWorkoutGuard } from './edit-workout.guard';
 import { WorkoutResolver } from './workout.resolver';
 import { SharedModule } from '../shared/shared.module';
+import { SetEditorComponent } from './edit-workout/set-editor.component';
 
 const routes: Routes = [
   { path: '', component: ListWorkoutsComponent },
@@ -27,7 +28,8 @@ const routes: Routes = [
     EditWorkoutComponent,
     ListWorkoutsComponent,
     WorkoutDetailsEditorComponent,
-    RestTimeComponent
+    RestTimeComponent,
+    SetEditorComponent
   ],
   imports: [
     RouterModule.forChild(routes),

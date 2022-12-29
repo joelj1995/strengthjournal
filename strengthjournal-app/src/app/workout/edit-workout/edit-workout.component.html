@@ -35,47 +35,36 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let set of workout.sets" (click)="this.startUpdatingSet(set.id)"
-            [draggable]="!setBeingUpdated && !addingSet" class="cursor-grab" (dragstart)="rowDragStart($event,set.id)"
-            (dragend)="rowDragEnd($event,set.id)" (dragover)="rowDragOver($event,set.id)"
-            (drop)="rowDrop($event,set.id)" [class.drag-transparent]="set.id == dragId"
-            [class.drag-border]="set.id == dropId">
-            <ng-container #viewSet *ngIf="set.id != setBeingUpdated; else updateSet">
+
+          <ng-container *ngFor="let set of workout.sets" [ngSwitch]="set.id == setBeingUpdated">
+            <tr *ngSwitchCase="false"
+              (click)="this.startUpdatingSet(set.id)"
+              (dragstart)="rowDragStart($event,set.id)"
+              (dragend)="rowDragEnd($event,set.id)" 
+              (dragover)="rowDragOver($event,set.id)"
+              (drop)="rowDrop($event,set.id)"
+              [draggable]="!setBeingUpdated && !addingSet" class="cursor-grab" 
+              [class.drag-transparent]="set.id == dragId"
+              [class.drag-border]="set.id == dropId"
+            >
               <td>{{set.exerciseName}}</td>
               <td>{{set.weight}} {{set.weight ? set.weightUnit : ''}}</td>
               <td>{{set.reps}}</td>
               <td>{{set.rpe | rpe}}</td>
-            </ng-container>
-            <ng-template [formGroup]="updateSetForm" #updateSet>
-              <td class="editRow">
-                <select class="form-control" formControlName="exerciseId" [class.is-invalid]="anyErrors('exerciseId')">
-                  <option *ngFor="let exercise of exerciseList" [value]="exercise.id">{{exercise.name}}</option>
-                </select>
-              </td>
-              <td class="editRow"><input type="number" class="form-control" id="weight" formControlName="weight" min="0" step="1"></td>
-              <td class="editRow"><input type="number" class="form-control" id="reps" formControlName="reps" min="0" step="1"></td>
-              <td class="editRow"><input type="number" class="form-control" id="rpe" formControlName="rpe"
-                  min="0" max="10" step="0.5"></td>
-            </ng-template>
-          </tr>
-          <tr [formGroup]="newSetForm" *ngIf="!setBeingUpdated">
-            <td class="editRow">
-              <select class="form-control" [class.is-invalid]="anyErrors('exerciseId')" formControlName="exerciseId"
-                (change)="differentExerciseSelectedForNewSet()">
-                <option *ngFor="let exercise of exerciseList" [value]="exercise.id">{{exercise.name}}</option>
-              </select>
-            </td>
-            <td class="editRow"><input type="number" class="form-control" id="weight" formControlName="weight" min="0" step="1"></td>
-            <td class="editRow"><input type="number" class="form-control" id="reps" formControlName="reps" min="0" step="1"></td>
-            <td class="editRow"><input type="number" class="form-control" id="rpe" formControlName="rpe" min="0"
-                max="10" step="0.5"></td>
-          </tr>
-          <tr *ngIf="setBeingUpdated">
-            <td>&nbsp;</td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
+            </tr>
+            <tr *ngSwitchCase="true" app-set-editor [exerciseError]="anyErrors('exerciseId')" [exerciseList]="exerciseList" [form]="updateSetForm"></tr>
+          </ng-container>
+
+          <ng-container [ngSwitch]="!!setBeingUpdated">
+            <tr *ngSwitchCase="false" app-set-editor [exerciseError]="anyErrors('exerciseId')" [exerciseList]="exerciseList" [form]="newSetForm"></tr>
+            <tr *ngSwitchCase="true">
+              <td>&nbsp;</td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+          </ng-container>
+
         </tbody>
       </table>
       <div class="card-footer">
