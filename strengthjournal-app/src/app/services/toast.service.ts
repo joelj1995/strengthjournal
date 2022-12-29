@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, of, Subscriber } from 'rxjs';
+import { BehaviorSubject, combineLatestWith, delay, mergeWith, Observable, of, scan, Subject, Subscriber } from 'rxjs';
 import { ToastMessage } from '../model/toast-message';
 
 @Injectable({
@@ -7,20 +7,20 @@ import { ToastMessage } from '../model/toast-message';
 })
 export class ToastService {
 
-  private toastMessages: ToastMessage[] = [];
-  private toastMessagesSubject = new BehaviorSubject<ToastMessage[]>([]);
+  private newToast = new Subject<ToastMessage>();
+  private popToast = this.newToast.pipe(
+    delay(3000)
+  );
 
   setToast(message: ToastMessage) {
-    this.toastMessages = [message, ...this.toastMessages];
-    this.toastMessagesSubject.next(this.toastMessages);
-    setTimeout(() => {
-      this.toastMessages.pop();
-      this.toastMessagesSubject.next(this.toastMessages);
-    }, 3000);
+    this.newToast.next(message);
   }
 
   getToast(): Observable<ToastMessage[]> {
-    return this.toastMessagesSubject;
+    return this.newToast.pipe(
+      mergeWith(this.popToast),
+      scan((acc, next) => acc.length > 0 && acc[0] == next ? acc.slice(1) : [...acc, next], [] as ToastMessage[])
+    );
   }
 
 }
