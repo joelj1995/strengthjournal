@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, Optional, SkipSelf } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NavComponent } from './nav/nav.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -10,6 +10,7 @@ import { BlockingSpinnerComponent } from './blocking-spinner/blocking-spinner.co
 import { RouterModule } from '@angular/router';
 import { SharedModule } from '../shared/shared.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { throwIfAlreadyLoaded } from '../import.guard';
 
 
 @NgModule({
@@ -39,4 +40,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     BrowserAnimationsModule
   ]
 })
-export class CoreModule { }
+export class CoreModule { 
+  constructor(@Optional() @SkipSelf() parentModule: CoreModule) {
+    throwIfAlreadyLoaded(parentModule, 'CoreModule');
+  }
+}
