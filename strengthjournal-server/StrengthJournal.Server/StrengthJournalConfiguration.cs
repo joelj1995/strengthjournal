@@ -16,6 +16,7 @@ namespace StrengthJournal.Server
         public string Azure_AppInsightsConnectionString { get; private set; }
         public string Azure_AppConfigConnectionString { get; private set; }
         public string TestSecret { get; private set; } = "Not Set";
+        public string FeatureLabel { get; private set; }
 
         public static void Init(IConfiguration configuration)
         {
@@ -46,6 +47,7 @@ namespace StrengthJournal.Server
             _configuration = configuration;
             Auth0_Audience = configuration["Auth0:Audience"];
             Auth0_BaseURL = configuration["Auth0:BaseURL"];
+            FeatureLabel = configuration["FeatureLabel"];
             /*
              * Get secrets
              */
