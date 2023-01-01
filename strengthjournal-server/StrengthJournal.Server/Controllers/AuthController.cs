@@ -34,6 +34,7 @@ namespace StrengthJournal.Server.Controllers
         public IActionResult SubmitLogin(LoginModel loginModel)
         {
             logger.LogDebug($"Processing login request for {loginModel.Email}");
+            logger.LogError("SJ ERROR TEST");
             var result = _authenticationService.Authenticate(loginModel.Email, loginModel.Password);
             switch (result.Result)
             {
