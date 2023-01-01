@@ -3,6 +3,8 @@ import { WeeklyVolumeReportLine } from 'src/app/model/weekly-volume-report-line'
 import { DashboardService } from 'src/app/services/dashboard.service';
 import { Chart, ChartConfiguration, ChartItem, registerables } from 'node_modules/chart.js'
 import { WeeklyTonnageReportLine } from 'src/app/model/weekly-tonnage-report-line';
+import { ConfigService } from 'src/app/services/config.service';
+import { AppFeatures } from '../app-features';
 
 @Component({
   selector: 'app-dashboard',
@@ -14,7 +16,9 @@ export class DashboardComponent implements OnInit {
   volumeChartLoaded = false;
   tonnageChartLoaded = false;
 
-  constructor(private dashboard: DashboardService) { }
+  constructor(
+    private dashboard: DashboardService,
+    private config: ConfigService) { }
 
   ngOnInit(): void {
     this.dashboard.getWeeklyVolumeReport().subscribe(lines => {
@@ -23,6 +27,10 @@ export class DashboardComponent implements OnInit {
     this.dashboard.getWeeklyTonnageReport().subscribe(lines => {
       this.createWeeklyTonnageReport(lines);
     })
+  }
+
+  enableWorkoutHistory() {
+    return this.config.hasFeature(AppFeatures.DASHBOURD_WORKOUT_VIEW);
   }
 
   createWeeklyVolumeReportChart(lines: WeeklyVolumeReportLine[]) {

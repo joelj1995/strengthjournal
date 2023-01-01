@@ -4,9 +4,8 @@ namespace StrengthJournal.Server.Models
 {
     public class AppConfig
     {
-        [JsonProperty("version")]
-        public int Version { get => 1; }
-        [JsonProperty("preferredWeightUnit")]
-        public string PreferredWeightUnit { get; set; } = "lbs";
+        public int version { get => 2; }
+        public string preferredWeightUnit { get; set; } = "lbs";
+        public ICollection<string> features { get; set; } = new List<string>();
     }
 }

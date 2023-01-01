@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, tap } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { AppConfig } from '../model/app-config';
 import { ProfileSettings } from '../model/profile-settings';
 import { StrengthjournalBaseService } from './strengthjournalbase.service';
@@ -10,9 +11,9 @@ import { StrengthjournalBaseService } from './strengthjournalbase.service';
 })
 export class ConfigService extends StrengthjournalBaseService  {
 
-  readonly minVersion: number = 1;
+  readonly minVersion: number = 2;
 
-  protected config: AppConfig | null = null;
+  protected config!: AppConfig;
 
   public configTooOld = false;
 
@@ -25,6 +26,8 @@ export class ConfigService extends StrengthjournalBaseService  {
         this.configTooOld = true
       else
         this.config = config;
+    } else {
+      throw "app_config not set in local storage";
     }
   }
 
@@ -47,6 +50,13 @@ export class ConfigService extends StrengthjournalBaseService  {
 
   getPreferredWeigthUnit(): string {
     return this.config?.preferredWeightUnit ?? '';
+  }
+
+  hasFeature(featureName: string): boolean {
+    if (environment.features.includes(featureName))
+      return true;
+    const remoteFeatures = this.config.features;
+    return remoteFeatures.includes(featureName);
   }
 
 }
