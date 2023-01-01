@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using StrengthJournal.DataAccess.Contexts;
+using StrengthJournal.Server.Integrations;
 using StrengthJournal.Server.Models;
 
 namespace StrengthJournal.Server.Services
@@ -7,10 +8,12 @@ namespace StrengthJournal.Server.Services
     public class UserService
     {
         protected readonly StrengthJournalContext context;
+        private readonly IFeatureService featureService;
 
-        public UserService(StrengthJournalContext context)
+        public UserService(StrengthJournalContext context, IFeatureService featureService)
         {
             this.context = context;
+            this.featureService = featureService;
         }
 
         public void RegisterUser(string email, string externalId, bool consentCEM, string countryCode)
@@ -40,11 +43,7 @@ namespace StrengthJournal.Server.Services
             var user = context.Users
                 .Include(u => u.PreferredWeightUnit)
                 .Single(u => u.Email.Equals(email));
-            var config = new AppConfig()
-            {
-                preferredWeightUnit = user.PreferredWeightUnit?.Abbreviation ?? "lbs"
-            };
-            return config;
+            return GetConfig(user);
         }
 
         public AppConfig GetConfig(Guid userId)
@@ -52,11 +51,16 @@ namespace StrengthJournal.Server.Services
             var user = context.Users
                 .Include(u => u.PreferredWeightUnit)
                 .Single(u => u.Id.Equals(userId));
-            var config = new AppConfig()
+            return GetConfig(user);
+        }
+
+        private AppConfig GetConfig(StrengthJournal.DataAccess.Model.User user)
+        {
+            return new AppConfig()
             {
-                preferredWeightUnit = user.PreferredWeightUnit?.Abbreviation ?? "lbs"
+                preferredWeightUnit = user.PreferredWeightUnit?.Abbreviation ?? "lbs",
+                features = featureService.GetFeatures().Result
             };
-            return config;
         }
     }
 }

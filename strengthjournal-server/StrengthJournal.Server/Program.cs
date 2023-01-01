@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.FeatureManagement;
 using Microsoft.IdentityModel.Tokens;
 using StrengthJournal.DataAccess.Contexts;
 using StrengthJournal.Server;
@@ -33,6 +34,8 @@ builder.Services.AddDbContext<StrengthJournalContext>(options =>
     options.UseSqlServer(StrengthJournalConfiguration.Instance.SqlServer_ConnectionString);
 });
 
+builder.Services.AddFeatureManagement();
+
 builder.Services.AddScoped<ExerciseService>();
 builder.Services.AddScoped<WorkoutService>();
 builder.Services.AddScoped<ErrorService>();
@@ -41,6 +44,7 @@ builder.Services.AddScoped<ProfileService>();
 builder.Services.AddScoped<DashboardService>();
 
 builder.Services.AddScoped<IAuthenticationService, Auth0AuthenticationService>();
+builder.Services.AddScoped<IFeatureService, AzureAppConfigurationFeatureService>();
 
 builder.Services.AddApplicationInsightsTelemetry(options =>
 {
