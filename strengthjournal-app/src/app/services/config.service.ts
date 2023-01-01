@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, tap } from 'rxjs';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { AppConfig } from '../model/app-config';
 import { ProfileSettings } from '../model/profile-settings';
@@ -11,12 +11,14 @@ import { StrengthjournalBaseService } from './strengthjournalbase.service';
 })
 export class ConfigService extends StrengthjournalBaseService  {
 
-  readonly minVersion: number = 2;
+  private localDevErrorSubject$ = new BehaviorSubject(false);
+  localDevError$ = this.localDevErrorSubject$.asObservable();
 
-  protected config!: AppConfig;
+  configTooOld = false;
 
-  public configTooOld = false;
-
+  private minVersion: number = 2;
+  private config!: AppConfig;
+  
   constructor(http: HttpClient) {
     super(http);
     const configJson = localStorage.getItem('app_config');
@@ -57,6 +59,10 @@ export class ConfigService extends StrengthjournalBaseService  {
       return true;
     const remoteFeatures = this.config.features;
     return remoteFeatures.includes(featureName);
+  }
+
+  triggerLocalDevError() {
+    this.localDevErrorSubject$.next(true);
   }
 
 }

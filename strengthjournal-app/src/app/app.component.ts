@@ -15,6 +15,7 @@ export class AppComponent implements OnInit {
 
   readonly lgBreakpoint: number = 992; // defined as map-get($grid-breakpoints, 'lg') by appstack
   screenWidth: number = 0;
+  localDevError = false;
 
   navCollapsed: boolean = false;
   configUpdating: boolean = false;
@@ -71,6 +72,9 @@ export class AppComponent implements OnInit {
       .subscribe((routerEvent: RouterEvent) => {
         this.checkRouterEvent(routerEvent);
       });
+    this.config.localDevError$.subscribe(isError => {
+      this.localDevError = isError;
+    });
     if (this.config.configTooOld) {
       this.configUpdating = true;
       this.spinner.setSpinnerEnabled(true);

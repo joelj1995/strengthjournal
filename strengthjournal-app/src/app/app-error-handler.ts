@@ -2,11 +2,12 @@ import { ErrorHandler, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { v4 as uuidv4 } from 'uuid';
+import { ConfigService } from './services/config.service';
 
 @Injectable()
 export class AppErrorHandler implements ErrorHandler {
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private config: ConfigService) { }
 
   handleError(error: any) {
     const errorId = uuidv4();
@@ -25,8 +26,7 @@ export class AppErrorHandler implements ErrorHandler {
     if (environment.production) {
       if (error.name != 'HandledHttpError') window.location.replace(`/app-exception?errorId=${errorId}`);
     } else {
-      alert('Exception hit. See error logs for details.');
-      this.router.navigate(['/']);
+      this.config.triggerLocalDevError();
     }
   }
 }
