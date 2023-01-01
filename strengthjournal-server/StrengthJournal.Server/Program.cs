@@ -39,7 +39,13 @@ builder.Services.AddScoped<ErrorService>();
 builder.Services.AddScoped<UserService>();
 builder.Services.AddScoped<ProfileService>();
 builder.Services.AddScoped<DashboardService>();
+
 builder.Services.AddScoped<IAuthenticationService, Auth0AuthenticationService>();
+
+builder.Services.AddApplicationInsightsTelemetry(options =>
+{
+    options.ConnectionString = StrengthJournalConfiguration.Instance.Azure_AppInsightsConnectionString;
+});
 
 var devCorsRule = "_allowAngularDevServer";
 builder.Services.AddCors(options =>

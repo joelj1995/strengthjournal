@@ -13,23 +13,27 @@ namespace StrengthJournal.Server.Controllers
         private readonly ProfileService profileService;
         private readonly IHostEnvironment _hostEnvironment;
         private readonly UserService userService;
+        private readonly ILogger<AuthController> logger;
 
         public AuthController(
             IAuthenticationService authenticationService, 
             IHostEnvironment hostEnvironment,
             ProfileService profileService,
-            UserService userService)
+            UserService userService,
+            ILogger<AuthController> logger)
         {
             _authenticationService = authenticationService;
             _hostEnvironment = hostEnvironment;
             this.profileService = profileService;
             this.userService = userService;
+            this.logger = logger;
         }
 
         [HttpPost]
         [Route("login")]
         public IActionResult SubmitLogin(LoginModel loginModel)
         {
+            logger.LogDebug($"Processing login request for {loginModel.Email}");
             var result = _authenticationService.Authenticate(loginModel.Email, loginModel.Password);
             switch (result.Result)
             {
