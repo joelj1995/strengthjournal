@@ -14,6 +14,7 @@ namespace StrengthJournal.Server
         public string Auth0_Audience { get; private set; }
         public string Auth0_BaseURL { get; private set; }
         public string Azure_AppInsightsConnectionString { get; private set; }
+        public string Azure_AppConfigConnectionString { get; private set; }
         public string TestSecret { get; private set; } = "Not Set";
 
         public static void Init(IConfiguration configuration)
@@ -53,6 +54,7 @@ namespace StrengthJournal.Server
             Auth0_ClientSecret = GetSecret("Auth0-ClientSecret");
             Auth0_ClientId = GetSecret("Auth0-ClientId");
             Azure_AppInsightsConnectionString = GetSecret("Azure-AppInsightsConnectionString");
+            Azure_AppConfigConnectionString = GetSecret("Azure-AppConfigConnectionString");
         }
 
         public static StrengthJournalConfiguration Instance

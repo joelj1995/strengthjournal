@@ -51,6 +51,16 @@ builder.Services.AddApplicationInsightsTelemetry(options =>
     options.ConnectionString = StrengthJournalConfiguration.Instance.Azure_AppInsightsConnectionString;
 });
 
+if (!String.IsNullOrEmpty(StrengthJournalConfiguration.Instance.Azure_AppConfigConnectionString))
+{
+    builder.Configuration.AddAzureAppConfiguration(options =>
+    {
+        options.Connect(StrengthJournalConfiguration.Instance.Azure_AppConfigConnectionString);
+        options.UseFeatureFlags();
+    });
+}
+
+
 var devCorsRule = "_allowAngularDevServer";
 builder.Services.AddCors(options =>
 {
