@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Exercise } from 'src/app/model/exercise';
 
@@ -19,9 +19,16 @@ export class SetEditorComponent implements OnInit {
   @Input()
   form!: FormGroup;
 
+  @Output()
+  newExerciseSelected = new EventEmitter;
+
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  onExerciseSelectionChange(e: any) {
+    this.newExerciseSelected.emit();
   }
 
 }

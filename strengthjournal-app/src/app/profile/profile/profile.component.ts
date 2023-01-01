@@ -1,17 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Country } from 'src/app/model/country';
 import { ProfileSettings } from 'src/app/model/profile-settings';
 import { ProfileService } from 'src/app/services/profile.service';
 import { ToastService } from 'src/app/services/toast.service';
+import { SubSink } from 'subsink';
 
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css']
 })
-export class ProfileComponent implements OnInit {
+export class ProfileComponent implements OnInit, OnDestroy {
 
   settings!: ProfileSettings;
   countryList!: Country[];
@@ -29,6 +30,10 @@ export class ProfileComponent implements OnInit {
     private toast: ToastService, 
     private route: ActivatedRoute) { }
 
+  ngOnDestroy(): void {
+    this.subs.unsubscribe();
+  }
+
   ngOnInit(): void {
     this.settings = this.route.snapshot.data['profile'].settings;
     this.countryList = this.route.snapshot.data['profile'].countryList;
@@ -40,7 +45,7 @@ export class ProfileComponent implements OnInit {
   }
 
   onSubmit() {
-    this.profile.updateSettings({
+    this.subs.sink = this.profile.updateSettings({
       preferredWeightUnit: this.settingsForm.value.preferredWeightUnit,
       consentCEM: this.settingsForm.value.consentCEM == true,
       countryCode: this.settingsForm.value.countryCode
@@ -50,18 +55,20 @@ export class ProfileComponent implements OnInit {
   }
 
   resetPassword() {
-    this.profile.resetPasword().subscribe(() => {
+    this.subs.sink = this.profile.resetPasword().subscribe(() => {
       this.toast.setToast({ message: 'Password reset sent', domClass: 'bg-success text-light' });
     });
   }
 
   updateEmail() {
     const newEmail = this.emailFormControl.value;
-    this.profile.updateEmail(newEmail).subscribe(() => {
+    this.subs.sink = this.profile.updateEmail(newEmail).subscribe(() => {
       this.toast.setToast({ message: 'Email updated successfully', domClass: 'bg-success text-light' });
       localStorage.setItem('app_username', newEmail);
       location.reload();
     });
   }
+
+  private subs = new SubSink();
 
 }

@@ -1,16 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Exercise } from 'src/app/model/exercise';
 import { ExerciseService } from 'src/app/services/exercise.service';
 import { ToastService } from 'src/app/services/toast.service';
+import { SubSink } from 'subsink';
 
 @Component({
   selector: 'app-edit-exercise',
   templateUrl: './edit-exercise.component.html',
   styleUrls: ['./edit-exercise.component.css']
 })
-export class EditExerciseComponent implements OnInit {
+export class EditExerciseComponent implements OnInit, OnDestroy {
 
   loadingData: boolean = false;
   enableSubmit: boolean = true;
@@ -30,17 +31,23 @@ export class EditExerciseComponent implements OnInit {
     this.id = exercise.id;
   }
 
+  ngOnDestroy(): void {
+    this.subs.unsubscribe();
+  }
+
   ngOnInit(): void {
 
   }
 
   onSubmit() {
     this.enableSubmit = false;
-    this.exercises.updateExercise(this.id, this.form.value.name, this.form.value.parentExerciseId).subscribe(e => {
+    this.subs.sink = this.exercises.updateExercise(this.id, this.form.value.name, this.form.value.parentExerciseId).subscribe(e => {
       this.toast.setToast({ message: 'Exercise updated', domClass: 'bg-success text-light' })
       this.enableSubmit = true;
       this.router.navigate(['exercises']);
     });
   }
+
+  private subs = new SubSink();
 
 }

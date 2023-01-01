@@ -1,15 +1,16 @@
-import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import { Router } from '@angular/router';
 import { map, Observable, tap } from 'rxjs';
 import { Workout } from 'src/app/model/workout';
 import { WorkoutService } from 'src/app/services/workout.service';
+import { SubSink } from 'subsink';
 
 @Component({
   selector: 'app-list-workouts',
   templateUrl: './list-workouts.component.html',
   styleUrls: ['./list-workouts.component.css']
 })
-export class ListWorkoutsComponent implements OnInit {
+export class ListWorkoutsComponent implements OnInit, OnDestroy {
 
   page: number = 1;
   pageSize: number = 10;
@@ -20,6 +21,10 @@ export class ListWorkoutsComponent implements OnInit {
   stagedDelete: string | null = null;
 
   constructor(private workouts: WorkoutService, private router: Router) { }
+
+  ngOnDestroy(): void {
+    this.subs.unsubscribe();
+  }
 
   getWorkoutPage() {
     this.workoutList$ = this.workouts.getWorkouts(this.page, this.pageSize).pipe(
@@ -42,7 +47,7 @@ export class ListWorkoutsComponent implements OnInit {
 
   confirmDeleteWorkout() {
     if (this.stagedDelete == null) throw "Tried to finalize workout delete but no ID staged";
-    this.workouts.deleteWorkout(this.stagedDelete).subscribe(() => {
+    this.subs.sink = this.workouts.deleteWorkout(this.stagedDelete).subscribe(() => {
       this.getWorkoutPage();
       this.stagedDelete = null;
     });
@@ -51,5 +56,7 @@ export class ListWorkoutsComponent implements OnInit {
   editWorkout(workoutId: string) {
     this.router.navigate(['workouts', workoutId, 'edit']);
   }
+
+  private subs = new SubSink();
 
 }

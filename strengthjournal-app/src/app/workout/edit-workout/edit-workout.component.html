@@ -1,5 +1,6 @@
 <h1 class="h3 mb-3">Editing workout {{workout.entryDateUTC | date:'short'}} <button class="btn btn-primary"
-    (click)="showDetailsPopover()">Edit Details</button></h1>
+    (click)="showDetailsPopover()">Edit Details</button>
+</h1>
 <div>
   <app-card cardTitle="Workout Sets" [collapseBody]="true">
     <div [formGroup]="sharedSetForm">
@@ -53,11 +54,24 @@
               <td>{{set.reps}}</td>
               <td>{{set.rpe | rpe}}</td>
             </tr>
-            <tr *ngSwitchCase="true" app-set-editor [exerciseError]="anyErrors('exerciseId')" [exerciseList]="exerciseList" [form]="updateSetForm"></tr>
+            <tr 
+              *ngSwitchCase="true" 
+              app-set-editor 
+              [exerciseError]="anyErrors('exerciseId')" 
+              [exerciseList]="exerciseList" 
+              [form]="updateSetForm"
+            ></tr>
           </ng-container>
 
           <ng-container [ngSwitch]="!!setBeingUpdated">
-            <tr *ngSwitchCase="false" app-set-editor [exerciseError]="anyErrors('exerciseId')" [exerciseList]="exerciseList" [form]="newSetForm"></tr>
+            <tr 
+              *ngSwitchCase="false" 
+              app-set-editor 
+              [exerciseError]="anyErrors('exerciseId')" 
+              [exerciseList]="exerciseList" 
+              [form]="newSetForm"
+              (newExerciseSelected)="differentExerciseSelectedForNewSet()"
+            ></tr>
             <tr *ngSwitchCase="true">
               <td>&nbsp;</td>
               <td></td>

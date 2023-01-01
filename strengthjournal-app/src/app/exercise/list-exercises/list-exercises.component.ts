@@ -1,15 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, combineLatestWith, debounceTime, map, merge, of, startWith, Subject, switchMap, tap } from 'rxjs';
-import { Exercise } from 'src/app/model/exercise';
 import { ExerciseService } from 'src/app/services/exercise.service';
+import { SubSink } from 'subsink';
 
 @Component({
   selector: 'app-list-exercises',
   templateUrl: './list-exercises.component.html',
   styleUrls: ['./list-exercises.component.css']
 })
-export class ListExercisesComponent implements OnInit {
+export class ListExercisesComponent implements OnInit, OnDestroy {
 
   page: number = 1;
   pageSize: number = 10;
@@ -37,6 +37,10 @@ export class ListExercisesComponent implements OnInit {
 
   constructor(private exercises : ExerciseService, private router: Router) { }
 
+  ngOnDestroy(): void {
+    this.subs.unsubscribe();
+  }
+
   ngOnInit(): void {
   }
 
@@ -50,7 +54,7 @@ export class ListExercisesComponent implements OnInit {
 
   confirmDeleteExercise() {
     if (this.stagedDelete == null) throw 'Tried to finalize delete but no record it staged';
-    this.exercises.deleteExercise(this.stagedDelete).subscribe(() => {
+    this.subs.sink = this.exercises.deleteExercise(this.stagedDelete).subscribe(() => {
       this.stagedDelete = null;
       this.pageNumber$.next(this.page);
     });
@@ -71,5 +75,7 @@ export class ListExercisesComponent implements OnInit {
   searchInputChange(e: any) {
     this.exerciseSearchInput$.next(e.target.value);
   }
+
+  private subs = new SubSink();
 
 }

@@ -1,6 +1,11 @@
 <ng-container [formGroup]="form">
   <td>
-    <select class="form-control" formControlName="exerciseId" [class.is-invalid]="exerciseError">
+    <select 
+      class="form-control" 
+      formControlName="exerciseId" 
+      [class.is-invalid]="exerciseError"
+      (change)="onExerciseSelectionChange($event)"
+    >
       <option *ngFor="let exercise of exerciseList" [value]="exercise.id">{{exercise.name}}</option>
     </select>
   </td>

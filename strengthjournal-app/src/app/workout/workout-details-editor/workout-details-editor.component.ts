@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { WorkoutService } from 'src/app/services/workout.service';
@@ -7,13 +7,14 @@ import { ToastService } from 'src/app/services/toast.service';
 import { ConfigService } from 'src/app/services/config.service';
 import { WorkoutCreateUpdateResult } from 'src/app/model/workout-create-update-result';
 import { WorkoutUpdate } from 'src/app/model/workout-update';
+import { SubSink } from 'subsink';
 
 @Component({
   selector: 'app-workout-details-editor',
   templateUrl: './workout-details-editor.component.html',
   styleUrls: ['./workout-details-editor.component.css']
 })
-export class WorkoutDetailsEditorComponent implements OnInit {
+export class WorkoutDetailsEditorComponent implements OnInit, OnDestroy {
 
   @Input()
   workoutId: string | null = null;
@@ -54,6 +55,10 @@ export class WorkoutDetailsEditorComponent implements OnInit {
         bodyweightUnit: [''],
         notes: ['', [Validators.maxLength(2048)]]
       });
+  }
+
+  ngOnDestroy(): void {
+    this.subs.unsubscribe();
   }
 
   getErrors(fc: string): string | null {
@@ -132,18 +137,21 @@ export class WorkoutDetailsEditorComponent implements OnInit {
     };
     if (this.workoutId != null) {
       const workoutId = this.workoutId;
-      this.workouts.updateWorkout(workoutId, workoutData).subscribe(() => {
+      this.subs.sink = this.workouts.updateWorkout(workoutId, workoutData).subscribe(() => {
         this.toast.setToast({ message: 'Workout updated', domClass: 'bg-success text-light' });
         workoutData.entryDateUTC = localDate;
         this.updateComplete.emit({...workoutData, id: workoutId });
         this.enableSubmit = true;
       })
     } else {
-      this.workouts.createWorkout(workoutData).subscribe(workoutId => {
+      this.subs.sink = this.workouts.createWorkout(workoutData).subscribe(workoutId => {
         this.toast.setToast({ message: 'Workout created', domClass: 'bg-success text-light' });
         workoutData.entryDateUTC = localDate;
         this.updateComplete.emit({...workoutData, id: workoutId });
       });
     }
   }
+
+  private subs = new SubSink();
+
 }

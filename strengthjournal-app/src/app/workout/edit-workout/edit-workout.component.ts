@@ -1,5 +1,5 @@
 import { trigger, transition, animate, style, state } from '@angular/animations';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Exercise } from 'src/app/model/exercise';
@@ -8,6 +8,7 @@ import { WorkoutCreateUpdateResult } from 'src/app/model/workout-create-update-r
 import { WorkoutSet } from 'src/app/model/workout-set';
 import { ConfigService } from 'src/app/services/config.service';
 import { WorkoutService } from 'src/app/services/workout.service';
+import { SubSink } from 'subsink';
 import { v4 as uuidv4 } from 'uuid';
 
 @Component({
@@ -24,7 +25,7 @@ import { v4 as uuidv4 } from 'uuid';
   templateUrl: './edit-workout.component.html',
   styleUrls: ['./edit-workout.component.css']
 })
-export class EditWorkoutComponent implements OnInit {
+export class EditWorkoutComponent implements OnInit, OnDestroy {
 
   loadingSets: boolean = false;
   loadingExercises: boolean = true;
@@ -49,6 +50,10 @@ export class EditWorkoutComponent implements OnInit {
     private workouts: WorkoutService, 
     private config: ConfigService,
     private router: Router) { }
+
+  ngOnDestroy(): void {
+    this.subs.unsubscribe();
+  }
 
   static createSetForm(): FormGroup {
     return new FormGroup({
@@ -77,7 +82,7 @@ export class EditWorkoutComponent implements OnInit {
     this.loadingExercises = false
     this.workout = this.route.snapshot.data['workout'].workout;
     this.exerciseList = this.route.snapshot.data['workout'].exerciseList;
-    this.route.paramMap.subscribe(p => {
+    this.subs.sink = this.route.paramMap.subscribe(p => {
       this.showHistory = p.get('showHistory') == 'true';
       this.showDetailsEditor = p.get('showDetails') == 'true';
     });
@@ -106,7 +111,7 @@ export class EditWorkoutComponent implements OnInit {
       rpe: setData.rpe * 2
     };
     this.addingSet = true;
-    this.workouts.syncSet(this.workout.id, newWorkoutSet).subscribe(() => {
+    this.subs.sink = this.workouts.syncSet(this.workout.id, newWorkoutSet).subscribe(() => {
       if (this.setBeingUpdated) {
         const indexOfSet = this.workout.sets.findIndex(s => s.id == this.setBeingUpdated);
         this.workout.sets[indexOfSet] = newWorkoutSet;
@@ -151,7 +156,7 @@ export class EditWorkoutComponent implements OnInit {
       throw 'Tried deleting set but none selected'
     }
     const toDelete = this.setBeingUpdated;
-    this.workouts.deleteSet(this.workout.id, toDelete).subscribe(() => {
+    this.subs.sink = this.workouts.deleteSet(this.workout.id, toDelete).subscribe(() => {
       this.setBeingUpdated = null;
       this.workout.sets = this.workout.sets.filter(s => s.id != toDelete);
       this.addingSet = false;
@@ -197,7 +202,7 @@ export class EditWorkoutComponent implements OnInit {
       this.workout.sets = newSets;
       let newSequence = newSets.map(s => s.id);
       this.addingSet = true;
-      this.workouts.updateWorkoutSetSequence(this.workout.id, newSequence).subscribe(() => {
+      this.subs.sink = this.workouts.updateWorkoutSetSequence(this.workout.id, newSequence).subscribe(() => {
         this.addingSet = false;
       });
     }
@@ -215,7 +220,7 @@ export class EditWorkoutComponent implements OnInit {
     this.workout.sets = newSets;
     let newSequence = newSets.map(s => s.id);
     this.addingSet = true;
-    this.workouts.updateWorkoutSetSequence(this.workout.id, newSequence).subscribe(() => {
+    this.subs.sink = this.workouts.updateWorkoutSetSequence(this.workout.id, newSequence).subscribe(() => {
       this.addingSet = false;
     });
   }
@@ -232,7 +237,7 @@ export class EditWorkoutComponent implements OnInit {
     this.workout.sets = newSets;
     let newSequence = newSets.map(s => s.id);
     this.addingSet = true;
-    this.workouts.updateWorkoutSetSequence(this.workout.id, newSequence).subscribe(() => {
+    this.subs.sink = this.workouts.updateWorkoutSetSequence(this.workout.id, newSequence).subscribe(() => {
       this.addingSet = false;
     });
   }
@@ -277,5 +282,7 @@ export class EditWorkoutComponent implements OnInit {
   anyErrors(control: string): boolean {
     return this.setBeingUpdated ? !!this.updateSetForm.controls[control].errors : !!this.newSetForm.controls[control].errors
   }
+
+  private subs = new SubSink();
 
 } 
