@@ -1,10 +1,8 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { WorkoutService } from 'src/app/services/workout.service';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { ToastService } from 'src/app/services/toast.service';
-import { ConfigService } from 'src/app/services/config.service';
 import { WorkoutCreateUpdateResult } from 'src/app/model/workout-create-update-result';
 import { WorkoutUpdate } from 'src/app/model/workout-update';
 import { SubSink } from 'subsink';
@@ -116,9 +114,8 @@ export class WorkoutDetailsEditorComponent implements OnInit, OnDestroy {
     const date = this.form.value.date;
     const time = this.form.value.time;
     let dateString = `${date.year}-${date.month}-${date.day}`;
-    if (time) {
+    if (time)
       dateString += ` ${time.hour}:${time.minute}`;
-    }
     if (forceUtc)
       dateString += ' UTC';
     const returnDate = new Date(dateString);
