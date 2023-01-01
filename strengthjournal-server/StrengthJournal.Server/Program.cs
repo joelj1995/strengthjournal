@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration.AzureAppConfiguration;
 using Microsoft.FeatureManagement;
 using Microsoft.IdentityModel.Tokens;
 using StrengthJournal.DataAccess.Contexts;
@@ -55,11 +56,11 @@ if (!String.IsNullOrEmpty(StrengthJournalConfiguration.Instance.Azure_AppConfigC
 {
     builder.Configuration.AddAzureAppConfiguration(options =>
     {
-        options.Connect(StrengthJournalConfiguration.Instance.Azure_AppConfigConnectionString);
-        options.UseFeatureFlags(options =>
-        {
-            options.Select("*", StrengthJournalConfiguration.Instance.Azure_AppConfigConnectionString);
-        });
+        options.Connect(StrengthJournalConfiguration.Instance.Azure_AppConfigConnectionString)
+            .UseFeatureFlags(options =>
+            {
+                options.Select(KeyFilter.Any, StrengthJournalConfiguration.Instance.Azure_AppConfigConnectionString);
+            });
     });
 }
 
