@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, combineLatestWith, delay, mergeWith, Observable, of, scan, Subject, Subscriber } from 'rxjs';
+import { delay, mergeWith, Observable, scan, Subject } from 'rxjs';
 import { ToastMessage } from '../model/toast-message';
 
 @Injectable({
