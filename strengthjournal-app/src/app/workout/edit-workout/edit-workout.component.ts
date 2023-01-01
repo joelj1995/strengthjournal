@@ -144,6 +144,7 @@ export class EditWorkoutComponent implements OnInit, OnDestroy {
     });
     this.sharedSetForm.setValue({ weightUnit: setData?.weightUnit })
     this.setBeingUpdated = setId;
+    this.lastSetAddedId = undefined;
   }
 
   stopUpdatingSet() {
