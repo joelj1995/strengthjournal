@@ -59,7 +59,7 @@ if (!String.IsNullOrEmpty(StrengthJournalConfiguration.Instance.Azure_AppConfigC
         options.Connect(StrengthJournalConfiguration.Instance.Azure_AppConfigConnectionString)
             .UseFeatureFlags(options =>
             {
-                options.Select(KeyFilter.Any, StrengthJournalConfiguration.Instance.Azure_AppConfigConnectionString);
+                options.Select(KeyFilter.Any, StrengthJournalConfiguration.Instance.FeatureLabel);
             });
     });
 }
