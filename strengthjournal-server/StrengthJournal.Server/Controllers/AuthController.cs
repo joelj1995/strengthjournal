@@ -33,8 +33,7 @@ namespace StrengthJournal.Server.Controllers
         [Route("login")]
         public IActionResult SubmitLogin(LoginModel loginModel)
         {
-            logger.LogDebug($"Processing login request for {loginModel.Email}");
-            logger.LogError("SJ ERROR TEST");
+            logger.LogInformation($"Processing login request for {loginModel.Email}");
             var result = _authenticationService.Authenticate(loginModel.Email, loginModel.Password);
             switch (result.Result)
             {
