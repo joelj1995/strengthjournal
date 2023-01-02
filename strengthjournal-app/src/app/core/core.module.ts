@@ -11,6 +11,7 @@ import { RouterModule } from '@angular/router';
 import { SharedModule } from '../shared/shared.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { throwIfAlreadyLoaded } from '../import.guard';
+import { WorkoutActivityComponent } from './workout-activity/workout-activity.component';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { throwIfAlreadyLoaded } from '../import.guard';
     FooterComponent,
     ToastComponent,
     NotFoundComponent,
-    BlockingSpinnerComponent
+    BlockingSpinnerComponent,
+    WorkoutActivityComponent
   ],
   imports: [
     RouterModule,

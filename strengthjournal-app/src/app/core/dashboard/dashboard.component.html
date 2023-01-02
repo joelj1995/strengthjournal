@@ -35,7 +35,9 @@
   </div>
 
   <div class="col-12"  *ngIf="enableWorkoutHistory()">
-    <p>Workout history stub.</p>
+    <app-card cardTitle="Latest Workouts">
+      <app-workout-activity></app-workout-activity>
+    </app-card>
   </div>
 
 </div>

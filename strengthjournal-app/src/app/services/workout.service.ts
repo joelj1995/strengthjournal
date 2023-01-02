@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { Workout } from '../model/workout';
+import { WorkoutActivity } from '../model/workout-activity';
 import { WorkoutCreate } from '../model/workout-create';
 import { WorkoutPage } from '../model/workout-page';
 import { WorkoutSet } from '../model/workout-set';
@@ -49,5 +50,39 @@ export class WorkoutService extends StrengthjournalBaseService {
 
   deleteWorkout(workoutId: string) {
     return this.http.delete(`${this.BASE_URL}/workouts/${workoutId}`);
+  }
+
+  getWorkoutActivity(pageNumber: number, perPage: number): Observable<WorkoutActivity[]> {
+    return of([
+      {
+        id: '1',
+        title: 'Test Workout',
+        entryDateUTC: new Date(),
+        sets: [
+          {
+            exerciseName: 'Squat',
+            weight: 315,
+            weightUnit: 'lbs',
+            sets: 3,
+            reps: 5
+          },
+          {
+            exerciseName: 'Bench Press',
+            weight: 225,
+            weightUnit: 'lbs',
+            sets: 5,
+            reps: 5
+          }
+        ],
+        notes: ''
+      },
+      {
+        id: '2',
+        title: 'Test Workout 2',
+        entryDateUTC: new Date(),
+        sets: [],
+        notes: 'My workout test 2'
+      }
+    ])
   }
 }
