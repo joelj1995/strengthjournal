@@ -73,7 +73,12 @@
               "browserTarget": "strengthjournal-app:build:production"
             },
             "development": {
-              "browserTarget": "strengthjournal-app:build:development"
+              "browserTarget": "strengthjournal-app:build:development",
+              "proxyConfig": "src/proxy.localdev.conf.json"
+            },
+            "test": {
+              "browserTarget": "strengthjournal-app:build:development",
+              "proxyConfig": "src/proxy.test.conf.json"
             }
           },
           "defaultConfiguration": "development"

@@ -1,0 +1,7 @@
+{
+  "/api": {
+    "target": "https://test.strengthjournal.io",
+    "secure": true,
+    "changeOrigin": true
+  }
+}
