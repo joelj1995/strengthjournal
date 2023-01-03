@@ -5,7 +5,7 @@
     <small class="text-muted">{{ workout.entryDateUTC | date }}</small><br>
     <ul style="list-style-type: none; padding: 0; margin: 0;">
       <li *ngFor="let set of workout.sets">
-        {{ set.exerciseName }} {{ set.weight }}x{{ set.reps }}x{{ set.sets }}
+        {{ set.exerciseName }} {{ set.weight ? set.weight : '?' }} {{ set.weightUnit }} x {{ set.reps ? set.reps : '?' }} x {{ set.sets }}
       </li>
     </ul>
     <div class="border text-sm text-muted p-2 mt-1 mb-2" *ngIf="workout.notes.length > 0">

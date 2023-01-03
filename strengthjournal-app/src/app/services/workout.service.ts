@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { from, map, mergeMap, Observable, of, switchMap, toArray, withLatestFrom } from 'rxjs';
 import { Workout } from '../model/workout';
-import { WorkoutActivity } from '../model/workout-activity';
+import { WorkoutActivity, WorkoutActivitySet } from '../model/workout-activity';
 import { WorkoutCreate } from '../model/workout-create';
 import { WorkoutPage } from '../model/workout-page';
 import { WorkoutSet } from '../model/workout-set';
@@ -89,14 +89,41 @@ export class WorkoutService extends StrengthjournalBaseService {
       id: workout.id,
       title: workout.title,
       entryDateUTC: workout.entryDateUTC,
-      sets: workout.sets.map(set => ({
-        exerciseName: set.exerciseName,
-        weight: set.weight,
-        weightUnit: set.weightUnit,
-        sets: 1,
-        reps: set.reps
-      })),
+      sets: this.groupRelatedSets(workout.sets),
       notes: workout.notes
     }
   }
+
+  private groupRelatedSets(sets: WorkoutSet[]): WorkoutActivitySet[] {
+    if (sets.length == 0) return [];
+    const result: WorkoutActivitySet[] = [];
+    let setCount = 1;
+    let lastSet = sets[0];
+    for (var i = 1; i < sets.length; i++) {
+      const currentSet = sets[i];
+      if (
+        currentSet.exerciseId != lastSet.exerciseId
+        || currentSet.reps != lastSet.reps
+        || currentSet.weight != lastSet.weight
+        || currentSet.weightUnit != lastSet.weightUnit
+      ) {
+        result.push({
+          ...lastSet,
+          sets: setCount
+        });
+        setCount = 1;
+      } else {
+        if (i == sets.length - 1) {
+          result.push({
+            ...lastSet,
+            sets: setCount
+          });
+        }
+        setCount += 1;
+      }
+      lastSet = currentSet;
+    }
+    return result;
+  }
+
 }
