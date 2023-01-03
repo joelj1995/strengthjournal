@@ -31,6 +31,9 @@ export class ConfigService extends StrengthjournalBaseService  {
     } else {
       throw "app_config not set in local storage";
     }
+    document.addEventListener('enableFeature', (e: any) => {
+      this.config.features.push(e.detail);
+    });
   }
 
   pullUpdate(): Observable<AppConfig> {

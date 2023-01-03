@@ -7,7 +7,7 @@ export const environment = {
   useResourceOwnerFlow: false,
   api: '/api',
   version: 'LOCAL',
-  features: ['Stub', 'DashboardWorkoutView']
+  features: ['Stub']
 };
 
 /*
