@@ -69,7 +69,7 @@ export class WorkoutService extends StrengthjournalBaseService {
         }),
         map(joined => ({
           ...joined.page,
-          data: joined.workouts.sort((a, b) => Number(new Date(a.entryDateUTC)) + Number(new Date(b.entryDateUTC)))
+          data: joined.workouts.sort((a, b) => Number(new Date(b.entryDateUTC)) - Number(new Date(a.entryDateUTC)))
         }))
       );
   }
