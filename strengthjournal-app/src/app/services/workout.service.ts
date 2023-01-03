@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, Observable, of } from 'rxjs';
+import { from, map, mergeMap, Observable, of, switchMap, toArray, withLatestFrom } from 'rxjs';
 import { Workout } from '../model/workout';
 import { WorkoutActivity } from '../model/workout-activity';
 import { WorkoutCreate } from '../model/workout-create';
@@ -56,42 +56,32 @@ export class WorkoutService extends StrengthjournalBaseService {
   getWorkoutActivity(pageNumber: number, perPage: number): Observable<DataPage<WorkoutActivity>> {
     return this.http.get<WorkoutPage>(`${this.BASE_URL}/workouts?pageNumber=${pageNumber}&perPage=${perPage}`)
       .pipe(
-        map(workout => ({
-          ...workout,
-          data: workout.data.map(this.workoutToActivity)
-        }))
+        switchMap(res => {
+          return from(res.data)
+            .pipe(
+              withLatestFrom(of(res))
+            )
+        }),
+        mergeMap(([workout, page]) => {
+          return this.getWorkout(workout.id)
+            .pipe(
+              withLatestFrom(of(page))
+            )
+        }),
+        map(([workout, page]) => ({ workout, page })),
+        toArray(),
+        map(workoutArray => {
+          return  workoutArray.length > 0 ? {
+            ...workoutArray[0].page,
+            data: workoutArray.map(w => this.workoutToActivity(w.workout))
+          } : {
+            perPage: perPage,
+            totalRecords: 0,
+            currentPage: pageNumber,
+            data: []
+          }
+        })
       );
-    // return of([
-    //   {
-    //     id: '1',
-    //     title: 'Test Workout',
-    //     entryDateUTC: new Date(),
-    //     sets: [
-    //       {
-    //         exerciseName: 'Squat',
-    //         weight: 315,
-    //         weightUnit: 'lbs',
-    //         sets: 3,
-    //         reps: 5
-    //       },
-    //       {
-    //         exerciseName: 'Bench Press',
-    //         weight: 225,
-    //         weightUnit: 'lbs',
-    //         sets: 5,
-    //         reps: 5
-    //       }
-    //     ],
-    //     notes: ''
-    //   },
-    //   {
-    //     id: '2',
-    //     title: 'Test Workout 2',
-    //     entryDateUTC: new Date(),
-    //     sets: [],
-    //     notes: 'My workout test 2'
-    //   }
-    // ]);
   }
 
   private workoutToActivity(workout: Workout): WorkoutActivity {
@@ -99,7 +89,13 @@ export class WorkoutService extends StrengthjournalBaseService {
       id: workout.id,
       title: workout.title,
       entryDateUTC: workout.entryDateUTC,
-      sets: [],
+      sets: workout.sets.map(set => ({
+        exerciseName: set.exerciseName,
+        weight: set.weight,
+        weightUnit: set.weightUnit,
+        sets: 1,
+        reps: set.reps
+      })),
       notes: workout.notes
     }
   }

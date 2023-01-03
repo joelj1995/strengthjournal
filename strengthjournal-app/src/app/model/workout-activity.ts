@@ -8,8 +8,8 @@ export interface WorkoutActivity {
 
 export interface WorkoutActivitySet {
   exerciseName: string
-  weight: number
+  weight: number | null
   weightUnit: string
   sets: number
-  reps: number
+  reps: number | null
 }
