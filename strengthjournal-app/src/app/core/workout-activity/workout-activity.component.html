@@ -1,17 +1,20 @@
 <div *ngIf="workoutActivities; else loading">
   <div class="flex-grow-1" *ngFor="let workout of workoutActivities">
     <small class="float-end">Workout logged</small>
-    <strong>{{ workout.title }}</strong><br>
+    <strong>{{ workout.title.length > 0 ? workout.title : 'Untitled Workout' }}</strong><br>
     <small class="text-muted">{{ workout.entryDateUTC | date }}</small><br>
     <ul style="list-style-type: none; padding: 0; margin: 0;">
       <li *ngFor="let set of workout.sets">
         {{ set.exerciseName }} {{ set.weight }}x{{ set.reps }}x{{ set.sets }}
       </li>
     </ul>
-    <div class="border text-sm text-muted p-2 mt-1 mb-4" *ngIf="workout.notes.length > 0">
+    <div class="border text-sm text-muted p-2 mt-1 mb-2" *ngIf="workout.notes.length > 0">
       {{ workout.notes }}
     </div>
     <hr>
+  </div>
+  <div class="d-grid">
+    <a href="#" class="btn btn-primary">Load more</a>
   </div>
 </div>
 <ng-template #loading>

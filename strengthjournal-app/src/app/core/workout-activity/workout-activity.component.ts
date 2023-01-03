@@ -19,9 +19,9 @@ export class WorkoutActivityComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.subs.sink = this.workout.getWorkoutActivity(0, 5)
+    this.subs.sink = this.workout.getWorkoutActivity(1, 5)
       .subscribe(activityData => {
-        this.workoutActivities = activityData;
+        this.workoutActivities = activityData.data;
       });
   }
 
