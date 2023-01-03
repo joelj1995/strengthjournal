@@ -113,13 +113,13 @@ export class WorkoutService extends StrengthjournalBaseService {
         });
         setCount = 1;
       } else {
+        setCount += 1;
         if (i == sets.length - 1) {
           result.push({
             ...lastSet,
             sets: setCount
           });
         }
-        setCount += 1;
       }
       lastSet = currentSet;
     }
