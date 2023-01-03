@@ -8,8 +8,8 @@
         {{ set.exerciseName }} {{ set.weight ? set.weight : '?' }} {{ set.weightUnit }} x {{ set.reps ? set.reps : '?' }} x {{ set.sets }}
       </li>
     </ul>
-    <div class="border text-sm text-muted p-2 mt-1 mb-2" *ngIf="workout.notes.length > 0">
-      {{ workout.notes }}
+    <div class="border text-muted p-2 mt-1 mb-2" *ngIf="workout.notes.length > 0">
+      <pre style="font-size: 100%;">{{ workout.notes }}</pre>
     </div>
     <hr>
   </div>
