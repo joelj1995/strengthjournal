@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { from, map, mergeMap, Observable, of, switchMap, toArray, withLatestFrom } from 'rxjs';
+import { forkJoin, from, map, mergeMap, Observable, of, switchMap, toArray, withLatestFrom } from 'rxjs';
 import { Workout } from '../model/workout';
 import { WorkoutActivity, WorkoutActivitySet } from '../model/workout-activity';
 import { WorkoutCreate } from '../model/workout-create';
@@ -57,30 +57,20 @@ export class WorkoutService extends StrengthjournalBaseService {
     return this.http.get<WorkoutPage>(`${this.BASE_URL}/workouts?pageNumber=${pageNumber}&perPage=${perPage}`)
       .pipe(
         switchMap(res => {
-          return from(res.data)
-            .pipe(
-              withLatestFrom(of(res))
-            )
+          return forkJoin({
+            workouts: from(res.data)
+              .pipe(
+                mergeMap(workout => this.getWorkout(workout.id)),
+                map(workout => this.workoutToActivity(workout)),
+                toArray()
+              ),
+            page: of(res)
+          })
         }),
-        mergeMap(([workout, page]) => {
-          return this.getWorkout(workout.id)
-            .pipe(
-              withLatestFrom(of(page))
-            )
-        }),
-        map(([workout, page]) => ({ workout, page })),
-        toArray(),
-        map(workoutArray => {
-          return  workoutArray.length > 0 ? {
-            ...workoutArray[0].page,
-            data: workoutArray.map(w => this.workoutToActivity(w.workout))
-          } : {
-            perPage: perPage,
-            totalRecords: 0,
-            currentPage: pageNumber,
-            data: []
-          }
-        })
+        map(joined => ({
+          ...joined.page,
+          data: joined.workouts.sort((a, b) => Number(new Date(a.entryDateUTC)) + Number(new Date(b.entryDateUTC)))
+        }))
       );
   }
 
