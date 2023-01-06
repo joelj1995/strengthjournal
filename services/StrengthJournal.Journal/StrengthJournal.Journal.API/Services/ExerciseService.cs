@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using StrengthJournal.Core.DataAccess.Contexts;
 using StrengthJournal.Journal.API.ApiModels;
-using StrengthJournal.MVC.ServiceExceptions;
+using StrengthJournal.Core;
 
 namespace StrengthJournal.Journal.API.Services
 {

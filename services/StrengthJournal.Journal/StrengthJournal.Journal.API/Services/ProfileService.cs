@@ -2,23 +2,20 @@
 using Microsoft.EntityFrameworkCore;
 using StrengthJournal.Core.DataAccess.Contexts;
 using StrengthJournal.Journal.API.ApiModels;
-using StrengthJournal.MVC.Integrations;
+using StrengthJournal.Core;
 
 namespace StrengthJournal.Journal.API.Services
 {
     public class ProfileService
     {
         protected readonly StrengthJournalContext context;
-        protected readonly IAuthenticationService authenticationService;
         protected readonly IMapper mapper;
 
         public ProfileService(
             StrengthJournalContext context, 
-            IAuthenticationService authenticationService,
             IMapper mapper)
         {
             this.context = context;
-            this.authenticationService = authenticationService;
             this.mapper = mapper;
         }
 
@@ -52,13 +49,13 @@ namespace StrengthJournal.Journal.API.Services
         {
             // TODO: potentially create an audit trail for these and rate limit
             var email = (await context.Users.SingleAsync(u => u.Id.Equals(userId))).Email;
-            authenticationService.ResetPassword(email);
+            throw new NotImplementedException();
         }
 
         public async Task<bool> UpdateEmail(Guid userId, string newEmail)
         {
             var externalId = (await context.Users.SingleAsync(u => u.Id.Equals(userId))).ExternalId;
-            return authenticationService.UpdateEmailAddress(externalId, newEmail);
+            throw new NotImplementedException();
         }
 
         public async Task<IEnumerable<CountryDto>> GetCountries()

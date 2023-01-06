@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\StrengthJournal.Core\StrengthJournal.Core.DataAccess\StrengthJournal.Core.DataAccess.csproj" />
+    <ProjectReference Include="..\..\StrengthJournal.Core\StrengthJournal.Core\StrengthJournal.Core.csproj" />
   </ItemGroup>
 
 </Project>

@@ -10,6 +10,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StrengthJournal.Journal.API
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StrengthJournal.Core", "..\StrengthJournal.Core\StrengthJournal.Core\StrengthJournal.Core.csproj", "{1C6B3EF8-08D5-4A51-B0A1-C24CD877D1CC}"
+	ProjectSection(ProjectDependencies) = postProject
+		{E463C2F9-7F15-4F3A-880F-AB1302C0F8B5} = {E463C2F9-7F15-4F3A-880F-AB1302C0F8B5}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StrengthJournal.Core.DataAccess", "..\StrengthJournal.Core\StrengthJournal.Core.DataAccess\StrengthJournal.Core.DataAccess.csproj", "{E463C2F9-7F15-4F3A-880F-AB1302C0F8B5}"
 EndProject

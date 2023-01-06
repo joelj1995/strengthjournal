@@ -2,9 +2,9 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using StrengthJournal.Journal.API.ApiModels;
-using StrengthJournal.Journal.API.Extensions;
-using StrengthJournal.Journal.API.Models;
+using StrengthJournal.Core.Extensions;
 using StrengthJournal.Journal.API.Services;
+using StrengthJournal.Core.ApiModels;
 
 namespace StrengthJournal.Journal.API.Controllers
 {

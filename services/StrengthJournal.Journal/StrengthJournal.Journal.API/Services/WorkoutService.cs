@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore;
 using StrengthJournal.Core.DataAccess.Contexts;
 using StrengthJournal.Core.DataAccess.Model;
 using StrengthJournal.Journal.API.ApiModels;
-using StrengthJournal.MVC.ServiceExceptions;
+using StrengthJournal.Core;
 
-namespace StrengthJournal.MVC.Services
+namespace StrengthJournal.Core
 {
     public class WorkoutService
     {

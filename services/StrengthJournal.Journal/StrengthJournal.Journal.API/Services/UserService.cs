@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using StrengthJournal.Core.DataAccess.Contexts;
 using StrengthJournal.MVC.Integrations;
-using StrengthJournal.MVC.Models;
+using StrengthJournal.Core;
 
 namespace StrengthJournal.Journal.API.Services
 {
