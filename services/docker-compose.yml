@@ -6,9 +6,11 @@ services:
     build:
       context: .
       dockerfile: ./StrengthJournal.MVC/StrengthJournal.MVC/Dockerfile
+    env_file:
+      - dotnet.env
 
   gateway:
-    build: 
+    build:
       context: .
       dockerfile: ./sj-server-nginx/Dockerfile
     ports:
