@@ -4,6 +4,7 @@ using StrengthJournal.Core.DataAccess.Contexts;
 using StrengthJournal.Core.DataAccess.Model;
 using StrengthJournal.Journal.API.ApiModels;
 using StrengthJournal.Core;
+using StrengthJournal.Journal.API.ServiceExceptions;
 
 namespace StrengthJournal.Core
 {
