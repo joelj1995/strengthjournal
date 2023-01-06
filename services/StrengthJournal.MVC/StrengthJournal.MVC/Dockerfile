@@ -8,6 +8,7 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
 COPY ["StrengthJournal.MVC", "StrengthJournal.MVC"]
+COPY ["StrengthJournal.Core", "StrengthJournal.Core"]
 WORKDIR "/src/StrengthJournal.MVC/StrengthJournal.MVC"
 RUN dotnet build "StrengthJournal.MVC.csproj" -c Release -o /app/build
 
