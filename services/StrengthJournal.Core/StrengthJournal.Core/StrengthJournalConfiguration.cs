@@ -1,7 +1,8 @@
 ﻿using Azure.Identity;
 using Azure.Security.KeyVault.Secrets;
+using Microsoft.Extensions.Configuration;
 
-namespace StrengthJournal.MVC
+namespace StrengthJournal.Core
 {
     public sealed class StrengthJournalConfiguration
     {

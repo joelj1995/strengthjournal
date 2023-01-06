@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using RestSharp;
+using StrengthJournal.Core;
 using StrengthJournal.Core.DataAccess.Contexts;
 using StrengthJournal.MVC.Integrations.Models;
 using StrengthJournal.MVC.Services;
