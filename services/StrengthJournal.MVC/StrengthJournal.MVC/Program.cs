@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration.AzureAppConfiguration;
 using Microsoft.FeatureManagement;
 using Microsoft.IdentityModel.Tokens;
-using StrengthJournal.DataAccess.Contexts;
+using StrengthJournal.Core.DataAccess.Contexts;
 using StrengthJournal.MVC;
 using StrengthJournal.MVC.Integrations;
 using StrengthJournal.MVC.Integrations.Implementation;

@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using StrengthJournal.DataAccess.Contexts;
+using StrengthJournal.Core.DataAccess.Contexts;
 using StrengthJournal.MVC.Integrations;
 using StrengthJournal.MVC.Models;
 
@@ -18,7 +18,7 @@ namespace StrengthJournal.MVC.Services
 
         public void RegisterUser(string email, string externalId, bool consentCEM, string countryCode)
         {
-            var newUser = new StrengthJournal.DataAccess.Model.User()
+            var newUser = new StrengthJournal.Core.DataAccess.Model.User()
             {
                 Email = email.ToLower(),
                 ExternalId = externalId,
@@ -54,7 +54,7 @@ namespace StrengthJournal.MVC.Services
             return GetConfig(user);
         }
 
-        private AppConfig GetConfig(StrengthJournal.DataAccess.Model.User user)
+        private AppConfig GetConfig(StrengthJournal.Core.DataAccess.Model.User user)
         {
             return new AppConfig()
             {

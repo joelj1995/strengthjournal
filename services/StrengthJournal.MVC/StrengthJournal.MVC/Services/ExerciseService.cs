@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using StrengthJournal.DataAccess.Contexts;
+using StrengthJournal.Core.DataAccess.Contexts;
 using StrengthJournal.MVC.ApiModels;
 using StrengthJournal.MVC.ServiceExceptions;
 
@@ -39,8 +39,8 @@ namespace StrengthJournal.MVC.Services
                 .Where(e => e.CreatedByUser == null || e.CreatedByUser == user)
                 .OrderBy(e => e.Name);
             var totalRecords = await exercisesQuery.CountAsync();
-            if (search != null) exercisesQuery = (IOrderedQueryable<DataAccess.Model.Exercise>)exercisesQuery.Where(e => e.Name.ToLower().StartsWith(search.ToLower()));
-            if (!allRecords) exercisesQuery = (IOrderedQueryable<DataAccess.Model.Exercise>)exercisesQuery.Skip(perPage * (pageNumber - 1)).Take(perPage);
+            if (search != null) exercisesQuery = (IOrderedQueryable<StrengthJournal.Core.DataAccess.Model.Exercise>)exercisesQuery.Where(e => e.Name.ToLower().StartsWith(search.ToLower()));
+            if (!allRecords) exercisesQuery = (IOrderedQueryable<StrengthJournal.Core.DataAccess.Model.Exercise>)exercisesQuery.Skip(perPage * (pageNumber - 1)).Take(perPage);
             var data = await exercisesQuery
                 .Select(e => new ExerciseDto() { Id = e.Id, Name = e.Name, SystemDefined = e.CreatedByUser == null, ParentExerciseId = e.ParentExerciseId })
                 .ToListAsync();
@@ -84,7 +84,7 @@ namespace StrengthJournal.MVC.Services
                 if (parentExercsie.ParentExerciseId != null)
                     throw new Exception("Cannot add non-root exercise as parent");
             }
-            await context.Exercises.AddAsync(new DataAccess.Model.Exercise() { Name = name, CreatedByUser = createdByUser, ParentExerciseId = parentExerciseId });
+            await context.Exercises.AddAsync(new StrengthJournal.Core.DataAccess.Model.Exercise() { Name = name, CreatedByUser = createdByUser, ParentExerciseId = parentExerciseId });
             await context.SaveChangesAsync();
         }
 

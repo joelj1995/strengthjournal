@@ -1,5 +1,5 @@
-﻿using StrengthJournal.DataAccess.Contexts;
-using StrengthJournal.DataAccess.Model;
+﻿using StrengthJournal.Core.DataAccess.Contexts;
+using StrengthJournal.Core.DataAccess.Model;
 
 namespace StrengthJournal.MVC.Services
 {

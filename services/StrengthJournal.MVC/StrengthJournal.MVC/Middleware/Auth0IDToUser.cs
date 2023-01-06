@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
-using StrengthJournal.DataAccess.Contexts;
+using StrengthJournal.Core.DataAccess.Contexts;
 using System.Threading.Tasks;
 
 namespace StrengthJournal.MVC.Middleware

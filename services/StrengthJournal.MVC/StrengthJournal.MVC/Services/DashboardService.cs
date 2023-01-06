@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
-using StrengthJournal.DataAccess.Contexts;
+using StrengthJournal.Core.DataAccess.Contexts;
 using StrengthJournal.MVC.ApiModels;
 
 namespace StrengthJournal.MVC.Services

@@ -1,13 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using StrengthJournal.DataAccess.Model;
-using StrengthJournal.DataAccess.Model.Virtual;
+using StrengthJournal.Core.DataAccess.Model;
+using StrengthJournal.Core.DataAccess.Model.Virtual;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace StrengthJournal.DataAccess.Contexts
+namespace StrengthJournal.Core.DataAccess.Contexts
 {
     public class StrengthJournalContext : DbContext
     {

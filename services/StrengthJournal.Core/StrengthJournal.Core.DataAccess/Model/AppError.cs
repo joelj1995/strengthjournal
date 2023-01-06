@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace StrengthJournal.DataAccess.Model
+namespace StrengthJournal.Core.DataAccess.Model
 {
     public class AppError
     {

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace StrengthJournal.DataAccess.Model.Virtual
+namespace StrengthJournal.Core.DataAccess.Model.Virtual
 {
     [NotMapped]
     public class WeeklyVolumeReportLine

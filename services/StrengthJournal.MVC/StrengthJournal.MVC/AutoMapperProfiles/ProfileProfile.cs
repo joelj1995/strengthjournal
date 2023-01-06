@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using StrengthJournal.DataAccess.Model;
+using StrengthJournal.Core.DataAccess.Model;
 using StrengthJournal.MVC.ApiModels;
 
 namespace StrengthJournal.MVC.AutoMapperProfiles
