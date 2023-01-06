@@ -11,4 +11,4 @@ RUN npm install
 RUN npm run build
 
 FROM base AS final
-COPY --from=build /usr/src/app/dist /tmp
+COPY --from=build /usr/src/app/dist /usr/share/nginx/html/app
