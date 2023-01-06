@@ -9,6 +9,13 @@ services:
     env_file:
       - dotnet.env
 
+  iam:
+    build:
+      context: .
+      dockerfile: ./StrengthJournal.IAM/StrengthJournal.IAM.API/Dockerfile
+    env_file:
+      - dotnet.env
+
   gateway:
     build:
       context: .

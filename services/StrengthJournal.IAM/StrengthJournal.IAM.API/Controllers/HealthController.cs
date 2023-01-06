@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace StrengthJournal.Journal.API.Controllers
+namespace StrengthJournal.IAM.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -10,7 +10,7 @@ namespace StrengthJournal.Journal.API.Controllers
         [Route("ping")]
         public ActionResult Ping()
         {
-            return Ok("journal");
+            return Ok("iam");
         }
     }
 }

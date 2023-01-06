@@ -7,10 +7,9 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
-COPY ["StrengthJournal.IAM.API/StrengthJournal.IAM.API.csproj", "StrengthJournal.IAM.API/"]
-RUN dotnet restore "StrengthJournal.IAM.API/StrengthJournal.IAM.API.csproj"
-COPY . .
-WORKDIR "/src/StrengthJournal.IAM.API"
+COPY ["StrengthJournal.IAM", "StrengthJournal.IAM"]
+COPY ["StrengthJournal.Core", "StrengthJournal.Core"]
+WORKDIR "/src/StrengthJournal.IAM/StrengthJournal.IAM.API"
 RUN dotnet build "StrengthJournal.IAM.API.csproj" -c Release -o /app/build
 
 FROM build AS publish
