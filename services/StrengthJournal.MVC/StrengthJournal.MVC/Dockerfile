@@ -7,16 +7,14 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
-COPY ["StrengthJournal.DataAccess/StrengthJournal.DataAccess.csproj", "StrengthJournal.DataAccess/"]
-RUN dotnet restore "StrengthJournal.Server/StrengthJournal.Server.csproj"
-COPY . .
-WORKDIR "/src/StrengthJournal.Server"
-RUN dotnet build "StrengthJournal.Server.csproj" -c Release -o /app/build
+COPY ["StrengthJournal.MVC", "StrengthJournal.MVC"]
+WORKDIR "/src/StrengthJournal.MVC/StrengthJournal.MVC"
+RUN dotnet build "StrengthJournal.MVC.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "StrengthJournal.Server.csproj" -c Release -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "StrengthJournal.MVC.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "StrengthJournal.Server.dll"]
+ENTRYPOINT ["dotnet", "StrengthJournal.MVC.dll"]

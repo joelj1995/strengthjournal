@@ -1,0 +1,14 @@
+version: '3.9'
+
+services:
+
+  mvc:
+    build:
+      context: .
+      dockerfile: ./StrengthJournal.MVC/StrengthJournal.MVC/Dockerfile
+
+  gateway:
+    build: ./sj-server-nginx
+    ports:
+      - "80:80"
+      - "443:443"
