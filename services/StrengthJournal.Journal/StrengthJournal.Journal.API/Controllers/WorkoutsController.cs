@@ -9,7 +9,7 @@ using StrengthJournal.Core;
 
 namespace StrengthJournal.Journal.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [Authorize]
     [ApiController]
     public class WorkoutsController : ControllerBase

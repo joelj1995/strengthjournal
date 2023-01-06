@@ -7,7 +7,7 @@ using StrengthJournal.Journal.API.Services;
 
 namespace StrengthJournal.Journal.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [Authorize]
     [ApiController]
     public class DashboardController : ControllerBase

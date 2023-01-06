@@ -16,6 +16,13 @@ services:
     env_file:
       - dotnet.env
 
+  journal:
+    build:
+      context: .
+      dockerfile: ./StrengthJournal.Journal/StrengthJournal.Journal.API/Dockerfile
+    env_file:
+      - dotnet.env
+
   gateway:
     build:
       context: .

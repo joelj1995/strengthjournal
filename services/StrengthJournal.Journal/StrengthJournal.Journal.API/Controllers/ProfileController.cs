@@ -8,7 +8,7 @@ using StrengthJournal.Core.ApiModels;
 
 namespace StrengthJournal.Journal.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [Authorize]
     [ApiController]
     public class ProfileController : ControllerBase

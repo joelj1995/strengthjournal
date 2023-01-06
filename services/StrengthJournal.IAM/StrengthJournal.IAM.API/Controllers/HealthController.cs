@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace StrengthJournal.IAM.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class HealthController : ControllerBase
     {
