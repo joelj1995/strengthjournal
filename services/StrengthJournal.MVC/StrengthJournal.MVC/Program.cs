@@ -6,10 +6,9 @@ using Microsoft.IdentityModel.Tokens;
 using StrengthJournal.Core;
 using StrengthJournal.Core.DataAccess.Contexts;
 using StrengthJournal.MVC;
-using StrengthJournal.MVC.Integrations;
-using StrengthJournal.MVC.Integrations.Implementation;
+using StrengthJournal.Core.Integrations;
+using StrengthJournal.Core.Integrations.Implementation;
 using StrengthJournal.MVC.Middleware;
-using StrengthJournal.MVC.Services;
 using System.Security.Claims;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -38,12 +37,7 @@ builder.Services.AddDbContext<StrengthJournalContext>(options =>
 
 builder.Services.AddFeatureManagement();
 
-builder.Services.AddScoped<ExerciseService>();
-builder.Services.AddScoped<WorkoutService>();
-builder.Services.AddScoped<ErrorService>();
-builder.Services.AddScoped<UserService>();
-builder.Services.AddScoped<ProfileService>();
-builder.Services.AddScoped<DashboardService>();
+
 
 builder.Services.AddScoped<IAuthenticationService, Auth0AuthenticationService>();
 builder.Services.AddScoped<IFeatureService, AzureAppConfigurationFeatureService>();

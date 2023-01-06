@@ -1,5 +1,4 @@
-﻿using StrengthJournal.MVC.ApiModels;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace StrengthJournal.MVC.Models
 {
@@ -17,5 +16,11 @@ namespace StrengthJournal.MVC.Models
         public string CountryCode { get; set; }
         public IEnumerable<CountryDto> CountryList { get; set; } = new List<CountryDto>();
         public string SelectedCountryCode { get; set; } = "CA";
+    }
+
+    public class CountryDto
+    {
+        public string Name { get; set; }
+        public string Code { get; set; }
     }
 }

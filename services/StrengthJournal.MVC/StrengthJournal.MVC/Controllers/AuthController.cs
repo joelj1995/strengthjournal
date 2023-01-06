@@ -1,31 +1,24 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RestSharp;
-using StrengthJournal.MVC.Integrations;
-using StrengthJournal.MVC.Integrations.Models;
+using StrengthJournal.Core.Integrations;
+using StrengthJournal.Core.Integrations.Models;
 using StrengthJournal.MVC.Models;
-using StrengthJournal.MVC.Services;
 
 namespace StrengthJournal.MVC.Controllers
 {
     public class AuthController : Controller
     {
         private readonly IAuthenticationService _authenticationService;
-        private readonly ProfileService profileService;
         private readonly IHostEnvironment _hostEnvironment;
-        private readonly UserService userService;
         private readonly ILogger<AuthController> logger;
 
         public AuthController(
             IAuthenticationService authenticationService, 
             IHostEnvironment hostEnvironment,
-            ProfileService profileService,
-            UserService userService,
             ILogger<AuthController> logger)
         {
             _authenticationService = authenticationService;
             _hostEnvironment = hostEnvironment;
-            this.profileService = profileService;
-            this.userService = userService;
             this.logger = logger;
         }
 
@@ -33,22 +26,23 @@ namespace StrengthJournal.MVC.Controllers
         [Route("login")]
         public IActionResult SubmitLogin(LoginModel loginModel)
         {
-            logger.LogInformation($"Processing login request for {loginModel.Email}");
-            var result = _authenticationService.Authenticate(loginModel.Email, loginModel.Password);
-            switch (result.Result)
-            {
-                case AuthenticationResponse.AuthResult.WrongPassword:
-                    return RedirectToAction("Login", new { wrongPassword = true });
-                case AuthenticationResponse.AuthResult.ServiceFailure:
-                    return RedirectToAction("Login", new { serviceFailure = true });
-                case AuthenticationResponse.AuthResult.EmailNotVerified:
-                    return RedirectToAction("Login", new { notVerified = true });
-                case AuthenticationResponse.AuthResult.Success:
-                    var config = userService.GetConfig(loginModel.Email);
-                    return View(new SubmitLoginModel(result.Token, loginModel.Email, config));
-                default:
-                    throw new NotImplementedException("Authentication result not recognized");
-            }
+            throw new Exception("No way to get the config");
+            //logger.LogInformation($"Processing login request for {loginModel.Email}");
+            //var result = _authenticationService.Authenticate(loginModel.Email, loginModel.Password);
+            //switch (result.Result)
+            //{
+            //    case AuthenticationResponse.AuthResult.WrongPassword:
+            //        return RedirectToAction("Login", new { wrongPassword = true });
+            //    case AuthenticationResponse.AuthResult.ServiceFailure:
+            //        return RedirectToAction("Login", new { serviceFailure = true });
+            //    case AuthenticationResponse.AuthResult.EmailNotVerified:
+            //        return RedirectToAction("Login", new { notVerified = true });
+            //    case AuthenticationResponse.AuthResult.Success:
+            //        var config = userService.GetConfig(loginModel.Email);
+            //        return View(new SubmitLoginModel(result.Token, loginModel.Email, config));
+            //    default:
+            //        throw new NotImplementedException("Authentication result not recognized");
+            //}
         }
 
         [Route("view-submit-login")]
@@ -75,15 +69,16 @@ namespace StrengthJournal.MVC.Controllers
         [Route("signup")]
         public IActionResult SignUp([FromQuery] string errorMessage, [FromQuery] string email, [FromQuery] string country)
         {
-            return View(new SignUpModel()
-            {
-                Email = email,
-                Password = "",
-                Password2 = "",
-                Error = errorMessage == string.Empty ? null : errorMessage,
-                CountryList = profileService.GetCountries().Result,
-                SelectedCountryCode = String.IsNullOrEmpty(country) ? "CA" : country
-            });
+            throw new NotImplementedException("Need a way to get the country list");
+            //return View(new SignUpModel()
+            //{
+            //    Email = email,
+            //    Password = "",
+            //    Password2 = "",
+            //    Error = errorMessage == string.Empty ? null : errorMessage,
+            //    // CountryList = profileService.GetCountries().Result,
+            //    SelectedCountryCode = String.IsNullOrEmpty(country) ? "CA" : country
+            //});
         }
 
         [HttpPost]
