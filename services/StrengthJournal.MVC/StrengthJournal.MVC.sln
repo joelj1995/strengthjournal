@@ -3,12 +3,12 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32602.215
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StrengthJournal.Server", "StrengthJournal.Server\StrengthJournal.Server.csproj", "{FE443913-9C64-451A-9BA7-968F682C085C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StrengthJournal.MVC", "StrengthJournal.MVC\StrengthJournal.MVC.csproj", "{FE443913-9C64-451A-9BA7-968F682C085C}"
 	ProjectSection(ProjectDependencies) = postProject
 		{DED9DE30-9015-4F16-AFC8-2A3AAF85D02B} = {DED9DE30-9015-4F16-AFC8-2A3AAF85D02B}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StrengthJournal.DataAccess", "StrengthJournal.DataAccess\StrengthJournal.DataAccess.csproj", "{DED9DE30-9015-4F16-AFC8-2A3AAF85D02B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StrengthJournal.DataAccess", "StrengthJournal.DataAccess\StrengthJournal.DataAccess.csproj", "{DED9DE30-9015-4F16-AFC8-2A3AAF85D02B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
