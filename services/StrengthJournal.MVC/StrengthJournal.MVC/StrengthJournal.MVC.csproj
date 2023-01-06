@@ -29,10 +29,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\StrengthJournal.DataAccess\StrengthJournal.DataAccess.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Include="app\**" CopyToOutputDirectory="PreserveNewest" LinkBase="app\" />
   </ItemGroup>
 
