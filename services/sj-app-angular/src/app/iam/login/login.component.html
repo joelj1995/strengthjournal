@@ -24,22 +24,22 @@
                       verification email if it has been lost.</p>
                   </div>
 
-                  <form method="POST" id="loginForm">
+                  <form method="POST" id="loginForm" (ngSubmit)="onSubmit()">
                     <div class="mb-3">
                       <label class="form-label">Email</label>
-                      <input class="form-control form-control-lg" id="email" type="email" name="email"
+                      <input [(ngModel)]="formEmail" class="form-control form-control-lg" id="email" type="email" name="email"
                         placeholder="Enter your email" />
                     </div>
                     <div class="mb-3">
                       <label class="form-label">Password</label>
-                      <input class="form-control form-control-lg" id="password" type="password" name="password"
+                      <input [(ngModel)]="formPassword" class="form-control form-control-lg" id="password" type="password" name="password"
                         placeholder="Enter your password" />
                       <small>
                         <a href="/reset-password">Forgot password?</a>
                       </small>
                     </div>
                     <div class="text-center mt-3">
-                      <button type="submit" class="btn btn-lg btn-primary">Sign in</button>
+                      <button type="submit" class="btn btn-lg btn-primary" [class.disabled]="processing">Sign in</button>
                     </div>
                   </form>
                   <div>
