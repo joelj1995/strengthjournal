@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { DashboardComponent } from './core/dashboard/dashboard.component';
+import { ErrorComponent } from './core/error/error.component';
 import { NotFoundComponent } from './core/special/not-found.component';
 
 const routes: Routes = [
@@ -20,6 +21,11 @@ const routes: Routes = [
   {
     path: 'iam',
     loadChildren: () => import('./iam/iam.module').then(m => m.IamModule),
+    data: { noNav: true }
+  },
+  {
+    path: 'error',
+    component: ErrorComponent,
     data: { noNav: true }
   },
   { 

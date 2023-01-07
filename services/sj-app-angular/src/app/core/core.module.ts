@@ -12,6 +12,7 @@ import { SharedModule } from '../shared/shared.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { throwIfAlreadyLoaded } from '../import.guard';
 import { WorkoutActivityComponent } from './workout-activity/workout-activity.component';
+import { ErrorComponent } from './error/error.component';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { WorkoutActivityComponent } from './workout-activity/workout-activity.co
     ToastComponent,
     NotFoundComponent,
     BlockingSpinnerComponent,
-    WorkoutActivityComponent
+    WorkoutActivityComponent,
+    ErrorComponent
   ],
   imports: [
     RouterModule,

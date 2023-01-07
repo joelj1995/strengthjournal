@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { AppConfig } from '../model/app-config';
@@ -11,15 +12,15 @@ import { StrengthjournalBaseService } from './strengthjournalbase.service';
 })
 export class ConfigService extends StrengthjournalBaseService  {
 
-  private localDevErrorSubject$ = new BehaviorSubject(false);
-  localDevError$ = this.localDevErrorSubject$.asObservable();
-
   configTooOld = false;
 
   private minVersion: number = 2;
   private config!: AppConfig;
   
-  constructor(http: HttpClient) {
+  constructor(
+    http: HttpClient,
+    private router: Router
+  ) {
     super(http);
     document.addEventListener('enableFeature', (e: any) => {
       this.config.features.push(e.detail);
@@ -55,7 +56,7 @@ export class ConfigService extends StrengthjournalBaseService  {
   }
 
   triggerLocalDevError() {
-    this.localDevErrorSubject$.next(true);
+    this.router.navigate(['/error']);
   }
 
 }
