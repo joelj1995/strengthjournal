@@ -1,8 +1,7 @@
 import { Component, HostListener, OnInit } from '@angular/core';
-import { ActivatedRoute, Event, NavigationStart, NavigationEnd, NavigationCancel, Router, RouterEvent } from '@angular/router';
+import { Event, NavigationStart, NavigationEnd, NavigationCancel, Router, RouterEvent } from '@angular/router';
 import { AuthService } from '@auth0/auth0-angular';
 import { filter } from 'rxjs';
-import { environment } from 'src/environments/environment';
 import { ConfigService } from './services/config.service';
 import { SpinnerService } from './services/spinner.service';
 
@@ -41,19 +40,15 @@ export class AppComponent implements OnInit {
   }
 
   resourceOwnerLoginFlow() {
-    this.userFullName = localStorage.getItem('app_username') ?? '';
+    this.userFullName = 'FIX THIS'; // TODO: get this from the config
   }
 
   constructor(
     public auth: AuthService, 
     private router: Router, 
     private config: ConfigService,
-    private spinner: SpinnerService) {
-    if (environment.useResourceOwnerFlow) {
-      this.resourceOwnerLoginFlow();
-    } else {
-      this.redirectLoginFlow();
-    }
+    private spinner: SpinnerService
+  ) {
     this.router.events.subscribe(ev => {
       if (this.screenWidth < this.lgBreakpoint)
         this.navCollapsed = false;
@@ -75,14 +70,12 @@ export class AppComponent implements OnInit {
     this.config.localDevError$.subscribe(isError => {
       this.localDevError = isError;
     });
-    if (this.config.configTooOld) {
-      this.configUpdating = true;
-      this.spinner.setSpinnerEnabled(true);
-      this.config.pullUpdate().subscribe(() => {
-        this.configUpdating = false;
-        this.spinner.setSpinnerEnabled(false);
-      });
-    }
+    this.configUpdating = true;
+    this.spinner.setSpinnerEnabled(true);
+    this.config.pullUpdate().subscribe(() => {
+      this.configUpdating = false;
+      this.spinner.setSpinnerEnabled(false);
+    });
   }
 
   checkRouterEvent(routerEvent: RouterEvent) {

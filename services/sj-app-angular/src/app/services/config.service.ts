@@ -21,16 +21,6 @@ export class ConfigService extends StrengthjournalBaseService  {
   
   constructor(http: HttpClient) {
     super(http);
-    const configJson = localStorage.getItem('app_config');
-    if (configJson) {
-      const config = JSON.parse(configJson);
-      if (config.version < this.minVersion)
-        this.configTooOld = true
-      else
-        this.config = config;
-    } else {
-      throw "app_config not set in local storage";
-    }
     document.addEventListener('enableFeature', (e: any) => {
       this.config.features.push(e.detail);
     });

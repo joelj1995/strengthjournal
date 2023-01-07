@@ -1,7 +1,7 @@
 export const environment = {
   production: true,
   useResourceOwnerFlow: true,
-  api: '/api',
+  api: '/services/journal',
   version: '{REVISION_HASH}',
   features: ['Stub']
 };
