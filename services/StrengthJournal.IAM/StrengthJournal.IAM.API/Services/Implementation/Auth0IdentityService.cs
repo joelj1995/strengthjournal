@@ -99,7 +99,22 @@ namespace StrengthJournal.IAM.API.Services.Implementation
 
         public async Task<SendVerificationResponse> SendVerification(SendVerificationRequest request)
         {
-            throw new NotImplementedException();
+            try
+            {
+                await Auth0SendVerification(request.Username);
+                return new SendVerificationResponse()
+                {
+                    Succeeded = true,
+                };
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "Send verification failure");
+                return new SendVerificationResponse()
+                {
+                    Succeeded = false
+                };
+            }
         }
 
         #region AuthenticationClient
@@ -180,7 +195,12 @@ namespace StrengthJournal.IAM.API.Services.Implementation
         #region SendVerificationClient
         async Task Auth0SendVerification(string username)
         {
-            throw new NotImplementedException();
+            var token = GetManagementToken();
+            var auth0UserId = await userService.GetExternalIDFromEmail(username);
+            var request = new RestRequest("api/v2/jobs/verification-email");
+            request.AddHeader("Authorization", $"Bearer {token}");
+            request.AddParameter("user_id", auth0UserId);
+            await client.PostAsync(request);
         }
 
         #endregion
@@ -189,12 +209,11 @@ namespace StrengthJournal.IAM.API.Services.Implementation
         private string GetManagementToken()
         {
             var request = new RestRequest("oauth/token");
-            request.AddHeader("content-type", "application/x-www-form-urlencoded");
             request.AddParameter("grant_type", "client_credentials");
             request.AddParameter("audience", $"{StrengthJournalConfiguration.Instance.Auth0_BaseURL}api/v2/");
             request.AddParameter("client_id", clientId);
             request.AddParameter("client_secret", clientSecret);
-            var response = client.Execute(request);
+            var response = client.Post(request);
             return ExtractTokenFromResponse(response.Content);
         }
 

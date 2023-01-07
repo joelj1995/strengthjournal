@@ -1,4 +1,5 @@
-﻿using StrengthJournal.Core.DataAccess.Contexts;
+﻿using Microsoft.EntityFrameworkCore;
+using StrengthJournal.Core.DataAccess.Contexts;
 
 namespace StrengthJournal.IAM.API.Services
 {
@@ -23,6 +24,12 @@ namespace StrengthJournal.IAM.API.Services
             };
             context.Users.Add(newUser);
             context.SaveChanges();
+        }
+
+        public async Task<string> GetExternalIDFromEmail(string email)
+        {
+            var user = await context.Users.SingleAsync(u => u.Email == email);
+            return user.ExternalId;
         }
     }
 }
