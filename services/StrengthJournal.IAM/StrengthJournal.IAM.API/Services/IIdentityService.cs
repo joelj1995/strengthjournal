@@ -4,6 +4,7 @@ namespace StrengthJournal.IAM.API.Services
 {
     public interface IIdentityService
     {
-        public Task<LoginResponse> Authenticate(LoginRequest request);
+        Task<LoginResponse> Authenticate(LoginRequest request);
+        Task<CreateAccountResponse> Register(CreateAccountRequest request);
     }
 }

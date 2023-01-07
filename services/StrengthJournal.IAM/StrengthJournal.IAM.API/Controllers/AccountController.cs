@@ -26,5 +26,12 @@ namespace StrengthJournal.IAM.API.Controllers
                 default: return Unauthorized(result);
             }
         }
+
+        [HttpPost("create")]
+        public async Task<ActionResult<CreateAccountResponse>> CreateAccount(CreateAccountRequest body)
+        {
+            var result = await identityService.Register(body);
+            return Ok(result);
+        }
     }
 }

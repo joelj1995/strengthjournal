@@ -1,4 +1,6 @@
+using Microsoft.EntityFrameworkCore;
 using StrengthJournal.Core;
+using StrengthJournal.Core.DataAccess.Contexts;
 using StrengthJournal.IAM.API.Services;
 using StrengthJournal.IAM.API.Services.Implementation;
 
@@ -13,7 +15,14 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddDbContext<StrengthJournalContext>(options =>
+{
+    options.UseSqlServer(StrengthJournalConfiguration.Instance.SqlServer_ConnectionString);
+});
+
+builder.Services.AddScoped<UserService>();
 builder.Services.AddScoped<IIdentityService, Auth0IdentityService>();
+
 
 var app = builder.Build();
 

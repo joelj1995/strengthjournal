@@ -17,28 +17,6 @@ namespace StrengthJournal.Journal.API.Services
             this.featureService = featureService;
         }
 
-        public void RegisterUser(string email, string externalId, bool consentCEM, string countryCode)
-        {
-            var newUser = new StrengthJournal.Core.DataAccess.Model.User()
-            {
-                Email = email.ToLower(),
-                ExternalId = externalId,
-                ConsentCEM = consentCEM,
-                UserCountry = context.Countries.Single(c => c.Code.Equals(countryCode)),
-                PreferredWeightUnit = context.WeightUnits.Single(wu => wu.Abbreviation == "lbs")
-            };
-            context.Users.Add(newUser);
-            context.SaveChanges();
-        }
-
-        public void UpdateEmailAddress(string externalId, string newEmail)
-        {
-            var user = context.Users.Single(u => u.ExternalId.Equals(externalId));
-            user.Email = newEmail;
-            context.Users.Update(user);
-            context.SaveChanges();
-        }
-
         public AppConfig GetConfig(string email)
         {
             var user = context.Users

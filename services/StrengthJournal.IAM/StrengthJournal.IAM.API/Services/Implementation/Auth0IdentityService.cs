@@ -15,8 +15,9 @@ namespace StrengthJournal.IAM.API.Services.Implementation
         private readonly string clientSecret;
         private readonly string audience;
         private readonly RestClient client;
+        private UserService userService;
 
-        public Auth0IdentityService(ILogger<Auth0IdentityService> logger) 
+        public Auth0IdentityService(ILogger<Auth0IdentityService> logger, UserService userService) 
         { 
             this.logger = logger;
             baseUrl = StrengthJournalConfiguration.Instance.Auth0_BaseURL;
@@ -25,6 +26,7 @@ namespace StrengthJournal.IAM.API.Services.Implementation
             audience = StrengthJournalConfiguration.Instance.Auth0_Audience;
             var options = new RestClientOptions(baseUrl);
             client = new RestClient(options);
+            this.userService = userService;
         }
 
         public async Task<LoginResponse> Authenticate(LoginRequest request)
@@ -48,6 +50,30 @@ namespace StrengthJournal.IAM.API.Services.Implementation
             {
                 logger.LogError(ex, "Authentication failure");
                 return LoginResponse.Fail(LoginResponse.AuthResult.ServiceFailure);
+            }
+        }
+
+        public async Task<CreateAccountResponse> Register(CreateAccountRequest request)
+        {
+            try
+            {
+                var auth0Response = await CreateAuth0Account(request.Username, request.Password);
+                var auth0Id = auth0Response.Id;
+                var userId = $"auth0|{auth0Id}";
+                userService.RegisterUser(request.Username, userId, request.ConsentCEM, request.CountryCode);
+                return CreateAccountResponse.Succeed();
+            }
+            catch (System.Net.Http.HttpRequestException ex)
+            {
+                if (ex.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                    return CreateAccountResponse.Fail(CreateAccountResponse.CreateResult.ValidationError, "There was an error creating your account.");
+                else
+                    return CreateAccountResponse.Fail(CreateAccountResponse.CreateResult.ServiceFailure, "There was an unexpected error processing your registration.");
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "Create account failure");
+                return CreateAccountResponse.Fail(CreateAccountResponse.CreateResult.ServiceFailure, "There was an unexpected error processing your registration.");
             }
         }
 
@@ -89,6 +115,27 @@ namespace StrengthJournal.IAM.API.Services.Implementation
         {
             [JsonProperty("email_verified")]
             public bool EmailVerified { get; init; }
+        }
+        #endregion
+
+        #region RegisterClient
+
+        async Task<Auth0CreateAccountResponse> CreateAuth0Account(string username, string password)
+        {
+            var request = new RestRequest("dbconnections/signup");
+            request.AddParameter("email", username);
+            request.AddParameter("password", password);
+            request.AddParameter("audience", audience);
+            request.AddParameter("client_id", clientId);
+            request.AddParameter("client_secret", clientSecret);
+            request.AddParameter("connection", "Username-Password-Authentication");
+            return await client.PostAsync<Auth0CreateAccountResponse>(request);
+        }
+
+        record Auth0CreateAccountResponse
+        {
+            [JsonProperty("_id")]
+            public string Id { get; init; }
         }
         #endregion
     }
