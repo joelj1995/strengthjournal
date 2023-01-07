@@ -32,17 +32,24 @@ namespace StrengthJournal.IAM.API.Services.Implementation
                 var tokenRequest = new RestRequest("oauth/token");
                 tokenRequest.AddParameter("grant_type", "password");
                 tokenRequest.AddParameter("scope", "openid");
-                tokenRequest.AddParameter("user_name", request.UserName);
+                tokenRequest.AddParameter("username", request.UserName);
                 tokenRequest.AddParameter("password", request.Password);
-                tokenRequest.AddParameter("audience", audience);
                 tokenRequest.AddParameter("audience", audience);
                 tokenRequest.AddParameter("client_id", clientId);
                 tokenRequest.AddParameter("client_secret", clientSecret);
                 var response = await client.PostAsync<AuthenticateTokenResponse>(tokenRequest);
                 return LoginResponse.Succeed(response.AccessToken);
             }
-            catch (Exception)
+            catch (System.Net.Http.HttpRequestException ex)
             {
+                if (ex.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+                    return LoginResponse.Fail(LoginResponse.AuthResult.WrongPassword);
+                else
+                    return LoginResponse.Fail(LoginResponse.AuthResult.ServiceFailure);
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "Authentication failure");
                 return LoginResponse.Fail(LoginResponse.AuthResult.ServiceFailure);
             }
         }
@@ -54,7 +61,7 @@ namespace StrengthJournal.IAM.API.Services.Implementation
             [JsonPropertyName("scope")]
             public string Scope { get; init; }
             [JsonPropertyName("expires_in")]
-            public string ExpiresIn { get; init; }
+            public int ExpiresIn { get; init; }
             [JsonPropertyName("token_type")]
             public string TokenType { get; init; }
         }
