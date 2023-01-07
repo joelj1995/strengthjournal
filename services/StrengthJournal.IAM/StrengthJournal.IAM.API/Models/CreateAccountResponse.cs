@@ -1,6 +1,4 @@
-﻿using StrengthJournal.Core.Integrations.Models;
-
-namespace StrengthJournal.IAM.API.Models
+﻿namespace StrengthJournal.IAM.API.Models
 {
     public class CreateAccountResponse
     {

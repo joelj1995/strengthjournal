@@ -5,10 +5,8 @@ using Microsoft.FeatureManagement;
 using Microsoft.IdentityModel.Tokens;
 using StrengthJournal.Core;
 using StrengthJournal.Core.DataAccess.Contexts;
-using StrengthJournal.MVC;
 using StrengthJournal.Core.Integrations;
 using StrengthJournal.Core.Integrations.Implementation;
-using StrengthJournal.MVC.Middleware;
 using System.Security.Claims;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -39,7 +37,6 @@ builder.Services.AddFeatureManagement();
 
 
 
-builder.Services.AddScoped<IAuthenticationService, Auth0AuthenticationService>();
 builder.Services.AddScoped<IFeatureService, AzureAppConfigurationFeatureService>();
 
 builder.Services.AddApplicationInsightsTelemetry(options =>
