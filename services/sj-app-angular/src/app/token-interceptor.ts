@@ -53,8 +53,7 @@ export class TokenInterceptor implements HttpInterceptor {
   }
 
   isApiUrl(url: string) {
-    const origin = window.location.origin;
     const apiUrl = environment.api;
-    return url.startsWith(origin) || url.startsWith(apiUrl);
+    return url.startsWith(apiUrl);
   }
 }

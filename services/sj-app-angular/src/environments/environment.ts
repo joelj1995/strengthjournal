@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   useResourceOwnerFlow: false,
-  api: '/services/journal',
+  api: '/api/journal',
   version: 'LOCAL',
   features: ['Stub', 'DashboardWorkoutView']
 };
