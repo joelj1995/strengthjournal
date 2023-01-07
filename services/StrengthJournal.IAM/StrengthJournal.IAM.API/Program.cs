@@ -21,6 +21,7 @@ builder.Services.AddDbContext<StrengthJournalContext>(options =>
 });
 
 builder.Services.AddScoped<UserService>();
+builder.Services.AddScoped<CountryService>();
 builder.Services.AddScoped<IIdentityService, Auth0IdentityService>();
 
 
