@@ -138,7 +138,7 @@ namespace StrengthJournal.IAM.API.Services.Implementation
 
         record ProfileDataResponse
         {
-            [JsonProperty("email_verified")]
+            [JsonPropertyName("email_verified")]
             public bool EmailVerified { get; init; }
         }
         #endregion
@@ -159,7 +159,7 @@ namespace StrengthJournal.IAM.API.Services.Implementation
 
         record Auth0CreateAccountResponse
         {
-            [JsonProperty("_id")]
+            [JsonPropertyName("_id")]
             public string Id { get; init; }
         }
         #endregion
