@@ -1,4 +1,6 @@
-﻿using RestSharp;
+﻿using Azure.Core;
+using Newtonsoft.Json;
+using RestSharp;
 using StrengthJournal.Core;
 using StrengthJournal.IAM.API.Models;
 using System.Text.Json.Serialization;
@@ -29,16 +31,11 @@ namespace StrengthJournal.IAM.API.Services.Implementation
         {
             try
             {
-                var tokenRequest = new RestRequest("oauth/token");
-                tokenRequest.AddParameter("grant_type", "password");
-                tokenRequest.AddParameter("scope", "openid");
-                tokenRequest.AddParameter("username", request.UserName);
-                tokenRequest.AddParameter("password", request.Password);
-                tokenRequest.AddParameter("audience", audience);
-                tokenRequest.AddParameter("client_id", clientId);
-                tokenRequest.AddParameter("client_secret", clientSecret);
-                var response = await client.PostAsync<AuthenticateTokenResponse>(tokenRequest);
-                return LoginResponse.Succeed(response.AccessToken);
+                var tokenResponse = await GetLoginToken(request.UserName, request.Password);
+                var profileResponse = await GetProfileData(tokenResponse.AccessToken);
+                if (!profileResponse.EmailVerified)
+                    return LoginResponse.Fail(LoginResponse.AuthResult.EmailNotVerified);
+                return LoginResponse.Succeed(tokenResponse.AccessToken);
             }
             catch (System.Net.Http.HttpRequestException ex)
             {
@@ -54,6 +51,28 @@ namespace StrengthJournal.IAM.API.Services.Implementation
             }
         }
 
+        #region AuthenticationClient
+        async Task<AuthenticateTokenResponse> GetLoginToken(string userName, string password)
+        {
+            var tokenRequest = new RestRequest("oauth/token");
+            tokenRequest.AddParameter("grant_type", "password");
+            tokenRequest.AddParameter("scope", "openid");
+            tokenRequest.AddParameter("username", userName);
+            tokenRequest.AddParameter("password", password);
+            tokenRequest.AddParameter("audience", audience);
+            tokenRequest.AddParameter("client_id", clientId);
+            tokenRequest.AddParameter("client_secret", clientSecret);
+            return await client.PostAsync<AuthenticateTokenResponse>(tokenRequest);
+        }
+
+        async Task<ProfileDataResponse> GetProfileData(string token)
+        {
+            var profileDataRequest = new RestRequest("userinfo")
+                .AddHeader("Authorization", $"Bearer {token}");
+            return await client.GetAsync<ProfileDataResponse>(profileDataRequest);
+        }
+        
+
         record AuthenticateTokenResponse
         {
             [JsonPropertyName("access_token")]
@@ -65,6 +84,13 @@ namespace StrengthJournal.IAM.API.Services.Implementation
             [JsonPropertyName("token_type")]
             public string TokenType { get; init; }
         }
+
+        record ProfileDataResponse
+        {
+            [JsonProperty("email_verified")]
+            public bool EmailVerified { get; init; }
+        }
+        #endregion
     }
 
 
