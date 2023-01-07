@@ -3,5 +3,10 @@
     "target": "https://test.strengthjournal.io",
     "secure": true,
     "changeOrigin": true
+  },
+  "/services": {
+    "target": "https://test.strengthjournal.io",
+    "secure": true,
+    "changeOrigin": true
   }
 }

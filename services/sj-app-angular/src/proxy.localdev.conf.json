@@ -3,5 +3,10 @@
     "target": "http://localhost",
     "secure": false,
     "changeOrigin": true
+  },
+  "/services": {
+    "target": "http://localhost",
+    "secure": false,
+    "changeOrigin": true
   }
 }

@@ -1,7 +1,7 @@
 import { Component, HostListener, OnInit } from '@angular/core';
-import { Event, NavigationStart, NavigationEnd, NavigationCancel, Router, RouterEvent } from '@angular/router';
+import { Event, NavigationStart, NavigationEnd, NavigationCancel, Router, RouterEvent, ActivatedRoute } from '@angular/router';
 import { AuthService } from '@auth0/auth0-angular';
-import { filter } from 'rxjs';
+import { filter, of, switchMap } from 'rxjs';
 import { ConfigService } from './services/config.service';
 import { SpinnerService } from './services/spinner.service';
 
@@ -14,7 +14,7 @@ export class AppComponent implements OnInit {
 
   readonly lgBreakpoint: number = 992; // defined as map-get($grid-breakpoints, 'lg') by appstack
   screenWidth: number = 0;
-  localDevError = false;
+  noNav: boolean = false;
 
   navCollapsed: boolean = false;
   configUpdating: boolean = false;
@@ -28,32 +28,28 @@ export class AppComponent implements OnInit {
    this.screenWidth = window.innerWidth;
   }
 
-  redirectLoginFlow() {
-    this.auth.user$.subscribe(user => {
-      if (user == null) {
-          this.auth.loginWithRedirect();
-        return;
-      }
-      this.userFullName = user?.name ?? '';
-      localStorage.setItem('app_username', this.userFullName);
-    });
-  }
-
-  resourceOwnerLoginFlow() {
-    this.userFullName = 'FIX THIS'; // TODO: get this from the config
-  }
-
   constructor(
     public auth: AuthService, 
     private router: Router, 
     private config: ConfigService,
-    private spinner: SpinnerService
+    private spinner: SpinnerService,
+    private activatedRoute: ActivatedRoute
   ) {
     this.router.events.subscribe(ev => {
       if (this.screenWidth < this.lgBreakpoint)
         this.navCollapsed = false;
     })
     this.onResize();
+    this.router.events
+      .pipe(
+        filter(ev => ev instanceof NavigationEnd),
+        switchMap(() => this.activatedRoute.firstChild?.data ?? of(null))
+      )
+      .subscribe(routeData => {
+        if (routeData) {
+          this.noNav = routeData['noNav'] ?? false;
+        }
+      });
   }
   
   ngOnInit(): void {
@@ -67,9 +63,6 @@ export class AppComponent implements OnInit {
       .subscribe((routerEvent: RouterEvent) => {
         this.checkRouterEvent(routerEvent);
       });
-    this.config.localDevError$.subscribe(isError => {
-      this.localDevError = isError;
-    });
     this.configUpdating = true;
     this.spinner.setSpinnerEnabled(true);
     this.config.pullUpdate().subscribe(() => {

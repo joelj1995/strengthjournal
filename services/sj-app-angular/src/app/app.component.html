@@ -1,14 +1,14 @@
-<ng-container *ngIf="!localDevError; else showError">
-  <app-toast></app-toast>
-
-  <div class="wrapper" *ngIf="!configUpdating">
+<app-toast></app-toast>
+<ng-container *ngIf="!noNav; else noNavOutlet">
+  
+  <div class="wrapper" >
     <app-nav id="sidebar" class="sidebar" [class.collapsed]="navCollapsed"></app-nav>
 
     <div class="main">
       <app-header [userFullName]="userFullName" (navToggleClicked)="toggleNav()"></app-header>
       <main class="content">
         <div class="container-fluid p-0">
-          <router-outlet></router-outlet>
+          <router-outlet *ngIf="!configUpdating"></router-outlet>
         </div>
       </main>
 
@@ -16,9 +16,10 @@
     </div>
   </div>
 
-  <app-blocking-spinner *ngIf="showSpinner">
-  </app-blocking-spinner>
 </ng-container>
+<ng-template #noNavOutlet>
+  <router-outlet></router-outlet>
+</ng-template>
 <ng-template #showError class="wrapper">
   <div class="main d-flex justify-content-center w-100">
     <main class="content d-flex p-0">
@@ -41,3 +42,5 @@
     </main>
   </div>
 </ng-template>
+<app-blocking-spinner *ngIf="showSpinner">
+</app-blocking-spinner>

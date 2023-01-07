@@ -17,7 +17,16 @@ const routes: Routes = [
     path: 'workouts', 
     loadChildren: () => import('./workout/workout.module').then(m => m.WorkoutModule)
   },
-  { path: '**', component: NotFoundComponent }
+  {
+    path: 'iam',
+    loadChildren: () => import('./iam/iam.module').then(m => m.IamModule),
+    data: { noNav: true }
+  },
+  { 
+    path: '**', 
+    component: NotFoundComponent,
+    data: { noNav: true }
+  }
 ];
 
 @NgModule({
