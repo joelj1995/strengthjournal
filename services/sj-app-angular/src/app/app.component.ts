@@ -63,12 +63,6 @@ export class AppComponent implements OnInit {
       .subscribe((routerEvent: RouterEvent) => {
         this.checkRouterEvent(routerEvent);
       });
-    this.configUpdating = true;
-    this.spinner.setSpinnerEnabled(true);
-    this.config.pullUpdate().subscribe(() => {
-      this.configUpdating = false;
-      this.spinner.setSpinnerEnabled(false);
-    });
   }
 
   checkRouterEvent(routerEvent: RouterEvent) {
