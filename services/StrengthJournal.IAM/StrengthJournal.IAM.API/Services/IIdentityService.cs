@@ -7,5 +7,6 @@ namespace StrengthJournal.IAM.API.Services
         Task<LoginResponse> Authenticate(LoginRequest request);
         Task<CreateAccountResponse> Register(CreateAccountRequest request);
         Task<ResetPasswordResponse> ResetPassword(ResetPasswordRequest request);
+        Task<SendVerificationResponse> SendVerification(SendVerificationRequest request);
     }
 }

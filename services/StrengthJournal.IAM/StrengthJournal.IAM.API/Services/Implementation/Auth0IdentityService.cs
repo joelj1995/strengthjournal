@@ -97,6 +97,11 @@ namespace StrengthJournal.IAM.API.Services.Implementation
             }
         }
 
+        public async Task<SendVerificationResponse> SendVerification(SendVerificationRequest request)
+        {
+            throw new NotImplementedException();
+        }
+
         #region AuthenticationClient
         async Task<AuthenticateTokenResponse> GetLoginToken(string userName, string password)
         {
@@ -167,9 +172,37 @@ namespace StrengthJournal.IAM.API.Services.Implementation
             request.AddParameter("client_id", clientId);
             request.AddParameter("client_secret", clientSecret);
             request.AddParameter("connection", "Username-Password-Authentication");
-            await client.ExecuteAsync(request);
+            await client.PostAsync(request);
         }
 
+        #endregion
+
+        #region SendVerificationClient
+        async Task Auth0SendVerification(string username)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
+
+        #region ManagementAPIHelpers
+        private string GetManagementToken()
+        {
+            var request = new RestRequest("oauth/token");
+            request.AddHeader("content-type", "application/x-www-form-urlencoded");
+            request.AddParameter("grant_type", "client_credentials");
+            request.AddParameter("audience", $"{StrengthJournalConfiguration.Instance.Auth0_BaseURL}api/v2/");
+            request.AddParameter("client_id", clientId);
+            request.AddParameter("client_secret", clientSecret);
+            var response = client.Execute(request);
+            return ExtractTokenFromResponse(response.Content);
+        }
+
+        private string ExtractTokenFromResponse(string response)
+        {
+            dynamic responseData = JsonConvert.DeserializeObject(response);
+            return responseData.access_token;
+        }
         #endregion
     }
 

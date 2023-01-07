@@ -47,5 +47,15 @@ namespace StrengthJournal.IAM.API.Controllers
             else
                 return BadRequest(result);
         }
+
+        [HttpPost("send-verification")]
+        public async Task<ActionResult<SendVerificationResponse>> SendVerification(SendVerificationRequest body)
+        {
+            var result = await identityService.SendVerification(body);
+            if (result.Succeeded)
+                return Ok(result);
+            else
+                return BadRequest(result);
+        }
     }
 }
