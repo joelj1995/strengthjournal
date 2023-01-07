@@ -31,7 +31,21 @@ namespace StrengthJournal.IAM.API.Controllers
         public async Task<ActionResult<CreateAccountResponse>> CreateAccount(CreateAccountRequest body)
         {
             var result = await identityService.Register(body);
-            return Ok(result);
+            switch (result.ResultCode)
+            {
+                case CreateAccountResponse.CreateResult.Success: return Ok(result);
+                default: return BadRequest(result);
+            }
+        }
+
+        [HttpPost("reset-password")]
+        public async Task<ActionResult<ResetPasswordResponse>> ResetPassword(ResetPasswordRequest body)
+        {
+            var result = await identityService.ResetPassword(body);
+            if (result.Succeeded)
+                return Ok(result);
+            else
+                return BadRequest(result);
         }
     }
 }

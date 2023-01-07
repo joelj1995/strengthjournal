@@ -77,6 +77,26 @@ namespace StrengthJournal.IAM.API.Services.Implementation
             }
         }
 
+        public async Task<ResetPasswordResponse> ResetPassword(ResetPasswordRequest request)
+        {
+            try
+            {
+                await Auth0ResetPassword(request.Username);
+                return new ResetPasswordResponse()
+                {
+                    Succeeded = true,
+                };
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "Reset password failure");
+                return new ResetPasswordResponse()
+                {
+                    Succeeded = false
+                };
+            }
+        }
+
         #region AuthenticationClient
         async Task<AuthenticateTokenResponse> GetLoginToken(string userName, string password)
         {
@@ -137,6 +157,19 @@ namespace StrengthJournal.IAM.API.Services.Implementation
             [JsonProperty("_id")]
             public string Id { get; init; }
         }
+        #endregion
+
+        #region ResetPasswordClient
+        async Task Auth0ResetPassword(string username)
+        {
+            var request = new RestRequest("dbconnections/change_password");
+            request.AddParameter("email", username);
+            request.AddParameter("client_id", clientId);
+            request.AddParameter("client_secret", clientSecret);
+            request.AddParameter("connection", "Username-Password-Authentication");
+            await client.ExecuteAsync(request);
+        }
+
         #endregion
     }
 
