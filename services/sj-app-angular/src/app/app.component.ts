@@ -13,7 +13,7 @@ export class AppComponent implements OnInit {
 
   readonly lgBreakpoint: number = 992; // defined as map-get($grid-breakpoints, 'lg') by appstack
   screenWidth: number = 0;
-  noNav: boolean = false;
+  noNav: boolean = true;
 
   navCollapsed: boolean = false;
   configUpdating: boolean = false;
@@ -29,7 +29,6 @@ export class AppComponent implements OnInit {
 
   constructor(
     private router: Router, 
-    private config: ConfigService,
     private spinner: SpinnerService,
     private activatedRoute: ActivatedRoute
   ) {
