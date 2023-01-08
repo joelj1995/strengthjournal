@@ -9,6 +9,7 @@ import {
 } from '@angular/common/http';
 import { catchError, map, Observable, tap, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { Router } from '@angular/router';
 
 export class HandledHttpError implements Error {
   readonly name = "HandledHttpError";
@@ -20,12 +21,12 @@ export class HandledHttpError implements Error {
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
-  constructor() { }
+  constructor(private router: Router) { }
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-
     var token = localStorage.getItem('app_token');
 
-    if (this.isApiUrl(request.url)) {
+    if (this.isApiUrl(window.origin + request.url)) {
+      
       request = request.clone({
         setHeaders: {
           Authorization: `Bearer ${token}`
@@ -43,7 +44,7 @@ export class TokenInterceptor implements HttpInterceptor {
           _: Observable<HttpEvent<any>>
         ) => {
           if (httpErrorResponse.status === HttpStatusCode.Unauthorized && this.isApiUrl(httpErrorResponse.url ?? '')) {
-            window.location.replace('/login');
+            this.router.navigate(['/iam', 'login']);
             return throwError(() => new HandledHttpError(''));
           }
           return throwError(() => httpErrorResponse);
@@ -54,6 +55,6 @@ export class TokenInterceptor implements HttpInterceptor {
 
   isApiUrl(url: string) {
     const apiUrl = environment.api;
-    return url.startsWith(apiUrl);
+    return url.startsWith(window.origin + apiUrl);
   }
 }

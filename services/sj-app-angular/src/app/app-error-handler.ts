@@ -10,6 +10,11 @@ export class AppErrorHandler implements ErrorHandler {
   constructor(private router: Router, private config: ConfigService) { }
 
   handleError(error: any) {
+    if (error.name == 'HandledHttpError') {
+      console.error(error);
+      console.log('Handled 401 error. Skipping handler');
+      return;
+    }
     const errorId = uuidv4();
     try {
       console.error(error);
@@ -24,7 +29,7 @@ export class AppErrorHandler implements ErrorHandler {
       console.error('Failed to set message data.')
     }
     if (environment.production) {
-      if (error.name != 'HandledHttpError') window.location.replace(`/app-exception?errorId=${errorId}`);
+      window.location.replace(`/app-exception?errorId=${errorId}`);
     } else {
       this.config.triggerLocalDevError();
     }

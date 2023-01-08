@@ -1,6 +1,5 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { Event, NavigationStart, NavigationEnd, NavigationCancel, Router, RouterEvent, ActivatedRoute } from '@angular/router';
-import { AuthService } from '@auth0/auth0-angular';
 import { filter, of, switchMap } from 'rxjs';
 import { ConfigService } from './services/config.service';
 import { SpinnerService } from './services/spinner.service';
@@ -29,7 +28,6 @@ export class AppComponent implements OnInit {
   }
 
   constructor(
-    public auth: AuthService, 
     private router: Router, 
     private config: ConfigService,
     private spinner: SpinnerService,
