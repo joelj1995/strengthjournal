@@ -41,7 +41,7 @@ namespace StrengthJournal.IAM.API.Services.Implementation
             }
             catch (System.Net.Http.HttpRequestException ex)
             {
-                if (ex.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+                if (ex.StatusCode == System.Net.HttpStatusCode.Forbidden)
                     return LoginResponse.Fail(LoginResponse.AuthResult.WrongPassword);
                 else
                     return LoginResponse.Fail(LoginResponse.AuthResult.ServiceFailure);
