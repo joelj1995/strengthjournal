@@ -19,8 +19,8 @@
                     <img src="assets/dark_logo_transparent@4x-8.png" width="200" height="103" />
                   </div>
 
-                  <div class="alert alert-primary p-3" role="alert" style="display: none">
-                    <p>Your must verifiy your email before signing. You can <a href="/send-verification">re-send</a> the
+                  <div class="alert alert-primary p-3" role="alert" *ngIf="unverifiedEmail">
+                    <p>Your must verifiy your email before signing. You can <a style="font-weight: bold;" (click)="resendVerification()">re-send</a> the
                       verification email if it has been lost.</p>
                   </div>
 
