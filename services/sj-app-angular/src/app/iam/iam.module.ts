@@ -3,17 +3,29 @@ import { CommonModule } from '@angular/common';
 import { LoginComponent } from './login/login.component';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { SignupComponent } from './signup/signup.component';
+import { SignupSuccessComponent } from './signup-success/signup-success.component';
 
 const routes: Routes = [
   { 
     path: 'login', 
     component: LoginComponent 
   },
+  {
+    path: 'signup',
+    component: SignupComponent
+  },
+  {
+    path: 'signup-success',
+    component: SignupSuccessComponent
+  }
 ]
 
 @NgModule({
   declarations: [
-    LoginComponent
+    LoginComponent,
+    SignupComponent,
+    SignupSuccessComponent
   ],
   imports: [
     FormsModule,
