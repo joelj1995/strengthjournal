@@ -2,6 +2,7 @@ import { trigger, transition, animate, style, state } from '@angular/animations'
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { StrengthJournalContext } from 'src/app/core/strength-journal-context';
 import { Exercise } from 'src/app/model/exercise';
 import { Workout } from 'src/app/model/workout';
 import { WorkoutCreateUpdateResult } from 'src/app/model/workout-create-update-result';
@@ -27,6 +28,8 @@ import { v4 as uuidv4 } from 'uuid';
 })
 export class EditWorkoutComponent implements OnInit, OnDestroy {
 
+  context: StrengthJournalContext = this.route.snapshot.data['context'];
+
   loadingSets: boolean = false;
   loadingExercises: boolean = true;
 
@@ -48,7 +51,6 @@ export class EditWorkoutComponent implements OnInit, OnDestroy {
   constructor(
     private route: ActivatedRoute, 
     private workouts: WorkoutService, 
-    private config: ConfigService,
     private router: Router) { }
 
   ngOnDestroy(): void {
@@ -71,7 +73,7 @@ export class EditWorkoutComponent implements OnInit, OnDestroy {
   }
 
   sharedSetForm = new FormGroup({
-    weightUnit: new FormControl(this.config.getPreferredWeigthUnit())
+    weightUnit: new FormControl(this.context.config.preferredWeightUnit)
   });
 
   updateSetForm = EditWorkoutComponent.createSetForm();

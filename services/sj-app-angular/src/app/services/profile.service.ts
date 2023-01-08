@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, tap } from 'rxjs';
+import { map, Observable, switchMap, tap, withLatestFrom } from 'rxjs';
 import { Country } from '../model/country';
 import { ProfileSettings } from '../model/profile-settings';
 import { ConfigService } from './config.service';
@@ -24,9 +24,7 @@ export class ProfileService extends StrengthjournalBaseService {
   updateSettings(settings: ProfileSettings): Observable<void> {
     return this.http.post<void>(`${this.BASE_URL}/profile/settings`, settings)
       .pipe(
-        tap(() => {
-          this.config.update(settings);
-        })
+        tap(() => this.config.refreshConfig())
       );
   }
 

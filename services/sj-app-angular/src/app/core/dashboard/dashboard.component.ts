@@ -29,10 +29,6 @@ export class DashboardComponent implements OnInit {
     })
   }
 
-  enableWorkoutHistory() {
-    return this.config.hasFeature(AppFeatures.DASHBOURD_WORKOUT_VIEW);
-  }
-
   createWeeklyVolumeReportChart(lines: WeeklyVolumeReportLine[]) {
     Chart.register(...registerables);
     const data = {
