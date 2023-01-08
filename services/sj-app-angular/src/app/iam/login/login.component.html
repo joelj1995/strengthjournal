@@ -27,12 +27,12 @@
                   <form method="POST" id="loginForm" (ngSubmit)="onSubmit()">
                     <div class="mb-3">
                       <label class="form-label">Email</label>
-                      <input [(ngModel)]="formEmail" class="form-control form-control-lg" id="email" type="email" name="email"
+                      <input [(ngModel)]="formEmail" class="form-control form-control-lg" id="email" type="email" name="email" autocomplete="username"
                         placeholder="Enter your email" />
                     </div>
                     <div class="mb-3">
                       <label class="form-label">Password</label>
-                      <input [(ngModel)]="formPassword" class="form-control form-control-lg" id="password" type="password" name="password"
+                      <input [(ngModel)]="formPassword" class="form-control form-control-lg" id="password" type="password" name="password" autocomplete="current-password"
                         placeholder="Enter your password" />
                       <small>
                         <a href="/reset-password">Forgot password?</a>
