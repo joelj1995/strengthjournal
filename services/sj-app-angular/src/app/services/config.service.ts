@@ -12,10 +12,10 @@ import { StrengthjournalBaseService } from './strengthjournalbase.service';
 export class ConfigService extends StrengthjournalBaseService  {
 
   configTooOld = false;
+  configLoaded = false;
 
   private minVersion: number = 2;
   private configSubject$ = new ReplaySubject<AppConfig>(1);
-  config$ = this.configSubject$.asObservable();
 
   private featuresSubject$ = new ReplaySubject<string[]>(1);
   features$ = this.featuresSubject$.asObservable();
@@ -28,9 +28,15 @@ export class ConfigService extends StrengthjournalBaseService  {
 
     document.addEventListener('enableFeature', (e: any) => { });
     
-    this.refreshConfig();
-
     this.featuresSubject$.next([]);
+  }
+
+  public get config$() {
+    if (!this.configLoaded) {
+      this.refreshConfig();
+      this.configLoaded = true;
+    }
+    return this.configSubject$.asObservable();
   }
 
   triggerLocalDevError() {
