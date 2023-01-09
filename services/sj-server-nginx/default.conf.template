@@ -7,7 +7,7 @@ server {
 
     
     location / {
-      proxy_pass  http://mvc;
+      proxy_pass  http://mvc${FQDN};
     }
 
     location /app/ {
@@ -19,11 +19,11 @@ server {
     }
 
     location /services/iam/ {
-      proxy_pass http://iam/;
+      proxy_pass http://iam${FQDN}/;
     }
 
     location /api/journal/ {
-      proxy_pass http://journal/;
+      proxy_pass http://journal${FQDN}/;
     }
     
 }
