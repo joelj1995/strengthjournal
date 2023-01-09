@@ -36,11 +36,26 @@ export class IamService {
     return this.http.get<Country[]>(`${this.BASE_URL}/countries`);
   }
 
+  signup(request: SignupRequest): Observable<SignupResponse> {
+    return this.http.post<SignupResponse>(`${this.BASE_URL}/account/create`, request)
+      .pipe(
+        catchError(err => {
+          try {
+            return of(err.error as SignupResponse);
+          } catch {
+            return of({
+              result: SignupResponseCode.Unknown
+            });
+          }
+        })
+      );
+  }
+
 }
 
 export interface LoginResponse {
   token: string | null;
-  result: LoginStatusCode
+  result: LoginStatusCode;
 }
 
 export enum LoginStatusCode {
@@ -48,5 +63,23 @@ export enum LoginStatusCode {
   WrongPassword = "WrongPassword",
   ServiceFailure = "ServiceFailure",
   EmailNotVerified = "EmailNotVerified",
+  Unknown = "Unknown"
+}
+
+export interface SignupRequest {
+  username: string;
+  password: string;
+  consentCEM: boolean;
+  countryCode: string;
+}
+
+export interface SignupResponse {
+  result: SignupResponseCode
+}
+
+export enum SignupResponseCode {
+  Success = "Success",
+  ValidationError = "ValidationError",
+  ServiceFailure = "ServiceFailure",
   Unknown = "Unknown"
 }

@@ -30,6 +30,10 @@
                     {{ formError() }}
                   </div>
 
+                  <div class="alert alert-warning p-3" role="alert" style="display: block;" *ngIf="submitError">
+                    {{ submitError }}
+                  </div>
+
                   <form method="POST" (ngSubmit)="onSubmit()">
                     <div class="mb-3">
                       <label class="form-label">Email</label>
@@ -60,7 +64,7 @@
                         emails from Strength Journal</label>
                     </div>
                     <div class="text-center mt-3">
-                      <button type="submit" class="btn btn-lg btn-primary" [class.disabled]="formError()">Sign up</button>
+                      <button type="submit" class="btn btn-lg btn-primary" [class.disabled]="formError() || processing">Sign up</button>
                     </div>
                   </form>
                   <div>
