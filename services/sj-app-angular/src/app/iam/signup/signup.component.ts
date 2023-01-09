@@ -34,4 +34,17 @@ export class SignupComponent implements OnInit {
     console.log(this.form);
   }
 
+  formError(): string | null {
+    if (this.form.email == '') {
+      return 'Email address is required';
+    }
+    if (this.form.password == '') {
+      return 'Password is required'
+    }
+    if (this.form.password != this.form.password2) {
+      return 'Passwords do not match';
+    }
+    return null;
+  }
+
 }

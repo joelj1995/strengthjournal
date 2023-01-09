@@ -26,21 +26,25 @@
                     </ul>
                   </div>
 
+                  <div class="alert alert-warning p-3" role="alert" style="display: block;" *ngIf="formError() && username.dirty && password.dirty && password2.dirty ">
+                    {{ formError() }}
+                  </div>
+
                   <form method="POST" (ngSubmit)="onSubmit()">
                     <div class="mb-3">
                       <label class="form-label">Email</label>
                       <input class="form-control form-control-lg" type="email" name="email"
-                        placeholder="Enter email" [(ngModel)]="form.email" autocomplete="username" />
+                        placeholder="Enter email" [(ngModel)]="form.email" autocomplete="username" #username="ngModel" />
                     </div>
                     <div class="mb-3">
                       <label class="form-label">Password</label>
                       <input class="form-control form-control-lg" type="password" name="password"
-                        placeholder="Enter password" [(ngModel)]="form.password" autocomplete="new-password" />
+                        placeholder="Enter password" [(ngModel)]="form.password" autocomplete="new-password" #password="ngModel" />
                     </div>
                     <div class="mb-3">
                       <label class="form-label">Confirm Password</label>
                       <input class="form-control form-control-lg" type="password" name="password2"
-                        placeholder="Enter password" [(ngModel)]="form.password2" autocomplete="new-password" />
+                        placeholder="Enter password" [(ngModel)]="form.password2" autocomplete="new-password" #password2="ngModel" />
                     </div>
                     <div class="mb-3">
                       <label class="form-label">Country</label>
@@ -56,7 +60,7 @@
                         emails from Strength Journal</label>
                     </div>
                     <div class="text-center mt-3">
-                      <button type="submit" class="btn btn-lg btn-primary">Sign up</button>
+                      <button type="submit" class="btn btn-lg btn-primary" [class.disabled]="formError()">Sign up</button>
                     </div>
                   </form>
                   <div>
