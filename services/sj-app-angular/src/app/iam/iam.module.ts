@@ -5,6 +5,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { SignupComponent } from './signup/signup.component';
 import { SignupSuccessComponent } from './signup-success/signup-success.component';
+import { CountriesResolver } from './countries.resolver';
 
 const routes: Routes = [
   { 
@@ -13,7 +14,8 @@ const routes: Routes = [
   },
   {
     path: 'signup',
-    component: SignupComponent
+    component: SignupComponent,
+    resolve: { countryList: CountriesResolver }
   },
   {
     path: 'signup-success',

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Country } from 'src/app/model/country';
 
 @Component({
@@ -19,10 +20,12 @@ export class SignupComponent implements OnInit {
     password: '',
     password2: '',
     consentCEM: true,
-    countryCode: ''
+    countryCode: 'CA'
   }
 
-  constructor() { }
+  constructor(private route: ActivatedRoute) { 
+    this.countryList = this.route.snapshot.data['countryList'];
+  }
 
   ngOnInit(): void {
   }
