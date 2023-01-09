@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, map, Observable, of } from 'rxjs';
+import { Country } from '../model/country';
 
 @Injectable({
   providedIn: 'root'
@@ -29,6 +30,10 @@ export class IamService {
 
   sendVerification(email: string): Observable<any> {
     return this.http.post(`${this.BASE_URL}/account/send-verification`, { username: email });
+  }
+
+  getCountries(): Observable<Country[]> {
+    return this.http.get<Country[]>(`${this.BASE_URL}/countries`);
   }
 
 }
