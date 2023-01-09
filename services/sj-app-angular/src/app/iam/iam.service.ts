@@ -28,14 +28,6 @@ export class IamService {
       );
   }
 
-  sendVerification(email: string): Observable<any> {
-    return this.http.post(`${this.BASE_URL}/account/send-verification`, { username: email });
-  }
-
-  getCountries(): Observable<Country[]> {
-    return this.http.get<Country[]>(`${this.BASE_URL}/countries`);
-  }
-
   signup(request: SignupRequest): Observable<SignupResponse> {
     return this.http.post<SignupResponse>(`${this.BASE_URL}/account/create`, request)
       .pipe(
@@ -49,6 +41,18 @@ export class IamService {
           }
         })
       );
+  }
+
+  sendVerification(email: string): Observable<any> {
+    return this.http.post(`${this.BASE_URL}/account/send-verification`, { username: email });
+  }
+
+  getCountries(): Observable<Country[]> {
+    return this.http.get<Country[]>(`${this.BASE_URL}/countries`);
+  }
+
+  resetPassword(email: string): Observable<any> {
+    return this.http.post(`${this.BASE_URL}/account/reset-password`, { username: email });
   }
 
 }

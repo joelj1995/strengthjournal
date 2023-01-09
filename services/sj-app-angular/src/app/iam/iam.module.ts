@@ -6,6 +6,8 @@ import { FormsModule } from '@angular/forms';
 import { SignupComponent } from './signup/signup.component';
 import { SignupSuccessComponent } from './signup-success/signup-success.component';
 import { CountriesResolver } from './countries.resolver';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { ForgotPasswordSuccessComponent } from './forgot-password-success/forgot-password-success.component';
 
 const routes: Routes = [
   { 
@@ -20,6 +22,14 @@ const routes: Routes = [
   {
     path: 'signup-success',
     component: SignupSuccessComponent
+  },
+  {
+    path: 'forgot-password',
+    component: ForgotPasswordComponent
+  },
+  {
+    path: 'forgot-password-success',
+    component: ForgotPasswordSuccessComponent
   }
 ]
 
@@ -27,7 +37,9 @@ const routes: Routes = [
   declarations: [
     LoginComponent,
     SignupComponent,
-    SignupSuccessComponent
+    SignupSuccessComponent,
+    ForgotPasswordComponent,
+    ForgotPasswordSuccessComponent
   ],
   imports: [
     FormsModule,
