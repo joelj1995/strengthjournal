@@ -7,7 +7,7 @@ on:
     branches: 
       [ main ]
     paths:
-    - 'sj-server-nginx/**'
+    - 'services/**'
     - '.github/workflows/main_StrengthJournal.yml'
 
   # Allow mannually trigger 
@@ -39,6 +39,80 @@ jobs:
           file: ./services/sj-server-nginx/Dockerfile
           context: ./services
 
+  build-iam:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout to the branch
+        uses: actions/checkout@v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Log in to container registry
+        uses: docker/login-action@v1
+        with:
+          registry: strengthjournalservices.azurecr.io
+          username: ${{ secrets.GATEWAY_REGISTRY_USERNAME }}
+          password: ${{ secrets.GATEWAY_REGISTRY_PASSWORD }}
+
+      - name: Build and push container image to registry
+        uses: docker/build-push-action@v2
+        with:
+          push: true
+          tags: strengthjournalservices.azurecr.io/iam:${{ github.sha }}
+          file: ./services/StrengthJournal.IAM/StrengthJournal.IAM.API/Dockerfile
+          context: ./services
+
+  build-journal:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout to the branch
+        uses: actions/checkout@v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Log in to container registry
+        uses: docker/login-action@v1
+        with:
+          registry: strengthjournalservices.azurecr.io
+          username: ${{ secrets.GATEWAY_REGISTRY_USERNAME }}
+          password: ${{ secrets.GATEWAY_REGISTRY_PASSWORD }}
+
+      - name: Build and push container image to registry
+        uses: docker/build-push-action@v2
+        with:
+          push: true
+          tags: strengthjournalservices.azurecr.io/journal:${{ github.sha }}
+          file: ./services/StrengthJournal.Journal/StrengthJournal.Journal.API/Dockerfile
+          context: ./services
+
+  build-mvc:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout to the branch
+        uses: actions/checkout@v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Log in to container registry
+        uses: docker/login-action@v1
+        with:
+          registry: strengthjournalservices.azurecr.io
+          username: ${{ secrets.GATEWAY_REGISTRY_USERNAME }}
+          password: ${{ secrets.GATEWAY_REGISTRY_PASSWORD }}
+
+      - name: Build and push container image to registry
+        uses: docker/build-push-action@v2
+        with:
+          push: true
+          tags: strengthjournalservices.azurecr.io/mvc:${{ github.sha }}
+          file: ./services/StrengthJournal.MVC/StrengthJournal.MVC/Dockerfile
+          context: ./services
 
   # deploy:
   #   runs-on: ubuntu-latest
