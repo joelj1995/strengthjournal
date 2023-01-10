@@ -133,8 +133,7 @@ jobs:
         with:
           inlineScript: |
             az config set extension.use_dynamic_install=yes_without_prompt
-            az containerapp registry set -n gateway -g strengthjournal-test-arch1 --server strengthjournalservices.azurecr.io --username  ${{ secrets.GATEWAY_REGISTRY_USERNAME }} --password ${{ secrets.GATEWAY_REGISTRY_PASSWORD }}
-            az containerapp update -n gateway -g strengthjournal-test-arch1 --image strengthjournalservices.azurecr.io/server:${{ github.sha }}
             az containerapp update -n iam -g strengthjournal-test-arch1 --image strengthjournalservices.azurecr.io/iam:${{ github.sha }}
             az containerapp update -n journal -g strengthjournal-test-arch1 --image strengthjournalservices.azurecr.io/journal:${{ github.sha }}
             az containerapp update -n mvc -g strengthjournal-test-arch1 --image strengthjournalservices.azurecr.io/mvc:${{ github.sha }}
+            az containerapp update -n gateway -g strengthjournal-test-arch1 --image strengthjournalservices.azurecr.io/server:${{ github.sha }}
