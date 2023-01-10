@@ -114,21 +114,27 @@ jobs:
           file: ./services/StrengthJournal.MVC/StrengthJournal.MVC/Dockerfile
           context: ./services
 
-  # deploy:
-  #   runs-on: ubuntu-latest
-  #   needs: build
+  deploy:
+    runs-on: ubuntu-latest
+    needs:
+    - build-server 
+    - build-iam 
+    - build-journal 
+    - build-mvc
     
-  #   steps:
-  #     - name: Azure Login
-  #       uses: azure/login@v1
-  #       with:
-  #         creds: ${{ secrets.GATEWAY_AZURE_CREDENTIALS }}
+    steps:
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS_TEST_ARCH1 }}
 
-
-  #     - name: Deploy to containerapp
-  #       uses: azure/CLI@v1
-  #       with:
-  #         inlineScript: |
-  #           az config set extension.use_dynamic_install=yes_without_prompt
-  #           az containerapp registry set -n gateway -g DefaultResourceGroup-CCAN --server strengthjournalservices.azurecr.io --username  ${{ secrets.GATEWAY_REGISTRY_USERNAME }} --password ${{ secrets.GATEWAY_REGISTRY_PASSWORD }}
-  #           az containerapp update -n gateway -g DefaultResourceGroup-CCAN --image strengthjournalservices.azurecr.io/gateway:${{ github.sha }}
+      - name: Deploy to containerapp
+        uses: azure/CLI@v1
+        with:
+          inlineScript: |
+            az config set extension.use_dynamic_install=yes_without_prompt
+            az containerapp registry set -n gateway -g strengthjournal-test-arch1 --server strengthjournalservices.azurecr.io --username  ${{ secrets.GATEWAY_REGISTRY_USERNAME }} --password ${{ secrets.GATEWAY_REGISTRY_PASSWORD }}
+            az containerapp update -n gateway -g strengthjournal-test-arch1 --image strengthjournalservices.azurecr.io/server:${{ github.sha }}
+            az containerapp update -n iam -g strengthjournal-test-arch1 --image strengthjournalservices.azurecr.io/iam:${{ github.sha }}
+            az containerapp update -n journal -g strengthjournal-test-arch1 --image strengthjournalservices.azurecr.io/journal:${{ github.sha }}
+            az containerapp update -n mvc -g strengthjournal-test-arch1 --image strengthjournalservices.azurecr.io/mvc:${{ github.sha }}
