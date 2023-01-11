@@ -1,5 +1,6 @@
 param location string
 param environmentName string
+param containerDeploymentRevision string
 
 resource law 'Microsoft.OperationalInsights/workspaces@2020-03-01-preview' = {
   name: '${environmentName}-logAnalytics'
@@ -27,5 +28,14 @@ resource containerAppEnvironment 'Microsoft.App/managedEnvironments@2022-06-01-p
         sharedKey: law.listKeys().primarySharedKey
       }
     }
+  }
+}
+
+module containerAppMvc './StrengthJournal.MVC/container-app-mvc.bicep' = {
+  name: '${environmentName}-containerApp-mvc'
+  params: {
+    location: location
+    containerDeploymentRevision: containerDeploymentRevision
+    environmentId: containerAppEnvironment.id
   }
 }

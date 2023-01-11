@@ -15,21 +15,7 @@ on:
   workflow_dispatch:      
 
 jobs:
-  deploy-test-environment:
-    environment: strengthjournal-test-arch1
-    name: Deploy app service Azure infrastructure
-    runs-on: ubuntu-latest
-    env:
-      AZURE_RESOURCEGROUP_NAME: strengthjournal-test-arch2
-    steps:
-    - uses: actions/checkout@v2
-    - uses: azure/login@v1
-      with:
-        creds: ${{ secrets.AZURE_CREDENTIALS }}
-    - uses: azure/arm-deploy@v1
-      with:
-        resourceGroupName: ${{ env.AZURE_RESOURCEGROUP_NAME }}
-        template: ./environment-arch2.bicep
+
 
   # build-server:
   #   runs-on: ubuntu-latest
@@ -130,6 +116,24 @@ jobs:
   #         tags: strengthjournalservices.azurecr.io/mvc:${{ github.sha }}
   #         file: ./services/StrengthJournal.MVC/StrengthJournal.MVC/Dockerfile
   #         context: ./services
+
+  deploy-test-environment:
+    environment: strengthjournal-test-arch1
+    name: Deploy app service Azure infrastructure
+    runs-on: ubuntu-latest
+    # needs: build-mvc
+    env:
+      AZURE_RESOURCEGROUP_NAME: strengthjournal-test-arch2
+    steps:
+    - uses: actions/checkout@v2
+    - uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+    - uses: azure/arm-deploy@v1
+      with:
+        resourceGroupName: ${{ env.AZURE_RESOURCEGROUP_NAME }}
+        template: ./environment-arch2.bicep
+        parameters: containerDeploymentRevision=3c4a54cccc4f46c462878a9ebbe53131d09650a3
 
   # deploy:
   #   runs-on: ubuntu-latest
