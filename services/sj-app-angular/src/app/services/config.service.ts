@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, of, ReplaySubject, tap } from 'rxjs';
+import { catchError, Observable, of, ReplaySubject, tap } from 'rxjs';
 import { AppConfig } from '../model/app-config';
 import { ProfileSettings } from '../model/profile-settings';
 import { StrengthjournalBaseService } from './strengthjournalbase.service';
@@ -33,7 +33,7 @@ export class ConfigService extends StrengthjournalBaseService  {
 
   public get config$() {
     if (!this.configLoaded) {
-      this.refreshConfig();
+      this.refreshConfig(true);
       this.configLoaded = true;
     }
     return this.configSubject$.asObservable();
@@ -43,10 +43,14 @@ export class ConfigService extends StrengthjournalBaseService  {
     this.router.navigate(['/error']);
   }
 
-  refreshConfig() {
+  refreshConfig(firstLoad: boolean = false) {
     this.http.get<AppConfig>(`${this.BASE_URL}/profile/config`)
       .pipe(
-        tap(config => console.log('new config pulled : ' + JSON.stringify(config)))
+        tap(config => console.log('new config pulled : ' + JSON.stringify(config))),
+        catchError(e => {
+          this.configLoaded = false;
+          throw e;
+        })
       )
       .subscribe(
         config => this.configSubject$.next(config)

@@ -5,7 +5,7 @@
     <app-nav id="sidebar" class="sidebar" [class.collapsed]="navCollapsed"></app-nav>
 
     <div class="main">
-      <app-header [userFullName]="userFullName" (navToggleClicked)="toggleNav()"></app-header>
+      <app-header (navToggleClicked)="toggleNav()"></app-header>
       <main class="content">
         <div class="container-fluid p-0">
           <router-outlet *ngIf="!configUpdating"></router-outlet>

@@ -3,8 +3,8 @@
   <div class="navbar-collapse collapse">
     <ul class="navbar-nav navbar-align">
       <li class="nav-item dropdown">
-        <span class="nav-link d-sm-inline-block">
-          <span class="text-dark">{{userFullName}} </span>
+        <span class="nav-link d-sm-inline-block" *ngIf="tryGetUsername$ | async as userName">
+          <span class="text-dark">{{userName}}</span>
         </span>
       </li>
     </ul>

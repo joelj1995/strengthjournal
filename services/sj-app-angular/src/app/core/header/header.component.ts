@@ -1,5 +1,7 @@
 import { Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
+import { ConfigService } from 'src/app/services/config.service';
+import { catchError, map, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-header',
@@ -10,9 +12,17 @@ export class HeaderComponent implements OnInit {
 
   @Output() navToggleClicked: EventEmitter<any> = new EventEmitter();
 
-  @Input() userFullName: string = '';
+  get tryGetUsername$(): Observable<string> {
+    return this.config.config$
+      .pipe(
+        map(c => c.userName),
+        catchError(() => '')
+      );
+  } 
 
-  constructor(@Inject(DOCUMENT) public document: Document) { }
+  constructor(
+    @Inject(DOCUMENT) public document: Document,
+    private config: ConfigService) { }
 
   ngOnInit(): void {
   }
