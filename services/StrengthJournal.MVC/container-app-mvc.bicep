@@ -19,7 +19,7 @@ resource containerAppMvc 'Microsoft.App/containerApps@2022-03-01' = {
       ingress: {
         allowInsecure: true
         customDomains: null
-        external: true
+        external: false
         targetPort: 80
         transport: 'http'
         traffic: [

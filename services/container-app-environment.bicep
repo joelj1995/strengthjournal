@@ -81,6 +81,6 @@ module containerAppServer './sj-server-nginx/container-app-server.bicep' = {
     location: location
     containerDeploymentRevision: containerDeploymentRevision
     environmentId: containerAppEnvironment.id
-    environmentDomain: '.${containerAppEnvironment.properties.defaultDomain}'
+    environmentDomain: '.internal.${containerAppEnvironment.properties.defaultDomain}'
   }
 }
