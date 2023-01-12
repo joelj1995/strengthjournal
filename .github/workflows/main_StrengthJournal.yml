@@ -120,7 +120,11 @@ jobs:
     environment: strengthjournal-test-arch2
     name: TEST Deploy app service Azure infrastructure
     runs-on: ubuntu-latest
-    # needs: build-mvc
+    needs:
+    - build-server
+    - build-iam
+    - build-journal
+    - build-mvc
     env:
       AZURE_RESOURCEGROUP_NAME: strengthjournal-test-arch2
       DOTNET_ENV: test
@@ -135,7 +139,7 @@ jobs:
       with:
         resourceGroupName: ${{ env.AZURE_RESOURCEGROUP_NAME }}
         template: ./environment-arch2.bicep
-        parameters: containerDeploymentRevision=c45bbce3f55a63995af1e7263f4d0d1ea2e89edc dotnetEnv=${{ env.DOTNET_ENV }} dotnetAzTenantId=${{ env.AZURE_TENANT_ID }} dotnetAzClientId=${{ env.AZURE_CLIENT_ID }} dotnetAzClientSecret=${{ secrets.AZURE_CLIENT_SECRET }}
+        parameters: containerDeploymentRevision=${{ github.sha }} dotnetEnv=${{ env.DOTNET_ENV }} dotnetAzTenantId=${{ env.AZURE_TENANT_ID }} dotnetAzClientId=${{ env.AZURE_CLIENT_ID }} dotnetAzClientSecret=${{ secrets.AZURE_CLIENT_SECRET }}
 
   deploy-production-environment-blue:
     environment: strengthjournal-prod-arch2-blue
