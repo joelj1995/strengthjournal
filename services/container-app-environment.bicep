@@ -74,3 +74,13 @@ module containerAppIam './StrengthJournal.IAM/container-app-iam.bicep' = {
     dotnetAzClientSecret: dotnetAzClientSecret
   }
 }
+
+module containerAppServer './sj-server-nginx/container-app-server.bicep' = {
+  name: '${environmentName}-containerApp-server'
+  params: {
+    location: location
+    containerDeploymentRevision: containerDeploymentRevision
+    environmentId: containerAppEnvironment.id
+    environmentDomain: '.${containerAppEnvironment.properties.defaultDomain}'
+  }
+}
