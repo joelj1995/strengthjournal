@@ -118,12 +118,15 @@ jobs:
   #         context: ./services
 
   deploy-test-environment:
-    environment: strengthjournal-test-arch1
+    environment: strengthjournal-test-arch2
     name: Deploy app service Azure infrastructure
     runs-on: ubuntu-latest
     # needs: build-mvc
     env:
       AZURE_RESOURCEGROUP_NAME: strengthjournal-test-arch2
+      DOTNET_ENV: test
+      AZURE_TENANT_ID: 31e50e54-3b13-47ed-938e-8600cb767ae7
+      AZURE_CLIENT_ID: f15b8bb4-c5b6-410f-b185-ca5c4c5619cc
     steps:
     - uses: actions/checkout@v2
     - uses: azure/login@v1
@@ -133,7 +136,25 @@ jobs:
       with:
         resourceGroupName: ${{ env.AZURE_RESOURCEGROUP_NAME }}
         template: ./environment-arch2.bicep
-        parameters: containerDeploymentRevision=3c4a54cccc4f46c462878a9ebbe53131d09650a3
+        parameters: containerDeploymentRevision=3c4a54cccc4f46c462878a9ebbe53131d09650a3 dotnetEnv=${{ env.DOTNET_ENV }} dotnetAzTenantId=${{ env.AZURE_TENANT_ID }} dotnetAzClientId=${{ env.AZURE_CLIENT_ID }} dotnetAzClientSecret=${{ secrets.AZURE_CLIENT_SECRET }}
+
+  # deploy-production-environment-blue:
+  #   environment: strengthjournal-prod-blue-arch2
+  #   name: Deploy app service Azure infrastructure
+  #   runs-on: ubuntu-latest
+  #   # needs: build-mvc
+  #   env:
+  #     AZURE_RESOURCEGROUP_NAME: strengthjournal-test-arch2
+  #   steps:
+  #   - uses: actions/checkout@v2
+  #   - uses: azure/login@v1
+  #     with:
+  #       creds: ${{ secrets.AZURE_CREDENTIALS }}
+  #   - uses: azure/arm-deploy@v1
+  #     with:
+  #       resourceGroupName: ${{ env.AZURE_RESOURCEGROUP_NAME }}
+  #       template: ./environment-arch2.bicep
+  #       parameters: containerDeploymentRevision=3c4a54cccc4f46c462878a9ebbe53131d09650a3
 
   # deploy:
   #   runs-on: ubuntu-latest

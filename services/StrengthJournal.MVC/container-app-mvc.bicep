@@ -2,6 +2,11 @@
 param location string
 param containerDeploymentRevision string
 param environmentId string
+param dotnetEnv string
+param dotnetAzTenantId string
+param dotnetAzClientId string
+@secure()
+param dotnetAzClientSecret string
 
 resource containerAppMvc 'Microsoft.App/containerApps@2022-03-01' = {
   name: 'mvc'
@@ -48,19 +53,19 @@ resource containerAppMvc 'Microsoft.App/containerApps@2022-03-01' = {
           env: [
             {
               name: 'ASPNETCORE_ENVIRONMENT'
-              value: 'test'
+              value: dotnetEnv
             }
             {
                 name: 'AZURE_TENANT_ID'
-                value: '31e50e54-3b13-47ed-938e-8600cb767ae7'
+                value: dotnetAzTenantId
             }
             {
                 name: 'AZURE_CLIENT_ID'
-                value: 'f15b8bb4-c5b6-410f-b185-ca5c4c5619cc'
+                value: dotnetAzClientId
             }
             {
                 name: 'AZURE_CLIENT_SECRET'
-                value: '4kk8Q~SBAYVMXcEKWrGn1iVyYb0TptYd43SF7b1r'
+                value: dotnetAzClientSecret
             }
           ]
           probes: []

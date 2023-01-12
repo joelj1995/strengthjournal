@@ -1,6 +1,11 @@
 param location string
 param environmentName string
 param containerDeploymentRevision string
+param dotnetEnv string
+param dotnetAzTenantId string
+param dotnetAzClientId string
+@secure()
+param dotnetAzClientSecret string
 
 resource law 'Microsoft.OperationalInsights/workspaces@2020-03-01-preview' = {
   name: '${environmentName}-logAnalytics'
@@ -37,5 +42,9 @@ module containerAppMvc './StrengthJournal.MVC/container-app-mvc.bicep' = {
     location: location
     containerDeploymentRevision: containerDeploymentRevision
     environmentId: containerAppEnvironment.id
+    dotnetEnv: dotnetEnv
+    dotnetAzTenantId: dotnetAzTenantId
+    dotnetAzClientId: dotnetAzClientId
+    dotnetAzClientSecret: dotnetAzClientSecret
   }
 }
