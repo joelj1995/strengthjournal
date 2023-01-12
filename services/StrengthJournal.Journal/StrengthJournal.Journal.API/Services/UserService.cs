@@ -38,7 +38,8 @@ namespace StrengthJournal.Journal.API.Services
             return new AppConfig()
             {
                 preferredWeightUnit = user.PreferredWeightUnit?.Abbreviation ?? "lbs",
-                features = featureService.GetFeatures().Result
+                features = featureService.GetFeatures().Result,
+                userName = user.Email
             };
         }
     }

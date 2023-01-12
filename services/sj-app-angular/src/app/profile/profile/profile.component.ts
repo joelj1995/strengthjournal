@@ -1,6 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { StrengthJournalContext } from 'src/app/core/strength-journal-context';
+import { IamService } from 'src/app/iam/iam.service';
 import { Country } from 'src/app/model/country';
 import { ProfileSettings } from 'src/app/model/profile-settings';
 import { ProfileService } from 'src/app/services/profile.service';
@@ -13,6 +15,8 @@ import { SubSink } from 'subsink';
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit, OnDestroy {
+
+  context: StrengthJournalContext = this.route.snapshot.data['context'];
 
   settings!: ProfileSettings;
   countryList!: Country[];
@@ -28,7 +32,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
   constructor(
     private profile: ProfileService, 
     private toast: ToastService, 
-    private route: ActivatedRoute) { }
+    private route: ActivatedRoute,
+    private iam: IamService) { }
 
   ngOnDestroy(): void {
     this.subs.unsubscribe();
@@ -55,7 +60,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   }
 
   resetPassword() {
-    this.subs.sink = this.profile.resetPasword().subscribe(() => {
+    this.subs.sink = this.iam.resetPassword(this.context.config.userName).subscribe(() => {
       this.toast.setToast({ message: 'Password reset sent', domClass: 'bg-success text-light' });
     });
   }

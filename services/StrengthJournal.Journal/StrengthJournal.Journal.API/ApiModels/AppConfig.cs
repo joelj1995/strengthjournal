@@ -5,5 +5,6 @@
         public int version { get => 2; }
         public string preferredWeightUnit { get; set; } = "lbs";
         public ICollection<string> features { get; set; } = new List<string>();
+        public string userName { get; set; }
     }
 }
