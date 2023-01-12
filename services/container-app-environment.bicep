@@ -48,3 +48,16 @@ module containerAppMvc './StrengthJournal.MVC/container-app-mvc.bicep' = {
     dotnetAzClientSecret: dotnetAzClientSecret
   }
 }
+
+module containerAppJournal './StrengthJournal.Journal/container-app-journal.bicep' = {
+  name: '${environmentName}-containerApp-journal'
+  params: {
+    location: location
+    containerDeploymentRevision: containerDeploymentRevision
+    environmentId: containerAppEnvironment.id
+    dotnetEnv: dotnetEnv
+    dotnetAzTenantId: dotnetAzTenantId
+    dotnetAzClientId: dotnetAzClientId
+    dotnetAzClientSecret: dotnetAzClientSecret
+  }
+}
