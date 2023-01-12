@@ -61,3 +61,16 @@ module containerAppJournal './StrengthJournal.Journal/container-app-journal.bice
     dotnetAzClientSecret: dotnetAzClientSecret
   }
 }
+
+module containerAppIam './StrengthJournal.IAM/container-app-iam.bicep' = {
+  name: '${environmentName}-containerApp-iam'
+  params: {
+    location: location
+    containerDeploymentRevision: containerDeploymentRevision
+    environmentId: containerAppEnvironment.id
+    dotnetEnv: dotnetEnv
+    dotnetAzTenantId: dotnetAzTenantId
+    dotnetAzClientId: dotnetAzClientId
+    dotnetAzClientSecret: dotnetAzClientSecret
+  }
+}
