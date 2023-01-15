@@ -33,6 +33,10 @@ jobs:
           username: ${{ secrets.GATEWAY_REGISTRY_USERNAME }}
           password: ${{ secrets.GATEWAY_REGISTRY_PASSWORD }}
 
+      - name: Add version tag to SPA
+        working-directory: ./services/sj-app-angular
+        run: sed -i "s/{REVISION_HASH}/${{ github.sha }}/" ./src/environments/environment.prod.ts
+
       - name: Build and push container image to registry
         uses: docker/build-push-action@v2
         with:
