@@ -6,6 +6,8 @@ param dotnetAzTenantId string
 param dotnetAzClientId string
 @secure()
 param dotnetAzClientSecret string
+@secure()
+param containerRegistryPassword string
 
 resource law 'Microsoft.OperationalInsights/workspaces@2020-03-01-preview' = {
   name: '${environmentName}-logAnalytics'
@@ -46,6 +48,7 @@ module containerAppMvc './StrengthJournal.MVC/container-app-mvc.bicep' = {
     dotnetAzTenantId: dotnetAzTenantId
     dotnetAzClientId: dotnetAzClientId
     dotnetAzClientSecret: dotnetAzClientSecret
+    containerRegistryPassword: containerRegistryPassword
   }
 }
 
@@ -59,6 +62,7 @@ module containerAppJournal './StrengthJournal.Journal/container-app-journal.bice
     dotnetAzTenantId: dotnetAzTenantId
     dotnetAzClientId: dotnetAzClientId
     dotnetAzClientSecret: dotnetAzClientSecret
+    containerRegistryPassword: containerRegistryPassword
   }
 }
 
@@ -72,6 +76,7 @@ module containerAppIam './StrengthJournal.IAM/container-app-iam.bicep' = {
     dotnetAzTenantId: dotnetAzTenantId
     dotnetAzClientId: dotnetAzClientId
     dotnetAzClientSecret: dotnetAzClientSecret
+    containerRegistryPassword: containerRegistryPassword
   }
 }
 
@@ -82,5 +87,6 @@ module containerAppServer './sj-server-nginx/container-app-server.bicep' = {
     containerDeploymentRevision: containerDeploymentRevision
     environmentId: containerAppEnvironment.id
     environmentDomain: '.internal.${containerAppEnvironment.properties.defaultDomain}'
+    containerRegistryPassword: containerRegistryPassword
   }
 }

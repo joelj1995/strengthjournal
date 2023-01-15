@@ -143,7 +143,13 @@ jobs:
       with:
         resourceGroupName: ${{ env.AZURE_RESOURCEGROUP_NAME }}
         template: ./environment-arch2.bicep
-        parameters: containerDeploymentRevision=${{ github.sha }} dotnetEnv=${{ env.DOTNET_ENV }} dotnetAzTenantId=${{ env.AZURE_TENANT_ID }} dotnetAzClientId=${{ env.AZURE_CLIENT_ID }} dotnetAzClientSecret=${{ secrets.AZURE_CLIENT_SECRET }}
+        parameters:
+          containerDeploymentRevision=${{ github.sha }}
+          containerRegistryPassword=${{ secrets.GATEWAY_REGISTRY_PASSWORD }}
+          dotnetEnv=${{ env.DOTNET_ENV }} 
+          dotnetAzTenantId=${{ env.AZURE_TENANT_ID }} 
+          dotnetAzClientId=${{ env.AZURE_CLIENT_ID }} 
+          dotnetAzClientSecret=${{ secrets.AZURE_CLIENT_SECRET }}
 
   deploy-production-environment-blue:
     environment: strengthjournal-prod-arch2-blue
@@ -168,4 +174,10 @@ jobs:
       with:
         resourceGroupName: ${{ env.AZURE_RESOURCEGROUP_NAME }}
         template: ./environment-arch2.bicep
-        parameters: containerDeploymentRevision=${{ github.sha }} dotnetEnv=${{ env.DOTNET_ENV }} dotnetAzTenantId=${{ env.AZURE_TENANT_ID }} dotnetAzClientId=${{ env.AZURE_CLIENT_ID }} dotnetAzClientSecret=${{ secrets.AZURE_CLIENT_SECRET }}
+        parameters: 
+          containerDeploymentRevision=${{ github.sha }}
+          containerRegistryPassword=${{ secrets.GATEWAY_REGISTRY_PASSWORD }}
+          dotnetEnv=${{ env.DOTNET_ENV }} 
+          dotnetAzTenantId=${{ env.AZURE_TENANT_ID }} 
+          dotnetAzClientId=${{ env.AZURE_CLIENT_ID }} 
+          dotnetAzClientSecret=${{ secrets.AZURE_CLIENT_SECRET }}

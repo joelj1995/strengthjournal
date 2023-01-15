@@ -2,6 +2,8 @@ param location string
 param containerDeploymentRevision string
 param environmentId string
 param environmentDomain string
+@secure()
+param containerRegistryPassword string
 
 resource containerAppServer 'Microsoft.App/containerApps@2022-03-01' = {
   name: 'server'
@@ -35,7 +37,7 @@ resource containerAppServer 'Microsoft.App/containerApps@2022-03-01' = {
       secrets: [
         {
           name: 'reg-pswd-a0579af6-bc30'
-          value: 'pG/IlLZjtIv1OODVlPYXRyTXOf/kE+A/oItn2MmnUU+ACRCPSeqy'
+          value: containerRegistryPassword
         }
       ]
     }

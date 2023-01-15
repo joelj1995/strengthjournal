@@ -6,6 +6,8 @@ param dotnetAzTenantId string
 param dotnetAzClientId string
 @secure()
 param dotnetAzClientSecret string
+@secure()
+param containerRegistryPassword string
 
 module containerAppEnvironment './services/container-app-environment.bicep' = {
   name: '${environmentName}-containerAppEnvironment'
@@ -17,5 +19,6 @@ module containerAppEnvironment './services/container-app-environment.bicep' = {
     dotnetAzTenantId: dotnetAzTenantId
     dotnetAzClientId: dotnetAzClientId
     dotnetAzClientSecret: dotnetAzClientSecret
+    containerRegistryPassword: containerRegistryPassword
   }
 }

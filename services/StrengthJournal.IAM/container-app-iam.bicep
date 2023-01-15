@@ -7,6 +7,8 @@ param dotnetAzTenantId string
 param dotnetAzClientId string
 @secure()
 param dotnetAzClientSecret string
+@secure()
+param containerRegistryPassword string
 
 resource containerAppIam 'Microsoft.App/containerApps@2022-03-01' = {
   name: 'iam'
@@ -40,7 +42,7 @@ resource containerAppIam 'Microsoft.App/containerApps@2022-03-01' = {
       secrets: [
         {
           name: 'reg-pswd-a0579af6-bc30'
-          value: 'pG/IlLZjtIv1OODVlPYXRyTXOf/kE+A/oItn2MmnUU+ACRCPSeqy'
+          value: containerRegistryPassword
         }
       ]
     }
