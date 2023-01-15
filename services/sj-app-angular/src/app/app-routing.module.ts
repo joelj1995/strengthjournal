@@ -13,6 +13,7 @@ const contextResolver: ResolveData = {
 
 const routes: Routes = [
   { path: '', component: DashboardComponent },
+  { path: 'dashboard', component: DashboardComponent },
   { 
     path: 'profile', 
     loadChildren: () => import('./profile/profile.module').then(m => m.ProfileModule),
