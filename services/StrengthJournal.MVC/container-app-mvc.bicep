@@ -9,6 +9,7 @@ param dotnetAzClientId string
 param dotnetAzClientSecret string
 @secure()
 param containerRegistryPassword string
+param azEnvironmentName string
 
 resource containerAppMvc 'Microsoft.App/containerApps@2022-03-01' = {
   name: 'mvc'
@@ -68,6 +69,10 @@ resource containerAppMvc 'Microsoft.App/containerApps@2022-03-01' = {
             {
                 name: 'AZURE_CLIENT_SECRET'
                 value: dotnetAzClientSecret
+            }
+            {
+              name: 'AZ_ENVIRONMENT'
+              value: azEnvironmentName
             }
           ]
           probes: []

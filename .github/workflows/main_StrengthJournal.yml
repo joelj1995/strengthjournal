@@ -150,6 +150,7 @@ jobs:
           dotnetAzTenantId=${{ env.AZURE_TENANT_ID }} 
           dotnetAzClientId=${{ env.AZURE_CLIENT_ID }} 
           dotnetAzClientSecret=${{ secrets.AZURE_CLIENT_SECRET }}
+          azEnvironmentName=${{ env.AZURE_RESOURCEGROUP_NAME }}
 
   deploy-production-environment-blue:
     environment: strengthjournal-prod-arch2-blue
@@ -181,3 +182,4 @@ jobs:
           dotnetAzTenantId=${{ env.AZURE_TENANT_ID }} 
           dotnetAzClientId=${{ env.AZURE_CLIENT_ID }} 
           dotnetAzClientSecret=${{ secrets.AZURE_CLIENT_SECRET }}
+          azEnvironmentName=${{ env.AZURE_RESOURCEGROUP_NAME }}

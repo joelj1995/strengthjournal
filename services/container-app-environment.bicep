@@ -8,6 +8,7 @@ param dotnetAzClientId string
 param dotnetAzClientSecret string
 @secure()
 param containerRegistryPassword string
+param azEnvironmentName string
 
 resource law 'Microsoft.OperationalInsights/workspaces@2020-03-01-preview' = {
   name: '${environmentName}-logAnalytics'
@@ -49,6 +50,7 @@ module containerAppMvc './StrengthJournal.MVC/container-app-mvc.bicep' = {
     dotnetAzClientId: dotnetAzClientId
     dotnetAzClientSecret: dotnetAzClientSecret
     containerRegistryPassword: containerRegistryPassword
+    azEnvironmentName: azEnvironmentName
   }
 }
 
