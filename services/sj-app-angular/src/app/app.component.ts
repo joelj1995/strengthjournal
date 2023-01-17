@@ -1,7 +1,7 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { Event, NavigationStart, NavigationEnd, NavigationCancel, Router, RouterEvent, ActivatedRoute } from '@angular/router';
 import { filter, of, switchMap } from 'rxjs';
-import { ConfigService } from './services/config.service';
+import { KeepAliveService } from './services/keep-alive.service';
 import { SpinnerService } from './services/spinner.service';
 
 @Component({
@@ -30,7 +30,8 @@ export class AppComponent implements OnInit {
   constructor(
     private router: Router, 
     private spinner: SpinnerService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private keepAlive: KeepAliveService
   ) {
     this.router.events.subscribe(ev => {
       if (this.screenWidth < this.lgBreakpoint)
@@ -47,6 +48,7 @@ export class AppComponent implements OnInit {
           this.noNav = routeData['noNav'] ?? false;
         }
       });
+    this.keepAlive.keepAlivePoll$.subscribe(([iam, journal]) => console.log(`pong: ${iam} ${journal}`));
   }
   
   ngOnInit(): void {
