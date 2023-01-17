@@ -55,6 +55,6 @@ export class TokenInterceptor implements HttpInterceptor {
 
   isApiUrl(url: string) {
     const apiUrl = environment.api;
-    return url.startsWith(window.origin + apiUrl);
+    return url.startsWith(window.origin + apiUrl) && !url.endsWith('ping');
   }
 }
