@@ -27,7 +27,7 @@ export class NewExerciseComponent implements OnInit, OnDestroy {
     private toast: ToastService) { }
 
   ngOnDestroy(): void {
-    throw new Error('Method not implemented.');
+    this.subs.unsubscribe();
   }
 
   ngOnInit(): void {
@@ -40,7 +40,7 @@ export class NewExerciseComponent implements OnInit, OnDestroy {
     this.enableSubmit = false;
     this.subs.sink = this.exercises.createExercise(this.form.value.name, this.form.value.parentExerciseId).subscribe(e => {
       this.toast.setToast({ message: 'Exercise created', domClass: 'bg-success text-light' });
-      this.router.navigate(['exercises']);
+      this.router.navigate(['/exercises']);
     });
   }
 
