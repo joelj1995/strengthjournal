@@ -1,0 +1,23 @@
+version: '3.9'
+
+services:
+
+  mvc:
+    image: strengthjournalservices.azurecr.io/mvc:${GIT_SHA}
+    env_file:
+      - dotnet.env
+
+  iam:
+    image: strengthjournalservices.azurecr.io/iam:${GIT_SHA}
+    env_file:
+      - dotnet.env
+
+  journal:
+    image: strengthjournalservices.azurecr.io/journal:${GIT_SHA}
+    env_file:
+      - dotnet.env
+
+  gateway:
+    image: strengthjournalservices.azurecr.io/server:${GIT_SHA}
+    ports:
+      - "${HOST_PORT}:80"
